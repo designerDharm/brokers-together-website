@@ -251,9 +251,8 @@
         title.textContent = 'Reset Password';
         subtitle.textContent = 'Recover access to your Brokers Together owner account.';
       } else {
-        regForm.style.display = 'block';
-        title.textContent = 'Create Your Account';
-        subtitle.textContent = 'Join Brokers Together to list your property projects and connect with top brokers.';
+        window.location.href = 'signup.html';
+        return;
       }
     }
 
