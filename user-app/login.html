@@ -10,6 +10,7 @@
   
   <!-- Reactive Single Source of Truth Client -->
   <script src="../shared/api.js" defer></script>
+  <script src="../shared/auth.js"></script>
 
   <style>
     /* ----------------------------------------------------
@@ -802,7 +803,7 @@
           <div class="form-field-group">
             <div class="field-header-row">
               <label for="login-password" class="field-label">PASSWORD</label>
-              <a href="#forgot" class="forgot-link" id="forgot-password-link" onclick="handleForgotPasswordClick(event)">Forgot Password?</a>
+              <a href="forgot-password.html" class="forgot-link" id="forgot-password-link">Forgot Password?</a>
             </div>
 
             <div class="input-shell">
@@ -1003,7 +1004,6 @@
       }
 
       if (hasError) {
-        // Focus first errored field
         if (!identifier || (!isValidEmail(identifier) && !isValidPhone(identifier))) {
           idInput.focus();
         } else {
@@ -1018,51 +1018,25 @@
       btnArrow.style.display = 'none';
       btnLabel.textContent = 'SIGNING IN...';
 
-      const API_BASE = window.ENV_API_URL || 'http://localhost:5050';
-
       try {
-        const response = await fetch(`${API_BASE}/api/auth/login`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ identifier, password })
-        });
+        const result = await window.AuthManager.login(identifier, password);
 
-        const result = await response.json();
-
-        if (response.ok && result.success) {
-          // Store authentication session
-          sessionStorage.setItem('bt_auth_user', JSON.stringify(result.user));
-          if (result.token) sessionStorage.setItem('bt_auth_token', result.token);
-
+        if (result.ok && result.data.success) {
           btnLabel.textContent = 'ACCESS GRANTED';
           submitBtn.style.background = '#2E7D32';
 
+          const returnUrl = window.AuthManager.getReturnUrl();
+          const target = returnUrl || (result.data.user?.role === 'Developer' ? 'dashboard.html' : 'dashboard.html');
+
           setTimeout(() => {
-            window.location.href = 'index.html?action=openDashboard';
-          }, 400);
+            window.location.href = target;
+          }, 350);
         } else {
-          // Authentication Failure
-          showAuthFailure(result.error || 'Email/mobile number or password is incorrect.');
+          showAuthFailure(result.data?.error || 'Incorrect email/mobile number or password.');
         }
       } catch (err) {
-        // Fallback for offline or standalone cloud review
-        console.warn('Backend server uncontactable. Testing local credentials.', err);
-        
-        if (password === 'wrong') {
-          showAuthFailure('Email/mobile number or password is incorrect.');
-        } else {
-          // Successful local fallback login
-          sessionStorage.setItem('bt_auth_user', JSON.stringify({
-            name: identifier.includes('@') ? identifier.split('@')[0] : 'Property Owner',
-            identifier: identifier,
-            role: 'Property Owner'
-          }));
-
-          btnLabel.textContent = 'ACCESS GRANTED';
-          setTimeout(() => {
-            window.location.href = 'index.html?action=openDashboard';
-          }, 400);
-        }
+        console.error('Login error:', err);
+        showAuthFailure('Unable to connect to authentication service. Please check your network.');
       }
     }
 
@@ -1091,21 +1065,33 @@
       pwInput.focus();
     }
 
-    // --- 6. Forgot Password Click ---
-    function handleForgotPasswordClick(e) {
-      e.preventDefault();
-      const identifier = document.getElementById('login-identifier').value.trim();
-      const promptEmail = identifier && isValidEmail(identifier) ? identifier : 'your registered email';
-      
-      const banner = document.getElementById('auth-error-banner');
-      const bannerText = document.getElementById('auth-error-banner-text');
-      
-      banner.style.backgroundColor = '#EFF6FF';
-      banner.style.borderColor = '#93C5FD';
-      banner.style.color = '#1E40AF';
-      bannerText.textContent = `Password reset instructions have been dispatched to ${promptEmail}.`;
-      banner.classList.add('visible');
-    }
+    // Intelligent check: If already authenticated, redirect safely
+    window.addEventListener('DOMContentLoaded', () => {
+      // If user came from signup with ?registered=1
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('registered') === '1') {
+        const banner = document.getElementById('auth-error-banner');
+        const bannerText = document.getElementById('auth-error-banner-text');
+        banner.style.backgroundColor = '#F0FDF4';
+        banner.style.borderColor = '#86EFAC';
+        banner.style.color = '#166534';
+        bannerText.textContent = 'Account created successfully! Please sign in with your password.';
+        banner.classList.add('visible');
+      }
+
+      // Preserve returnUrl in register link
+      const returnUrl = window.AuthManager.getReturnUrl();
+      if (returnUrl) {
+        const regLink = document.getElementById('register-redirect-link');
+        if (regLink) regLink.href = `signup.html?returnUrl=${encodeURIComponent(returnUrl)}`;
+      }
+
+      // Redirect if already logged in (unless explicit reauth requested)
+      if (window.AuthManager.isAuthenticated() && !params.get('reauth')) {
+        const target = returnUrl || 'dashboard.html';
+        window.location.replace(target);
+      }
+    });
   </script>
 </body>
 </html>

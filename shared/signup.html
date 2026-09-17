@@ -10,6 +10,7 @@
   
   <!-- Reactive Single Source of Truth Client -->
   <script src="../shared/api.js" defer></script>
+  <script src="../shared/auth.js"></script>
 
   <style>
     /* ----------------------------------------------------
@@ -1084,11 +1085,34 @@
           <span class="field-error-msg" id="confirm-error-msg">Passwords do not match.</span>
         </div>
 
+        <!-- Broker Informational Gateway Notice (Hidden by default, shown when Broker tab selected) -->
+        <div id="broker-gateway-notice" style="display: none; background: #FFFBEB; border: 1px solid #FCD34D; border-radius: 12px; padding: 18px 20px; margin-bottom: 24px;">
+          <div style="display: flex; gap: 14px; align-items: flex-start;">
+            <div style="color: #D97706; flex-shrink: 0; margin-top: 2px;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            </div>
+            <div>
+              <h4 style="font-size: 0.95rem; font-weight: 700; color: #92400E; margin-bottom: 4px;">Broker Partner Network Access</h4>
+              <p style="font-size: 0.85rem; color: #78350F; line-height: 1.45; margin-bottom: 12px;">
+                Broker access is exclusive via the Brokers Together Broker Mobile App and Partner Verification program. Exploring and listing owner projects on the web requires an Owner or Developer account.
+              </p>
+              <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <button type="button" onclick="selectRole('Property Owner', document.getElementById('role-tab-owner'))" class="btn-create-account" style="width: auto; padding: 8px 16px; font-size: 0.8rem; border-radius: 8px;">
+                  Continue as Property Owner
+                </button>
+                <button type="button" onclick="openBrokerAppModal()" style="background: #FFF; border: 1px solid #D97706; color: #92400E; font-weight: 700; padding: 8px 16px; font-size: 0.8rem; border-radius: 8px; cursor: pointer;">
+                  Download Broker App
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Terms & Privacy Checkbox -->
         <div class="terms-check-row">
           <input type="checkbox" id="reg-terms-check" class="terms-checkbox" required>
           <label for="reg-terms-check" class="terms-label">
-            I agree to the <a href="#" onclick="event.preventDefault(); alert('Terms of Service: Brokers Together platform usage rules.');">Terms of Service</a> and <a href="#" onclick="event.preventDefault(); alert('Privacy Policy: All member details are fully encrypted and confidential.');">Privacy Policy</a>.
+            I agree to the <a href="index.html#terms" target="_blank">Terms of Service</a> and <a href="index.html#privacy" target="_blank">Privacy Policy</a>.
           </label>
         </div>
         <span class="field-error-msg" id="terms-error-msg">You must accept the terms to proceed.</span>
@@ -1115,6 +1139,27 @@
 
   </div>
 
+  <!-- Broker App Informational Modal -->
+  <div id="broker-app-modal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.65); z-index: 1000; place-items: center; padding: 24px;" onclick="closeBrokerAppModal(event)">
+    <div style="background: #FFF; border-radius: 18px; max-width: 440px; width: 100%; padding: 32px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); text-align: center; position: relative;" onclick="event.stopPropagation()">
+      <div style="width: 52px; height: 52px; background: rgba(184, 149, 85, 0.12); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; color: #B89555;">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+      </div>
+      <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 8px; color: #0A0D14;">Brokers Together App</h3>
+      <p style="font-size: 0.9rem; color: #64748B; line-height: 1.5; margin-bottom: 24px;">
+        Connect with over 800+ verified brokers, explore off-market inventory, and receive immediate client deal notifications through our official mobile app.
+      </p>
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <button type="button" class="btn-create-account" style="width: 100%;" onclick="closeBrokerAppModal()">
+          Open Mobile App
+        </button>
+        <button type="button" style="background: none; border: 1px solid #CBD5E1; color: #475569; font-weight: 600; padding: 12px; border-radius: 100px; cursor: pointer;" onclick="closeBrokerAppModal()">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- ====================================================
        INTERACTION & SSoT SCRIPT
        ==================================================== -->
@@ -1133,6 +1178,19 @@
           if (hlBrokers) hlBrokers.textContent = `${brokerCount} Brokers`;
         });
       }
+
+      // Check if already authenticated
+      if (window.AuthManager && window.AuthManager.isAuthenticated()) {
+        const returnUrl = window.AuthManager.getReturnUrl();
+        window.location.replace(returnUrl || 'dashboard.html');
+      }
+
+      // Preserve returnUrl in login link
+      const returnUrl = window.AuthManager ? window.AuthManager.getReturnUrl() : null;
+      if (returnUrl) {
+        const loginLink = document.getElementById('link-to-login');
+        if (loginLink) loginLink.href = `login.html?returnUrl=${encodeURIComponent(returnUrl)}`;
+      }
     });
 
     // --- 2. Role Tab Switcher ---
@@ -1150,6 +1208,33 @@
       if (displayEl) {
         displayEl.innerHTML = `Role: <strong>${roleName}</strong>`;
       }
+
+      const notice = document.getElementById('broker-gateway-notice');
+      const submitBtn = document.getElementById('btn-submit-signup');
+
+      if (roleName === 'Broker') {
+        notice.style.display = 'block';
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = '0.5';
+        submitBtn.style.pointerEvents = 'none';
+        document.getElementById('signup-btn-text').textContent = 'BROKER APP ONLY';
+      } else {
+        notice.style.display = 'none';
+        submitBtn.disabled = false;
+        submitBtn.style.opacity = '1';
+        submitBtn.style.pointerEvents = 'auto';
+        document.getElementById('signup-btn-text').textContent = 'CREATE ACCOUNT';
+      }
+    }
+
+    function openBrokerAppModal() {
+      const modal = document.getElementById('broker-app-modal');
+      modal.style.display = 'grid';
+    }
+
+    function closeBrokerAppModal() {
+      const modal = document.getElementById('broker-app-modal');
+      modal.style.display = 'none';
     }
 
     // --- 3. Toggle Password Visibility ---
@@ -1203,6 +1288,11 @@
       const cpwInput = document.getElementById('reg-confirm-password');
       const termsCheck = document.getElementById('reg-terms-check');
       const role = document.getElementById('selected-role').value;
+
+      if (role === 'Broker') {
+        openBrokerAppModal();
+        return;
+      }
 
       const nameVal = nameInput.value.trim();
       const emailVal = emailInput.value.trim();
@@ -1275,48 +1365,60 @@
       arrowIcon.style.display = 'none';
       btnText.textContent = 'CREATING ACCOUNT...';
 
-      const API_BASE = window.ENV_API_URL || 'http://localhost:5050';
       const fullPhone = `${countryCode} ${phoneVal}`;
 
       try {
-        const res = await fetch(`${API_BASE}/api/users`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            name: nameVal,
-            email: emailVal,
-            phone: fullPhone,
-            role: role,
-            membership: 'Verified Member'
-          })
-        });
-
-        const createdUser = await res.json();
-        
-        sessionStorage.setItem('bt_auth_user', JSON.stringify(createdUser));
-        btnText.textContent = 'ACCOUNT CREATED!';
-        submitBtn.style.background = '#2E7D32';
-
-        setTimeout(() => {
-          window.location.href = `login.html?email=${encodeURIComponent(emailVal)}&registered=1`;
-        }, 600);
-
-      } catch (err) {
-        console.warn('Backend unavailable, creating local session:', err);
-        
-        sessionStorage.setItem('bt_auth_user', JSON.stringify({
+        const result = await window.AuthManager.signup({
           name: nameVal,
           email: emailVal,
           phone: fullPhone,
-          role: role
-        }));
+          role: role,
+          password: pwVal
+        });
 
-        btnText.textContent = 'ACCOUNT CREATED!';
-        setTimeout(() => {
-          window.location.href = `login.html?email=${encodeURIComponent(emailVal)}&registered=1`;
-        }, 600);
+        if (result.ok && result.data.success) {
+          btnText.textContent = 'ACCOUNT CREATED!';
+          submitBtn.style.background = '#2E7D32';
+
+          const returnUrl = window.AuthManager.getReturnUrl();
+          const target = `onboarding.html?role=${encodeURIComponent(role)}` + (returnUrl ? `&returnUrl=${encodeURIComponent(returnUrl)}` : '');
+
+          setTimeout(() => {
+            window.location.href = target;
+          }, 450);
+        } else {
+          // Display backend error (e.g. duplicate account)
+          const errorMsg = result.data?.error || 'Account creation failed. Please try again.';
+          const banner = document.getElementById('signup-error-banner');
+          const bannerText = document.getElementById('signup-error-banner-text');
+          
+          if (result.status === 409) {
+            bannerText.innerHTML = `${errorMsg} <a href="login.html?email=${encodeURIComponent(emailVal)}" style="color: inherit; font-weight: 700; text-decoration: underline; margin-left: 6px;">Log In</a>`;
+          } else {
+            bannerText.textContent = errorMsg;
+          }
+          banner.classList.add('visible');
+
+          submitBtn.disabled = false;
+          spinner.style.display = 'none';
+          arrowIcon.style.display = 'inline-block';
+          btnText.textContent = 'CREATE ACCOUNT';
+        }
+      } catch (err) {
+        console.error('Signup error:', err);
+        const banner = document.getElementById('signup-error-banner');
+        document.getElementById('signup-error-banner-text').textContent = 'Service temporarily unavailable. Please check your connection.';
+        banner.classList.add('visible');
+
+        submitBtn.disabled = false;
+        spinner.style.display = 'none';
+        arrowIcon.style.display = 'inline-block';
+        btnText.textContent = 'CREATE ACCOUNT';
       }
     }
+  </script>
+</body>
+</html>
   </script>
 </body>
 </html>

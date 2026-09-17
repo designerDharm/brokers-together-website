@@ -84,6 +84,7 @@
       "id": "usr-101",
       "name": "Rajesh Malhotra",
       "email": "rajesh@malhotraestates.com",
+      "password": "Password@123",
       "role": "Property Owner",
       "membership": "Platinum Owner",
       "status": "Active",
@@ -91,14 +92,38 @@
       "createdAt": "2026-01-15T09:30:00Z"
     },
     {
+      "id": "usr-102",
+      "name": "Karan Singhania",
+      "email": "karan@landmark.com",
+      "password": "Password@123",
+      "role": "Developer",
+      "membership": "Verified Developer",
+      "status": "Active",
+      "phone": "+91 98111 22334",
+      "createdAt": "2026-02-10T10:00:00Z"
+    },
+    {
       "id": "usr-1789651187555",
       "name": "Ramesh",
       "email": "ram@gmail.com",
+      "password": "Password@123",
       "phone": "+91 9876543210",
       "role": "Broker",
       "membership": "Verified Member",
       "status": "Active",
       "createdAt": "2026-09-17T13:19:47.555Z"
+    },
+    {
+      "id": "usr-1789652783413",
+      "name": "Test Developer",
+      "email": "devtest@luxuryestates.com",
+      "phone": "+91 9876500000",
+      "role": "Property Owner",
+      "password": "NewPass@2026",
+      "membership": "Verified Owner",
+      "status": "Active",
+      "profileComplete": true,
+      "createdAt": "2026-09-17T13:46:23.413Z"
     }
   ],
   "counsellors": [
@@ -222,6 +247,66 @@
     }
   ],
   "auditLogs": [
+    {
+      "id": "log-1789653045222",
+      "timestamp": "2026-09-17T13:50:45.222Z",
+      "action": "AUTH_SUCCESS",
+      "detail": "Successful sign-in: Test Developer (Property Owner)"
+    },
+    {
+      "id": "log-1789653009675",
+      "timestamp": "2026-09-17T13:50:09.676Z",
+      "action": "AUTH_SUCCESS",
+      "detail": "Successful sign-in: Test Developer (Property Owner)"
+    },
+    {
+      "id": "log-1789652978377",
+      "timestamp": "2026-09-17T13:49:38.377Z",
+      "action": "PASSWORD_UPDATED",
+      "detail": "Password updated for user: devtest@luxuryestates.com"
+    },
+    {
+      "id": "log-1789652909391",
+      "timestamp": "2026-09-17T13:48:29.391Z",
+      "action": "PASSWORD_RESET_REQUESTED",
+      "detail": "Reset token generated for user: devtest@luxuryestates.com"
+    },
+    {
+      "id": "log-1789652872308",
+      "timestamp": "2026-09-17T13:47:52.308Z",
+      "action": "AUTH_SUCCESS",
+      "detail": "Successful sign-in: Test Developer (Property Owner)"
+    },
+    {
+      "id": "log-1789652855148",
+      "timestamp": "2026-09-17T13:47:35.149Z",
+      "action": "AUTH_FAILURE",
+      "detail": "Failed login attempt (forced 'wrong'): devtest@luxuryestates.com"
+    },
+    {
+      "id": "log-1789652783417",
+      "timestamp": "2026-09-17T13:46:23.417Z",
+      "action": "USER_REGISTERED",
+      "detail": "User created account: Test Developer (Property Owner)"
+    },
+    {
+      "id": "log-1789652262363",
+      "timestamp": "2026-09-17T13:37:42.363Z",
+      "action": "AUTH_FAILURE",
+      "detail": "Failed login attempt (forced 'wrong'): rajesh@malhotraestates.com"
+    },
+    {
+      "id": "log-1789652235035",
+      "timestamp": "2026-09-17T13:37:15.036Z",
+      "action": "AUTH_SUCCESS",
+      "detail": "Successful sign-in: Rajesh Malhotra (Property Owner)"
+    },
+    {
+      "id": "log-1789652225648",
+      "timestamp": "2026-09-17T13:37:05.648Z",
+      "action": "AUTH_SUCCESS",
+      "detail": "Successful sign-in: Rajesh Malhotra (Property Owner)"
+    },
     {
       "id": "log-1789651187562",
       "timestamp": "2026-09-17T13:19:47.562Z",

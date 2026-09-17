@@ -117,51 +117,240 @@ app.get('/api/users', (req, res) => {
   res.json(db.users || []);
 });
 
+// In-memory or persisted reset tokens store
+const passwordResetTokens = new Map();
+
+// Helper to sanitize user object for client responses (omit password)
+function sanitizeUser(user) {
+  if (!user) return null;
+  const { password, ...safeUser } = user;
+  return safeUser;
+}
+
 app.post('/api/users', (req, res) => {
   const db = readDB();
+  const { name, email, phone, role, password } = req.body;
+
+  // Check duplicate
+  const cleanEmail = (email || '').trim().toLowerCase();
+  const cleanPhone = (phone || '').replace(/[\s\-\(\)]/g, '');
+
+  const duplicate = (db.users || []).find(u => 
+    (u.email && u.email.trim().toLowerCase() === cleanEmail) ||
+    (cleanPhone && u.phone && u.phone.replace(/[\s\-\(\)]/g, '') === cleanPhone)
+  );
+
+  if (duplicate) {
+    return res.status(409).json({
+      error: 'An account already exists with this email or mobile number.'
+    });
+  }
+
   const newUser = {
     id: `usr-${Date.now()}`,
-    ...req.body,
+    name: name || 'New Member',
+    email: cleanEmail,
+    phone: phone || '',
+    role: role || 'Property Owner',
+    password: password || 'Brokers@2026',
+    membership: role === 'Developer' ? 'Verified Developer' : 'Verified Owner',
     status: 'Active',
+    profileComplete: true,
     createdAt: new Date().toISOString()
   };
+
+  if (!db.users) db.users = [];
   db.users.push(newUser);
   writeDB(db);
-  logAction('USER_REGISTERED', `User registered: ${newUser.name || newUser.email}`);
-  broadcast('USER_ADDED', newUser);
-  res.status(201).json(newUser);
+  logAction('USER_REGISTERED', `User registered: ${newUser.name} (${newUser.role})`);
+  broadcast('USER_ADDED', sanitizeUser(newUser));
+
+  const token = `bt-token-${newUser.id}-${Date.now()}`;
+  res.status(201).json({
+    success: true,
+    user: sanitizeUser(newUser),
+    token
+  });
 });
 
-// Authentication endpoint
+// Authentication: Signup endpoint
+app.post('/api/auth/signup', (req, res) => {
+  const db = readDB();
+  const { name, email, phone, role, password } = req.body;
+
+  if (!name || !email || !password) {
+    return res.status(400).json({ error: 'Full name, email, and password are required.' });
+  }
+
+  const cleanEmail = (email || '').trim().toLowerCase();
+  const cleanPhone = (phone || '').replace(/[\s\-\(\)]/g, '');
+
+  const duplicate = (db.users || []).find(u => 
+    (u.email && u.email.trim().toLowerCase() === cleanEmail) ||
+    (cleanPhone && u.phone && u.phone.replace(/[\s\-\(\)]/g, '') === cleanPhone)
+  );
+
+  if (duplicate) {
+    return res.status(409).json({
+      error: 'An account already exists with this email or mobile number.'
+    });
+  }
+
+  const newUser = {
+    id: `usr-${Date.now()}`,
+    name: name.trim(),
+    email: cleanEmail,
+    phone: phone ? phone.trim() : '',
+    role: role === 'Developer' ? 'Developer' : 'Property Owner',
+    password: password,
+    membership: role === 'Developer' ? 'Verified Developer' : 'Verified Owner',
+    status: 'Active',
+    profileComplete: true,
+    createdAt: new Date().toISOString()
+  };
+
+  if (!db.users) db.users = [];
+  db.users.push(newUser);
+  writeDB(db);
+  logAction('USER_REGISTERED', `User created account: ${newUser.name} (${newUser.role})`);
+  broadcast('USER_ADDED', sanitizeUser(newUser));
+
+  const token = `bt-token-${newUser.id}-${Date.now()}`;
+  res.status(201).json({
+    success: true,
+    user: sanitizeUser(newUser),
+    token
+  });
+});
+
+// Authentication: Login endpoint
 app.post('/api/auth/login', (req, res) => {
   const { identifier, password } = req.body;
   const db = readDB();
   const users = db.users || [];
   
-  // Find by email or phone
   const cleanId = (identifier || '').trim().toLowerCase();
-  const user = users.find(u => 
-    (u.email && u.email.toLowerCase() === cleanId) || 
-    (u.phone && u.phone.replace(/\s+/g, '') === cleanId.replace(/\s+/g, ''))
-  );
+  const cleanPhoneInput = cleanId.replace(/[\s\-\(\)]/g, '');
+
+  // Match by email or phone
+  const user = users.find(u => {
+    const userEmail = (u.email || '').trim().toLowerCase();
+    const userPhone = (u.phone || '').replace(/[\s\-\(\)]/g, '');
+    return userEmail === cleanId || (cleanPhoneInput.length >= 8 && userPhone.endsWith(cleanPhoneInput));
+  });
 
   if (password === 'wrong') {
-    logAction('AUTH_FAILURE', `Failed login attempt for: ${cleanId}`);
-    return res.status(401).json({ error: 'Email/mobile number or password is incorrect.' });
+    logAction('AUTH_FAILURE', `Failed login attempt (forced 'wrong'): ${cleanId}`);
+    return res.status(401).json({ error: 'Incorrect email/mobile number or password.' });
   }
 
-  const authenticatedUser = user || {
-    id: `usr-${Date.now()}`,
-    name: cleanId.includes('@') ? cleanId.split('@')[0] : 'Property Owner',
-    email: cleanId.includes('@') ? cleanId : `${cleanId}@owner.brokerstogether.com`,
-    phone: cleanId.includes('@') ? '+91 98765 43210' : cleanId,
-    role: 'Property Owner',
-    membership: 'Verified Owner',
-    status: 'Active'
-  };
+  if (!user) {
+    logAction('AUTH_FAILURE', `Account not found for: ${cleanId}`);
+    return res.status(401).json({ error: 'Incorrect email/mobile number or password.' });
+  }
 
-  logAction('AUTH_SUCCESS', `Successful sign-in: ${authenticatedUser.name}`);
-  res.json({ success: true, user: authenticatedUser, token: `bt-jwt-${Date.now()}` });
+  // Verify password if stored
+  if (user.password && user.password !== password) {
+    logAction('AUTH_FAILURE', `Incorrect password for: ${cleanId}`);
+    return res.status(401).json({ error: 'Incorrect email/mobile number or password.' });
+  }
+
+  const safeUser = sanitizeUser(user);
+  logAction('AUTH_SUCCESS', `Successful sign-in: ${safeUser.name} (${safeUser.role})`);
+  const token = `bt-token-${user.id}-${Date.now()}`;
+  res.json({ success: true, user: safeUser, token });
+});
+
+// Authentication: Forgot Password (dispatch reset token)
+app.post('/api/auth/forgot-password', (req, res) => {
+  const { identifier } = req.body;
+  if (!identifier) {
+    return res.status(400).json({ error: 'Email or mobile number is required.' });
+  }
+
+  const cleanId = identifier.trim().toLowerCase();
+  const db = readDB();
+  const users = db.users || [];
+
+  const user = users.find(u => 
+    (u.email && u.email.trim().toLowerCase() === cleanId) ||
+    (u.phone && u.phone.replace(/[\s\-\(\)]/g, '') === cleanId.replace(/[\s\-\(\)]/g, ''))
+  );
+
+  // Generate a reset token (valid for 1 hour)
+  const token = `rst-${Date.now()}-${Math.random().toString(36).substring(2, 8)}`;
+  const expiresAt = Date.now() + 3600 * 1000;
+
+  if (user) {
+    passwordResetTokens.set(token, {
+      userId: user.id,
+      email: user.email,
+      expiresAt
+    });
+    logAction('PASSWORD_RESET_REQUESTED', `Reset token generated for user: ${user.email}`);
+  }
+
+  // SSoT Response: Secure non-disclosure message + token for dev/staging test link
+  res.json({
+    success: true,
+    message: 'If an account matches that identifier, password reset instructions have been dispatched.',
+    resetToken: user ? token : null
+  });
+});
+
+// Authentication: Reset Password
+app.post('/api/auth/reset-password', (req, res) => {
+  const { token, newPassword } = req.body;
+
+  if (!token || !newPassword) {
+    return res.status(400).json({ error: 'Token and new password are required.' });
+  }
+
+  if (newPassword.length < 6) {
+    return res.status(400).json({ error: 'Password must be at least 6 characters in length.' });
+  }
+
+  const record = passwordResetTokens.get(token);
+  if (!record || Date.now() > record.expiresAt) {
+    return res.status(400).json({ error: 'The reset link is invalid or has expired. Please request a new one.' });
+  }
+
+  const db = readDB();
+  const userIdx = (db.users || []).findIndex(u => u.id === record.userId);
+
+  if (userIdx === -1) {
+    return res.status(404).json({ error: 'User account not found.' });
+  }
+
+  db.users[userIdx].password = newPassword;
+  writeDB(db);
+  passwordResetTokens.delete(token);
+
+  logAction('PASSWORD_UPDATED', `Password updated for user: ${record.email}`);
+  res.json({ success: true, message: 'Password updated successfully. You can now log in.' });
+});
+
+// Authentication: Current User Verification
+app.get('/api/auth/me', (req, res) => {
+  const authHeader = req.headers.authorization || '';
+  const token = authHeader.replace('Bearer ', '').trim();
+
+  if (!token) {
+    return res.status(401).json({ error: 'Not authenticated' });
+  }
+
+  // Parse token: bt-token-<userId>-<timestamp>
+  const parts = token.split('-');
+  const userId = parts.length >= 3 ? `${parts[1]}-${parts[2]}` : null;
+
+  const db = readDB();
+  const user = (db.users || []).find(u => u.id === userId);
+
+  if (!user) {
+    return res.status(401).json({ error: 'Session invalid or expired' });
+  }
+
+  res.json({ success: true, user: sanitizeUser(user) });
 });
 
 
