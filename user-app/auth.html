@@ -244,9 +244,8 @@
       forgotForm.style.display = 'none';
 
       if (mode === 'login') {
-        loginForm.style.display = 'block';
-        title.textContent = 'Welcome Back';
-        subtitle.textContent = 'Sign in to access your Owner Dashboard and manage broker inquiries.';
+        window.location.href = 'login.html';
+        return;
       } else if (mode === 'forgot') {
         forgotForm.style.display = 'block';
         title.textContent = 'Reset Password';

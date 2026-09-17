@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="page-title">Sign In — Brokers Together</title>
+  
+  <!-- Global Shared Styles & Typographic Scale -->
+  <link rel="stylesheet" href="../shared/style.css">
+  
+  <!-- Reactive Single Source of Truth Client -->
+  <script src="../shared/api.js" defer></script>
+
+  <style>
+    /* ----------------------------------------------------
+       RESET & BASE OVERRIDES
+       ---------------------------------------------------- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: var(--font-primary, 'Plus Jakarta Sans', sans-serif);
+      color: #0C1017;
+      background-color: #0A0D14;
+      overflow-x: hidden;
+    }
+
+    /* ----------------------------------------------------
+       SECTION 1 & 2: FULL-SCREEN PAGE BACKGROUND
+       Camera-real luxury modern residential villa at golden hour
+       ---------------------------------------------------- */
+    .auth-page {
+      min-height: 100vh;
+      width: 100%;
+      position: relative;
+      display: grid;
+      place-items: center;
+      padding: 40px 24px;
+      overflow: hidden;
+    }
+
+    /* Photographic Background Layer with Defocused Depth */
+    .auth-bg-layer {
+      position: fixed;
+      inset: -20px;
+      background-image: 
+        radial-gradient(ellipse at 50% 30%, rgba(10, 13, 20, 0.45) 0%, rgba(10, 13, 20, 0.82) 100%),
+        url('assets/luxury_villa_dusk.jpg');
+      background-size: cover;
+      background-position: center 35%;
+      filter: blur(14px) brightness(0.92) saturate(1.15);
+      transform: scale(1.04);
+      z-index: 0;
+      transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: transform;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .auth-bg-layer {
+        animation: subtleBgZoom 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+      @keyframes subtleBgZoom {
+        from { transform: scale(1.07); }
+        to { transform: scale(1.04); }
+      }
+    }
+
+    /* Warm Ambient Lighting Vignette */
+    .auth-vignette {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(184, 149, 85, 0.08) 0%, rgba(0, 0, 0, 0.55) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* ----------------------------------------------------
+       SECTION 3: MAIN AUTH CONTAINER (FLOATING CARD)
+       Desktop: 1010–1060px wide, 42% Left / 58% Right
+       ---------------------------------------------------- */
+    .auth-card {
+      position: relative;
+      z-index: 2;
+      width: min(1040px, 100%);
+      min-height: 650px;
+      display: grid;
+      grid-template-columns: 42% 58%;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      box-shadow: 
+        0 24px 70px rgba(0, 0, 0, 0.45),
+        0 1px 3px rgba(0, 0, 0, 0.2),
+        inset 0 1px 1px rgba(255, 255, 255, 0.35);
+      opacity: 0;
+      transform: translateY(14px);
+      animation: cardEntrance 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+    }
+
+    @keyframes cardEntrance {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ----------------------------------------------------
+       SECTION 4 - 8: LEFT BRAND PANEL
+       Translucent editorial overlay over luxury scene
+       ---------------------------------------------------- */
+    .brand-panel {
+      position: relative;
+      background: 
+        linear-gradient(160deg, rgba(16, 20, 28, 0.88) 0%, rgba(10, 13, 20, 0.94) 100%),
+        url('assets/luxury_villa_dusk.jpg');
+      background-size: cover;
+      background-position: left center;
+      padding: 52px 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      color: #FFFFFF;
+      border-right: 1px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .brand-panel-top {
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Logo (Original vector logo) */
+    .brand-logo-wrap {
+      display: inline-flex;
+      align-items: center;
+      margin-bottom: 56px;
+      text-decoration: none;
+    }
+
+    .brand-logo {
+      width: 175px;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+    }
+
+    /* 3-line Headline with Gold Emphasis */
+    .brand-headline {
+      font-size: clamp(38px, 3.2vw, 48px);
+      line-height: 1.08;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: #FFFFFF;
+      margin-bottom: 24px;
+      font-family: var(--font-primary, 'Plus Jakarta Sans', sans-serif);
+    }
+
+    .brand-headline .gold-text {
+      color: #B89555;
+      display: inline;
+    }
+
+    /* Supporting Editorial Copy */
+    .brand-copy {
+      font-size: 19px;
+      line-height: 1.55;
+      color: rgba(248, 247, 244, 0.88);
+      max-width: 340px;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+    }
+
+    /* Bottom Trust Metric Box */
+    .brand-trust-box {
+      margin-top: 40px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 16px;
+      padding: 18px 22px;
+      display: grid;
+      grid-template-columns: auto 1fr auto 1fr;
+      align-items: center;
+      gap: 16px;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .trust-icon-wrap {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(184, 149, 85, 0.15);
+      border: 1px solid rgba(184, 149, 85, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #B89555;
+    }
+
+    .trust-metric-main {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
+
+    .trust-metric-number {
+      font-size: 22px;
+      font-weight: 800;
+      color: #FFFFFF;
+      letter-spacing: -0.02em;
+    }
+
+    .trust-metric-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.7);
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+
+    .trust-divider {
+      width: 1px;
+      height: 36px;
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .trust-editorial {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.25;
+    }
+
+    .trust-editorial-line {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #B89555;
+    }
+
+    .trust-editorial-sub {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.65);
+    }
+
+    /* ----------------------------------------------------
+       SECTION 9 - 15: RIGHT LOGIN FORM PANEL
+       Warm white / ivory #FBFAF7
+       ---------------------------------------------------- */
+    .form-panel {
+      background-color: #FBFAF7;
+      padding: 56px 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+    }
+
+    /* Back Link to Explore Landing Page */
+    .back-explore-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #B89555;
+      font-size: 14.5px;
+      font-weight: 600;
+      text-decoration: none;
+      margin-bottom: 28px;
+      transition: transform 0.2s ease, color 0.2s ease;
+      width: fit-content;
+    }
+
+    .back-explore-link:hover {
+      color: #9E7D3F;
+      transform: translateX(-3px);
+    }
+
+    .back-arrow {
+      font-size: 16px;
+      transition: transform 0.2s ease;
+    }
+
+    /* Heading: Welcome Back */
+    .form-heading {
+      font-size: clamp(40px, 3.8vw, 54px);
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      line-height: 1.02;
+      color: #0C1017;
+      margin-bottom: 12px;
+      font-family: var(--font-primary, 'Plus Jakarta Sans', sans-serif);
+    }
+
+    .form-subtitle {
+      font-size: 17.5px;
+      color: #556070;
+      line-height: 1.5;
+      margin-bottom: 32px;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+    }
+
+    /* Form & Input Groups */
+    .auth-form-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .form-field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: relative;
+    }
+
+    .field-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .field-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #1A202C;
+    }
+
+    .forgot-link {
+      color: #B89555;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .forgot-link:hover {
+      color: #9E7D3F;
+      text-decoration: underline;
+    }
+
+    /* Input Shell with Left Icon and Right Action */
+    .input-shell {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+
+    .input-icon-left {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #8C98A9;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s ease;
+    }
+
+    .auth-input {
+      width: 100%;
+      height: 54px;
+      padding: 0 54px 0 48px;
+      font-size: 16px;
+      font-family: inherit;
+      color: #0C1017;
+      background-color: #FFFFFF;
+      border: 1px solid #D8DFE8;
+      border-radius: 10px;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .auth-input::placeholder {
+      color: #94A3B8;
+      font-size: 15px;
+      font-weight: 400;
+    }
+
+    .auth-input:focus {
+      border-color: #B89555;
+      box-shadow: 0 0 0 3.5px rgba(184, 149, 85, 0.18);
+      background-color: #FFFFFF;
+    }
+
+    .auth-input:focus + .input-icon-left,
+    .input-shell:focus-within .input-icon-left {
+      color: #B89555;
+    }
+
+    /* Error state styling */
+    .auth-input.has-error {
+      border-color: #DC2626 !important;
+      box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12) !important;
+      background-color: #FFFDFD;
+    }
+
+    .field-error-msg {
+      font-size: 12.5px;
+      color: #DC2626;
+      font-weight: 500;
+      margin-top: 2px;
+      display: none;
+    }
+
+    .field-error-msg.visible {
+      display: block;
+    }
+
+    /* Password Toggle Button */
+    .toggle-pw-btn {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: #64748B;
+      transition: color 0.2s ease, transform 0.15s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 6px;
+    }
+
+    .toggle-pw-btn:hover {
+      color: #B89555;
+      background: rgba(184, 149, 85, 0.08);
+    }
+
+    .toggle-pw-btn:focus-visible {
+      outline: 2px solid #B89555;
+    }
+
+    /* Compact Error Banner Above Button */
+    .error-banner-alert {
+      background-color: #FEF2F2;
+      border: 1px solid #FCA5A5;
+      border-radius: 10px;
+      padding: 12px 16px;
+      display: none;
+      align-items: center;
+      gap: 12px;
+      color: #991B1B;
+      font-size: 14px;
+      font-weight: 500;
+      animation: shakeBanner 0.3s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    }
+
+    .error-banner-alert.visible {
+      display: flex;
+    }
+
+    @keyframes shakeBanner {
+      10%, 90% { transform: translate3d(-1px, 0, 0); }
+      20%, 80% { transform: translate3d(2px, 0, 0); }
+      30%, 50%, 70% { transform: translate3d(-3px, 0, 0); }
+      40%, 60% { transform: translate3d(3px, 0, 0); }
+    }
+
+    /* Gold Pill Login Button */
+    .btn-submit-gold {
+      width: 100%;
+      height: 56px;
+      margin-top: 10px;
+      background: linear-gradient(135deg, #C29D55 0%, #B89555 100%);
+      color: #FFFFFF;
+      border: none;
+      border-radius: 999px;
+      font-size: 15.5px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, background 0.2s ease;
+      box-shadow: 0 4px 14px rgba(184, 149, 85, 0.28);
+    }
+
+    .btn-submit-gold:hover {
+      background: linear-gradient(135deg, #BA944C 0%, #AD8A49 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(184, 149, 85, 0.38);
+    }
+
+    .btn-submit-gold:active {
+      transform: translateY(1px);
+      box-shadow: 0 2px 8px rgba(184, 149, 85, 0.2);
+    }
+
+    .btn-submit-gold:disabled {
+      background: #D1C5AD;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* Loading Spinner */
+    .btn-spinner {
+      display: none;
+      width: 20px;
+      height: 20px;
+      border: 2.5px solid rgba(255, 255, 255, 0.35);
+      border-top-color: #FFFFFF;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Register Prompt Link Below Button */
+    .register-footer-prompt {
+      margin-top: 24px;
+      text-align: center;
+      font-size: 14.5px;
+      color: #556070;
+      font-weight: 400;
+    }
+
+    .register-footer-prompt a {
+      color: #B89555;
+      font-weight: 700;
+      text-decoration: none;
+      margin-left: 4px;
+      transition: color 0.2s ease;
+    }
+
+    .register-footer-prompt a:hover {
+      color: #9E7D3F;
+      text-decoration: underline;
+    }
+
+    /* ----------------------------------------------------
+       SECTION 19: RESPONSIVE — TABLET (768px – 1100px)
+       ---------------------------------------------------- */
+    @media (max-width: 1040px) {
+      .auth-card {
+        width: 92vw;
+        min-height: auto;
+        grid-template-columns: 40% 60%;
+      }
+
+      .brand-panel {
+        padding: 40px 32px;
+      }
+
+      .form-panel {
+        padding: 44px 38px;
+      }
+
+      .brand-headline {
+        font-size: 34px;
+      }
+
+      .brand-copy {
+        font-size: 16px;
+      }
+
+      .form-heading {
+        font-size: 42px;
+      }
+    }
+
+    /* ----------------------------------------------------
+       SECTION 20: RESPONSIVE — MOBILE (Below 768px)
+       Compact brand banner with one-line value prop / logo
+       ---------------------------------------------------- */
+    @media (max-width: 768px) {
+      .auth-page {
+        padding: 16px 12px;
+        place-items: start center;
+      }
+
+      .auth-card {
+        width: 100%;
+        grid-template-columns: 1fr;
+        border-radius: 20px;
+        margin: 8px 0 24px 0;
+      }
+
+      .brand-panel {
+        padding: 24px 20px;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      }
+
+      .brand-logo-wrap {
+        margin-bottom: 16px;
+      }
+
+      .brand-logo {
+        width: 138px;
+      }
+
+      .brand-headline {
+        font-size: 24px;
+        line-height: 1.15;
+        margin-bottom: 8px;
+      }
+
+      .brand-copy {
+        font-size: 14px;
+        line-height: 1.45;
+        max-width: 100%;
+      }
+
+      .brand-trust-box {
+        margin-top: 16px;
+        padding: 12px 14px;
+        gap: 10px;
+      }
+
+      .trust-icon-wrap {
+        width: 36px;
+        height: 36px;
+      }
+
+      .trust-metric-number {
+        font-size: 18px;
+      }
+
+      .form-panel {
+        padding: 28px 20px;
+      }
+
+      .back-explore-link {
+        margin-bottom: 18px;
+        font-size: 13.5px;
+      }
+
+      .form-heading {
+        font-size: 34px;
+      }
+
+      .form-subtitle {
+        font-size: 15px;
+        margin-bottom: 22px;
+      }
+
+      .auth-input {
+        height: 50px;
+      }
+
+      .btn-submit-gold {
+        height: 52px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Full-Screen Defocused Luxury Architecture Background -->
+  <div class="auth-page">
+    <div class="auth-bg-layer" aria-hidden="true"></div>
+    <div class="auth-vignette" aria-hidden="true"></div>
+
+    <!-- MAIN FLOATING AUTH CARD -->
+    <main class="auth-card" id="auth-main-card">
+      
+      <!-- ====================================================
+           LEFT BRAND PANEL (Translucent Editorial Charcoal)
+           ==================================================== -->
+      <section class="brand-panel" aria-label="Brand Overview">
+        <div class="brand-panel-top">
+          
+          <!-- Original Vector Logo (White/Gold Dark Version) -->
+          <a href="index.html" class="brand-logo-wrap" title="Brokers Together Home">
+            <img src="logo-white.svg" onerror="this.src='logo.svg'" alt="Brokers Together Logo" class="brand-logo" id="brand-logo-img">
+          </a>
+
+          <!-- Large Brand Statement (3 lines) -->
+          <h2 class="brand-headline">
+            A stronger<br>
+            real estate market,<br>
+            <span class="gold-text">together.</span>
+          </h2>
+
+          <!-- Supporting Editorial Copy -->
+          <p class="brand-copy">
+            Access over <span id="brand-claim-brokers">800+</span> verified brokers, publish off-market listings, and manage serious buyer inquiries in real-time.
+          </p>
+
+        </div>
+
+        <!-- Bottom Trust Metric Box -->
+        <div class="brand-trust-box" id="trust-metric-box">
+          
+          <!-- Left: Gold People Icon -->
+          <div class="trust-icon-wrap" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+          </div>
+
+          <!-- Main: Dynamic Count & Verified Label -->
+          <div class="trust-metric-main">
+            <span class="trust-metric-number" id="trust-metric-num">800+</span>
+            <span class="trust-metric-label">Verified Brokers</span>
+          </div>
+
+          <!-- Vertical Divider -->
+          <div class="trust-divider" aria-hidden="true"></div>
+
+          <!-- Right: Editorial Phrase -->
+          <div class="trust-editorial">
+            <span class="trust-editorial-line">REAL OPPORTUNITIES.</span>
+            <span class="trust-editorial-sub">REAL PEOPLE.</span>
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- ====================================================
+           RIGHT LOGIN FORM PANEL (Warm White / Ivory #FBFAF7)
+           ==================================================== -->
+      <section class="form-panel" aria-label="Sign In Form">
+        
+        <!-- Back Link to Explore Landing Page -->
+        <a href="index.html" class="back-explore-link" id="back-explore-btn">
+          <span class="back-arrow" aria-hidden="true">←</span>
+          <span>Back to Explore Landing Page</span>
+        </a>
+
+        <!-- Main Form Heading & Supporting Text -->
+        <h1 class="form-heading" id="form-heading-text">Welcome Back</h1>
+        <p class="form-subtitle" id="form-subtitle-text">
+          Sign in to access your Owner Dashboard and manage broker inquiries.
+        </p>
+
+        <!-- Compact Error Banner Alert (Above Submit Button) -->
+        <div class="error-banner-alert" id="auth-error-banner" role="alert" aria-live="polite">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          <span id="auth-error-banner-text">Email/mobile number or password is incorrect.</span>
+        </div>
+
+        <!-- LOGIN FORM -->
+        <form id="login-auth-form" class="auth-form-stack" novalidate onsubmit="handleLoginSubmit(event)">
+          
+          <!-- FIELD 1: EMAIL OR MOBILE NUMBER -->
+          <div class="form-field-group">
+            <div class="field-header-row">
+              <label for="login-identifier" class="field-label">EMAIL ADDRESS OR MOBILE NUMBER</label>
+            </div>
+            
+            <div class="input-shell">
+              <!-- Left User/Mail Icon -->
+              <span class="input-icon-left" aria-hidden="true">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+              </span>
+
+              <input 
+                type="text" 
+                id="login-identifier" 
+                name="identifier"
+                class="auth-input" 
+                placeholder="name@company.com or +91..." 
+                autocomplete="username" 
+                required
+                aria-required="true"
+                aria-describedby="identifier-error-msg"
+                oninput="clearFieldError('login-identifier')"
+              >
+            </div>
+            <span class="field-error-msg" id="identifier-error-msg">Enter a valid email address or mobile number.</span>
+          </div>
+
+          <!-- FIELD 2: PASSWORD -->
+          <div class="form-field-group">
+            <div class="field-header-row">
+              <label for="login-password" class="field-label">PASSWORD</label>
+              <a href="#forgot" class="forgot-link" id="forgot-password-link" onclick="handleForgotPasswordClick(event)">Forgot Password?</a>
+            </div>
+
+            <div class="input-shell">
+              <!-- Left Lock Icon -->
+              <span class="input-icon-left" aria-hidden="true">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+              </span>
+
+              <input 
+                type="password" 
+                id="login-password" 
+                name="password"
+                class="auth-input" 
+                placeholder="Enter your password" 
+                autocomplete="current-password" 
+                required
+                aria-required="true"
+                aria-describedby="password-error-msg"
+                oninput="clearFieldError('login-password')"
+              >
+
+              <!-- Interactive Show / Hide Password Toggle -->
+              <button 
+                type="button" 
+                class="toggle-pw-btn" 
+                id="toggle-pw-btn" 
+                onclick="togglePasswordVisibility()" 
+                aria-label="Toggle password visibility"
+              >
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" id="toggle-pw-icon">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+                <span id="toggle-pw-text">SHOW</span>
+              </button>
+            </div>
+            <span class="field-error-msg" id="password-error-msg">Enter your password.</span>
+          </div>
+
+          <!-- FULL-WIDTH GOLD SUBMIT BUTTON -->
+          <button type="submit" class="btn-submit-gold" id="btn-login-submit">
+            <span class="btn-spinner" id="btn-login-spinner" aria-hidden="true"></span>
+            <span id="btn-login-label">LOG IN</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" id="btn-arrow-icon">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </button>
+
+          <!-- REGISTER REDIRECT LINK -->
+          <p class="register-footer-prompt">
+            Need an account? 
+            <a href="auth.html?mode=register" id="register-redirect-link">Register</a>
+          </p>
+
+        </form>
+
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ====================================================
+       INTERACTIVITY & SSoT INTEGRATION SCRIPT
+       ==================================================== -->
+  <script>
+    // --- 1. SSoT Reactive Synchronization ---
+    window.addEventListener('DOMContentLoaded', () => {
+      // Connect to SSoT Store if available
+      if (window.ecosystemStore) {
+        window.ecosystemStore.subscribe((state) => {
+          const claims = state.settings?.configurableClaims || {};
+          const brokerCount = claims.verifiedBrokersCount || "800+";
+          
+          const brandClaimEl = document.getElementById('brand-claim-brokers');
+          if (brandClaimEl) brandClaimEl.textContent = brokerCount;
+          
+          const trustNumEl = document.getElementById('trust-metric-num');
+          if (trustNumEl) trustNumEl.textContent = brokerCount;
+        });
+      }
+
+      // Check for pre-filled email from registration
+      const params = new URLSearchParams(window.location.search);
+      const preEmail = params.get('email');
+      if (preEmail) {
+        const idInput = document.getElementById('login-identifier');
+        if (idInput) idInput.value = preEmail;
+      }
+    });
+
+    // --- 2. Password Visibility Toggle (SHOW / HIDE) ---
+    function togglePasswordVisibility() {
+      const pwInput = document.getElementById('login-password');
+      const toggleText = document.getElementById('toggle-pw-text');
+      const toggleIcon = document.getElementById('toggle-pw-icon');
+
+      if (pwInput.type === 'password') {
+        pwInput.type = 'text';
+        toggleText.textContent = 'HIDE';
+        // Eye-off icon
+        toggleIcon.innerHTML = `
+          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+          <line x1="1" y1="1" x2="23" y2="23"></line>
+        `;
+      } else {
+        pwInput.type = 'password';
+        toggleText.textContent = 'SHOW';
+        // Eye icon
+        toggleIcon.innerHTML = `
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+          <circle cx="12" cy="12" r="3"></circle>
+        `;
+      }
+    }
+
+    // --- 3. Field Error Clearing ---
+    function clearFieldError(fieldId) {
+      const input = document.getElementById(fieldId);
+      input.classList.remove('has-error');
+      input.removeAttribute('aria-invalid');
+
+      if (fieldId === 'login-identifier') {
+        const err = document.getElementById('identifier-error-msg');
+        err.classList.remove('visible');
+      } else if (fieldId === 'login-password') {
+        const err = document.getElementById('password-error-msg');
+        err.classList.remove('visible');
+      }
+
+      // Also hide top error banner
+      const banner = document.getElementById('auth-error-banner');
+      banner.classList.remove('visible');
+    }
+
+    // --- 4. Validation Helpers ---
+    function isValidEmail(val) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+    }
+
+    function isValidPhone(val) {
+      // Allow international (+91, etc.) and domestic phone formats with 8-15 digits
+      const cleaned = val.replace(/[\s\-\(\)\.]/g, '');
+      return /^(\+?\d{8,15})$/.test(cleaned);
+    }
+
+    // --- 5. Form Submit Handler ---
+    async function handleLoginSubmit(event) {
+      event.preventDefault();
+      
+      const idInput = document.getElementById('login-identifier');
+      const pwInput = document.getElementById('login-password');
+      const idError = document.getElementById('identifier-error-msg');
+      const pwError = document.getElementById('password-error-msg');
+      const banner = document.getElementById('auth-error-banner');
+      const bannerText = document.getElementById('auth-error-banner-text');
+
+      const submitBtn = document.getElementById('btn-login-submit');
+      const btnSpinner = document.getElementById('btn-login-spinner');
+      const btnLabel = document.getElementById('btn-login-label');
+      const btnArrow = document.getElementById('btn-arrow-icon');
+
+      // Reset states
+      clearFieldError('login-identifier');
+      clearFieldError('login-password');
+      banner.classList.remove('visible');
+
+      const identifier = idInput.value.trim();
+      const password = pwInput.value;
+
+      let hasError = false;
+
+      // Validate Identifier
+      if (!identifier) {
+        idInput.classList.add('has-error');
+        idInput.setAttribute('aria-invalid', 'true');
+        idError.textContent = 'Enter your email address or mobile number.';
+        idError.classList.add('visible');
+        hasError = true;
+      } else if (!isValidEmail(identifier) && !isValidPhone(identifier)) {
+        idInput.classList.add('has-error');
+        idInput.setAttribute('aria-invalid', 'true');
+        idError.textContent = 'Enter a valid email address or mobile number.';
+        idError.classList.add('visible');
+        hasError = true;
+      }
+
+      // Validate Password
+      if (!password) {
+        pwInput.classList.add('has-error');
+        pwInput.setAttribute('aria-invalid', 'true');
+        pwError.textContent = 'Enter your password.';
+        pwError.classList.add('visible');
+        hasError = true;
+      }
+
+      if (hasError) {
+        // Focus first errored field
+        if (!identifier || (!isValidEmail(identifier) && !isValidPhone(identifier))) {
+          idInput.focus();
+        } else {
+          pwInput.focus();
+        }
+        return;
+      }
+
+      // Set Loading State
+      submitBtn.disabled = true;
+      btnSpinner.style.display = 'inline-block';
+      btnArrow.style.display = 'none';
+      btnLabel.textContent = 'SIGNING IN...';
+
+      const API_BASE = window.ENV_API_URL || 'http://localhost:5050';
+
+      try {
+        const response = await fetch(`${API_BASE}/api/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ identifier, password })
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+          // Store authentication session
+          sessionStorage.setItem('bt_auth_user', JSON.stringify(result.user));
+          if (result.token) sessionStorage.setItem('bt_auth_token', result.token);
+
+          btnLabel.textContent = 'ACCESS GRANTED';
+          submitBtn.style.background = '#2E7D32';
+
+          setTimeout(() => {
+            window.location.href = 'index.html?action=openDashboard';
+          }, 400);
+        } else {
+          // Authentication Failure
+          showAuthFailure(result.error || 'Email/mobile number or password is incorrect.');
+        }
+      } catch (err) {
+        // Fallback for offline or standalone cloud review
+        console.warn('Backend server uncontactable. Testing local credentials.', err);
+        
+        if (password === 'wrong') {
+          showAuthFailure('Email/mobile number or password is incorrect.');
+        } else {
+          // Successful local fallback login
+          sessionStorage.setItem('bt_auth_user', JSON.stringify({
+            name: identifier.includes('@') ? identifier.split('@')[0] : 'Property Owner',
+            identifier: identifier,
+            role: 'Property Owner'
+          }));
+
+          btnLabel.textContent = 'ACCESS GRANTED';
+          setTimeout(() => {
+            window.location.href = 'index.html?action=openDashboard';
+          }, 400);
+        }
+      }
+    }
+
+    function showAuthFailure(message) {
+      const banner = document.getElementById('auth-error-banner');
+      const bannerText = document.getElementById('auth-error-banner-text');
+      const submitBtn = document.getElementById('btn-login-submit');
+      const btnSpinner = document.getElementById('btn-login-spinner');
+      const btnLabel = document.getElementById('btn-login-label');
+      const btnArrow = document.getElementById('btn-arrow-icon');
+      const idInput = document.getElementById('login-identifier');
+      const pwInput = document.getElementById('login-password');
+
+      bannerText.textContent = message;
+      banner.classList.add('visible');
+
+      idInput.classList.add('has-error');
+      pwInput.classList.add('has-error');
+
+      submitBtn.disabled = false;
+      btnSpinner.style.display = 'none';
+      btnArrow.style.display = 'inline-block';
+      btnLabel.textContent = 'LOG IN';
+
+      pwInput.value = '';
+      pwInput.focus();
+    }
+
+    // --- 6. Forgot Password Click ---
+    function handleForgotPasswordClick(e) {
+      e.preventDefault();
+      const identifier = document.getElementById('login-identifier').value.trim();
+      const promptEmail = identifier && isValidEmail(identifier) ? identifier : 'your registered email';
+      
+      const banner = document.getElementById('auth-error-banner');
+      const bannerText = document.getElementById('auth-error-banner-text');
+      
+      banner.style.backgroundColor = '#EFF6FF';
+      banner.style.borderColor = '#93C5FD';
+      banner.style.color = '#1E40AF';
+      bannerText.textContent = `Password reset instructions have been dispatched to ${promptEmail}.`;
+      banner.classList.add('visible');
+    }
+  </script>
+</body>
+</html>

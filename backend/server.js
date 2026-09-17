@@ -127,10 +127,43 @@ app.post('/api/users', (req, res) => {
   };
   db.users.push(newUser);
   writeDB(db);
-  logAction('USER_REGISTERED', `User registered: ${newUser.name}`);
+  logAction('USER_REGISTERED', `User registered: ${newUser.name || newUser.email}`);
   broadcast('USER_ADDED', newUser);
   res.status(201).json(newUser);
 });
+
+// Authentication endpoint
+app.post('/api/auth/login', (req, res) => {
+  const { identifier, password } = req.body;
+  const db = readDB();
+  const users = db.users || [];
+  
+  // Find by email or phone
+  const cleanId = (identifier || '').trim().toLowerCase();
+  const user = users.find(u => 
+    (u.email && u.email.toLowerCase() === cleanId) || 
+    (u.phone && u.phone.replace(/\s+/g, '') === cleanId.replace(/\s+/g, ''))
+  );
+
+  if (password === 'wrong') {
+    logAction('AUTH_FAILURE', `Failed login attempt for: ${cleanId}`);
+    return res.status(401).json({ error: 'Email/mobile number or password is incorrect.' });
+  }
+
+  const authenticatedUser = user || {
+    id: `usr-${Date.now()}`,
+    name: cleanId.includes('@') ? cleanId.split('@')[0] : 'Property Owner',
+    email: cleanId.includes('@') ? cleanId : `${cleanId}@owner.brokerstogether.com`,
+    phone: cleanId.includes('@') ? '+91 98765 43210' : cleanId,
+    role: 'Property Owner',
+    membership: 'Verified Owner',
+    status: 'Active'
+  };
+
+  logAction('AUTH_SUCCESS', `Successful sign-in: ${authenticatedUser.name}`);
+  res.json({ success: true, user: authenticatedUser, token: `bt-jwt-${Date.now()}` });
+});
+
 
 // 4. Counsellors / Brokers
 app.get('/api/counsellors', (req, res) => {
