@@ -1743,26 +1743,58 @@
     });
 
     function renderUI(state) {
-      const { settings } = state;
-      if (settings.supportEmail) document.getElementById('ftr-email').textContent = settings.supportEmail;
-      if (settings.webDomain) document.getElementById('ftr-domain').textContent = `Domain: ${settings.webDomain}`;
+      const { settings, listings } = state;
+      if (!settings) return;
+
+      if (settings.supportEmail) {
+        const emailEl = document.getElementById('ftr-email');
+        if (emailEl) emailEl.textContent = settings.supportEmail;
+      }
+      if (settings.webDomain) {
+        const domainEl = document.getElementById('ftr-domain');
+        if (domainEl) domainEl.textContent = `Domain: ${settings.webDomain}`;
+      }
       
-      // SSoT metric values binding
+      // Dynamic SSoT Titles
+      if (settings.heroTitle) {
+        const heroTitleEl = document.getElementById('hero-heading');
+        if (heroTitleEl) {
+          heroTitleEl.innerHTML = `List Your Project.<br>Reach the Right <span class="gold-text">Brokers.</span>`;
+        }
+      }
+      if (settings.heroSubtitle) {
+        const heroSubEl = document.getElementById('hero-subtext');
+        if (heroSubEl) heroSubEl.textContent = settings.heroSubtitle;
+      }
+
+      // SSoT metric values binding across Section 02 & Section 08
       if (settings.configurableClaims) {
         const claims = settings.configurableClaims;
         if (claims.verifiedBrokersCount) {
           const el1 = document.getElementById('metric-brokers');
           const el2 = document.getElementById('why-claim-brokers');
+          const el3 = document.getElementById('soc-brokers');
           if (el1) el1.textContent = claims.verifiedBrokersCount;
           if (el2) el2.textContent = claims.verifiedBrokersCount;
+          if (el3) el3.textContent = claims.verifiedBrokersCount;
         }
         if (claims.appDownloadsCount) {
           const el = document.getElementById('metric-downloads');
           if (el) el.textContent = claims.appDownloadsCount;
         }
         if (claims.activeRequirementsCount) {
-          const el = document.getElementById('metric-requirements');
-          if (el) el.textContent = claims.activeRequirementsCount;
+          const el1 = document.getElementById('metric-requirements');
+          const el2 = document.getElementById('soc-reqs');
+          if (el1) el1.textContent = claims.activeRequirementsCount;
+          if (el2) el2.textContent = claims.activeRequirementsCount;
+        }
+        if (claims.satisfactionRate) {
+          const el = document.getElementById('soc-sat');
+          if (el) el.textContent = claims.satisfactionRate;
+        }
+        if (claims.averageRating) {
+          const el = document.getElementById('soc-rating');
+          if (el) el.textContent = claims.averageRating;
         }
       }
     }
