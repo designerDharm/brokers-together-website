@@ -216,65 +216,184 @@
       max-width: 500px;
     }
 
-    /* Role Selection Tabs (3 Cards in one row) */
+    /* Role Selection Tabs (Creative Luxury Interactive Cards) */
+    .role-selection-wrapper {
+      margin-bottom: 28px;
+    }
+
+    .role-selection-label {
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #64748B;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .role-selection-label .selected-indicator {
+      color: #B89555;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+
     .role-tabs-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-bottom: 26px;
-    }
-
-    .role-tab-card {
-      background: #FFFFFF;
-      border: 1.5px solid #E2E8F0;
-      border-radius: 12px;
-      padding: 14px 12px;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 6px;
-      cursor: pointer;
-      text-align: left;
-      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      gap: 14px;
       position: relative;
     }
 
-    .role-tab-card:hover {
-      border-color: #B89555;
-      background: #FFFDF9;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(184, 149, 85, 0.12);
+    .role-tab-card {
+      position: relative;
+      background: #FFFFFF;
+      border: 1.5px solid #E2E8F0;
+      border-radius: 16px;
+      padding: 16px 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
     }
 
+    /* Subtle decorative ambient glow on card */
+    .role-tab-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #B89555, transparent);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .role-tab-card:hover {
+      border-color: #D1B888;
+      background: #FFFFFF;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 24px rgba(184, 149, 85, 0.12);
+    }
+
+    .role-tab-card:hover::before {
+      opacity: 0.6;
+    }
+
+    /* Active Creative State: Rich Luxury Gold with subtle inner sheen */
     .role-tab-card.active {
-      background: linear-gradient(135deg, #C29D55 0%, #B89555 100%);
-      border-color: #B89555;
-      box-shadow: 0 6px 18px rgba(184, 149, 85, 0.32);
-      transform: translateY(-2px);
+      background: 
+        radial-gradient(ellipse at 80% 0%, rgba(255, 255, 255, 0.22) 0%, transparent 60%),
+        linear-gradient(140deg, #CA9F53 0%, #B89555 50%, #A47F40 100%);
+      border-color: #9C7738;
+      box-shadow: 
+        0 10px 28px rgba(184, 149, 85, 0.35),
+        inset 0 1px 1px rgba(255, 255, 255, 0.4);
+      transform: translateY(-3px) scale(1.01);
+    }
+
+    .role-tab-card.active::before {
+      opacity: 1;
+      height: 3px;
+      background: #FFF;
+    }
+
+    .role-card-top {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .role-icon-box {
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-      background: rgba(184, 149, 85, 0.1);
+      width: 38px;
+      height: 38px;
+      border-radius: 11px;
+      background: rgba(184, 149, 85, 0.10);
+      border: 1px solid rgba(184, 149, 85, 0.22);
       display: flex;
       align-items: center;
       justify-content: center;
       color: #B89555;
-      transition: background 0.2s ease, color 0.2s ease;
+      transition: all 0.25s ease;
+      box-shadow: 0 2px 6px rgba(184, 149, 85, 0.08);
+    }
+
+    .role-tab-card:hover .role-icon-box {
+      background: rgba(184, 149, 85, 0.18);
+      transform: scale(1.05);
     }
 
     .role-tab-card.active .role-icon-box {
       background: rgba(255, 255, 255, 0.25);
+      border-color: rgba(255, 255, 255, 0.45);
       color: #FFFFFF;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      transform: none;
+    }
+
+    /* Status badge on top right of each tab */
+    .role-badge-pill {
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: #F1F5F9;
+      color: #64748B;
+      transition: all 0.25s ease;
+    }
+
+    .role-tab-card.active .role-badge-pill {
+      background: rgba(255, 255, 255, 0.24);
+      color: #FFFFFF;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+    }
+
+    /* Checkmark radio indicator */
+    .role-check-dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 1.5px solid #CBD5E1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.22s ease;
+    }
+
+    .role-tab-card.active .role-check-dot {
+      border-color: #FFFFFF;
+      background: #FFFFFF;
+      color: #B89555;
+    }
+
+    .role-tab-card:not(.active) .role-check-dot svg {
+      display: none;
+    }
+
+    .role-card-content {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
     }
 
     .role-tab-title {
-      font-size: 14px;
+      font-size: 14.5px;
       font-weight: 700;
       color: #0C1017;
-      letter-spacing: -0.01em;
+      letter-spacing: -0.015em;
+      transition: color 0.2s ease;
     }
 
     .role-tab-card.active .role-tab-title {
@@ -284,12 +403,13 @@
     .role-tab-subtitle {
       font-size: 11.5px;
       color: #64748B;
-      line-height: 1.25;
+      line-height: 1.3;
       font-weight: 500;
+      transition: color 0.2s ease;
     }
 
     .role-tab-card.active .role-tab-subtitle {
-      color: rgba(255, 255, 255, 0.88);
+      color: rgba(255, 255, 255, 0.92);
     }
 
     /* Signup Form Grid Layout */
@@ -749,68 +869,105 @@
         Join the Brokers Together owner network to list your projects and manage broker inquiries.
       </p>
 
-      <!-- Role Selection Tabs (3 Cards in one row) -->
-      <div class="role-tabs-grid" role="tablist" aria-label="Account Type Selection">
-        
-        <!-- Tab 1: Property Owner (Default active) -->
-        <button 
-          type="button" 
-          class="role-tab-card active" 
-          id="role-tab-owner" 
-          role="tab" 
-          aria-selected="true" 
-          onclick="selectRole('Property Owner', this)"
-        >
-          <div class="role-icon-box" aria-hidden="true">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-              <polyline points="9 22 9 12 15 12 15 22"></polyline>
-            </svg>
-          </div>
-          <span class="role-tab-title">Property Owner</span>
-          <span class="role-tab-subtitle">List & manage your projects</span>
-        </button>
+      <!-- Role Selection Tabs (Creative Luxury Layout) -->
+      <div class="role-selection-wrapper">
+        <div class="role-selection-label">
+          <span>SELECT ACCOUNT TYPE</span>
+          <span class="selected-indicator" id="role-selected-display">Role: <strong>Property Owner</strong></span>
+        </div>
 
-        <!-- Tab 2: Developer -->
-        <button 
-          type="button" 
-          class="role-tab-card" 
-          id="role-tab-developer" 
-          role="tab" 
-          aria-selected="false" 
-          onclick="selectRole('Developer', this)"
-        >
-          <div class="role-icon-box" aria-hidden="true">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
-              <line x1="9" y1="22" x2="9" y2="2"></line>
-              <path d="M8 6h.01M16 6h.01M8 10h.01M16 10h.01M8 14h.01M16 14h.01M8 18h.01M16 18h.01"></path>
-            </svg>
-          </div>
-          <span class="role-tab-title">Developer</span>
-          <span class="role-tab-subtitle">Showcase developments</span>
-        </button>
+        <div class="role-tabs-grid" role="tablist" aria-label="Account Type Selection">
+          
+          <!-- Tab 1: Property Owner (Default active) -->
+          <button 
+            type="button" 
+            class="role-tab-card active" 
+            id="role-tab-owner" 
+            role="tab" 
+            aria-selected="true" 
+            onclick="selectRole('Property Owner', this)"
+          >
+            <div class="role-card-top">
+              <div class="role-icon-box" aria-hidden="true">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+              </div>
+              <div class="role-check-dot" aria-hidden="true">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </div>
+            </div>
 
-        <!-- Tab 3: Broker -->
-        <button 
-          type="button" 
-          class="role-tab-card" 
-          id="role-tab-broker" 
-          role="tab" 
-          aria-selected="false" 
-          onclick="selectRole('Broker', this)"
-        >
-          <div class="role-icon-box" aria-hidden="true">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-              <circle cx="9" cy="7" r="4"></circle>
-              <polyline points="16 11 18 13 22 9"></polyline>
-            </svg>
-          </div>
-          <span class="role-tab-title">Broker</span>
-          <span class="role-tab-subtitle">Connect & grow</span>
-        </button>
+            <div class="role-card-content">
+              <span class="role-tab-title">Property Owner</span>
+              <span class="role-tab-subtitle">List & manage your projects</span>
+            </div>
+          </button>
 
+          <!-- Tab 2: Developer -->
+          <button 
+            type="button" 
+            class="role-tab-card" 
+            id="role-tab-developer" 
+            role="tab" 
+            aria-selected="false" 
+            onclick="selectRole('Developer', this)"
+          >
+            <div class="role-card-top">
+              <div class="role-icon-box" aria-hidden="true">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+                  <line x1="9" y1="22" x2="9" y2="2"></line>
+                  <path d="M8 6h.01M16 6h.01M8 10h.01M16 10h.01M8 14h.01M16 14h.01M8 18h.01M16 18h.01"></path>
+                </svg>
+              </div>
+              <div class="role-check-dot" aria-hidden="true">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </div>
+            </div>
+
+            <div class="role-card-content">
+              <span class="role-tab-title">Developer</span>
+              <span class="role-tab-subtitle">Showcase developments</span>
+            </div>
+          </button>
+
+          <!-- Tab 3: Broker -->
+          <button 
+            type="button" 
+            class="role-tab-card" 
+            id="role-tab-broker" 
+            role="tab" 
+            aria-selected="false" 
+            onclick="selectRole('Broker', this)"
+          >
+            <div class="role-card-top">
+              <div class="role-icon-box" aria-hidden="true">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <polyline points="16 11 18 13 22 9"></polyline>
+                </svg>
+              </div>
+              <div class="role-check-dot" aria-hidden="true">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </div>
+            </div>
+
+            <div class="role-card-content">
+              <span class="role-tab-title">Broker</span>
+              <span class="role-tab-subtitle">Connect & grow network</span>
+            </div>
+          </button>
+
+        </div>
       </div>
 
       <!-- Compact Error Alert Banner -->
@@ -1027,6 +1184,11 @@
       tabBtn.classList.add('active');
       tabBtn.setAttribute('aria-selected', 'true');
       document.getElementById('selected-role').value = roleName;
+
+      const displayEl = document.getElementById('role-selected-display');
+      if (displayEl) {
+        displayEl.innerHTML = `Role: <strong>${roleName}</strong>`;
+      }
     }
 
     // --- 3. Toggle Password Visibility ---
