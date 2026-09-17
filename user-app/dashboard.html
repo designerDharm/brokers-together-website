@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="dash-doc-title">Owner Dashboard — Brokers Together</title>
+  <link rel="stylesheet" href="../shared/style.css">
+  <script src="../shared/api.js" defer></script>
+  <style>
+    body {
+      background-color: var(--color-off-white);
+      min-height: 100vh;
+    }
+    .dash-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: 100vh;
+    }
+    @media (max-width: 992px) {
+      .dash-layout {
+        grid-template-columns: 1fr;
+      }
+      .dash-sidebar {
+        display: none;
+      }
+    }
+    /* Sidebar */
+    .dash-sidebar {
+      background-color: var(--color-black);
+      color: var(--color-white);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid var(--color-gold-border);
+    }
+    .sidebar-menu {
+      list-style: none;
+      margin-top: 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      color: #A0AEC0;
+      text-decoration: none;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+    }
+    .sidebar-link:hover, .sidebar-link.active {
+      background: rgba(184, 149, 85, 0.15);
+      color: var(--color-gold);
+    }
+
+    /* Top Utility Bar */
+    .dash-topbar {
+      background: var(--color-white);
+      padding: 16px 32px;
+      border-bottom: 1px solid var(--color-gray-200);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Main Dashboard Content Area */
+    .dash-main {
+      padding: 32px;
+      max-width: 1400px;
+    }
+
+    /* Compact Summary Cards */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+    @media (max-width: 768px) {
+      .summary-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    .compact-card {
+      background: var(--color-white);
+      padding: 20px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-gray-200);
+      box-shadow: var(--shadow-subtle);
+    }
+    .compact-card-val {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--color-black);
+      margin-top: 4px;
+    }
+
+    /* Performance Graph Canvas Simulation */
+    .chart-container {
+      background: var(--color-white);
+      padding: 24px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-gray-200);
+      box-shadow: var(--shadow-subtle);
+      margin-bottom: 32px;
+    }
+    .chart-bar-wrap {
+      display: flex;
+      align-items: flex-end;
+      gap: 16px;
+      height: 180px;
+      padding-top: 20px;
+      border-bottom: 1px solid var(--color-gray-200);
+    }
+    .chart-bar {
+      flex: 1;
+      background: var(--color-gold);
+      border-radius: 4px 4px 0 0;
+      transition: height 0.6s ease;
+      position: relative;
+    }
+    .chart-bar:hover {
+      filter: brightness(1.1);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="dash-layout">
+    
+    <!-- DESKTOP SIDEBAR -->
+    <aside class="dash-sidebar">
+      <a href="index.html" style="display: block; margin-bottom: 12px;">
+        <img src="http://localhost:5050/logo.svg" alt="Brokers Together" style="height: 38px;">
+      </a>
+
+      <ul class="sidebar-menu">
+        <li><a href="#" onclick="switchDashTab('tab-overview')" class="sidebar-link active">📊 Overview</a></li>
+        <li><a href="#" onclick="switchDashTab('tab-projects')" class="sidebar-link">🏙 My Projects</a></li>
+        <li><a href="#" onclick="switchDashTab('tab-inquiries')" class="sidebar-link">💼 Inquiries</a></li>
+        <li><a href="#" onclick="switchDashTab('tab-messages')" class="sidebar-link">💬 Messages</a></li>
+        <li><a href="#" onclick="switchDashTab('tab-analytics')" class="sidebar-link">📈 Analytics</a></li>
+        <li><a href="#" onclick="switchDashTab('tab-account')" class="sidebar-link">⚙ Account / Settings</a></li>
+        <li><a href="#" onclick="switchDashTab('tab-support')" class="sidebar-link">🎧 Support</a></li>
+      </ul>
+
+      <div style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 16px; font-size: 0.8rem; color: #718096;">
+        Logged in as:<br>
+        <strong style="color: #FFF;" id="sb-owner-name">Rajesh Malhotra</strong>
+      </div>
+    </aside>
+
+    <!-- MAIN RIGHT WORKSPACE -->
+    <div style="display: flex; flex-direction: column; flex: 1;">
+      
+      <!-- TOP UTILITY BAR -->
+      <header class="dash-topbar">
+        <div style="width: 360px;">
+          <input type="text" id="dash-search" class="form-control" placeholder="Search projects, inquiries, or brokers..." style="padding: 10px 16px; font-size: 0.85rem;">
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 20px;">
+          <div style="position: relative; cursor: pointer;">
+            <span style="font-size: 1.2rem;">🔔</span>
+            <span style="position: absolute; top: -2px; right: -4px; background: #EF4444; color: #FFF; font-size: 0.65rem; font-weight: 800; padding: 2px 5px; border-radius: 50%;">3</span>
+          </div>
+          
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <img src="https://img.magnific.com/free-photo/view-serious-business-partners-having-meeting-cafe_1262-16866.jpg" alt="" style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 1px solid var(--color-gold);">
+            <strong style="font-size: 0.9rem;" id="topbar-name">Rajesh Malhotra</strong>
+          </div>
+        </div>
+      </header>
+
+      <!-- MAIN CONTENT -->
+      <main class="dash-main">
+        
+        <!-- DASHBOARD HERO BANNER -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px;">
+          <div>
+            <span class="eyebrow-label">OWNER CONTROL PANEL</span>
+            <h1 class="h2-title" id="dash-welcome">Welcome back, Rajesh Malhotra</h1>
+            <p style="color: var(--color-gray-500); font-size: 0.95rem;">Here is a summary of your active project listings, broker inquiries, and performance metrics.</p>
+          </div>
+          <button onclick="openWizardModal()" class="btn-gold" style="padding: 14px 28px; font-size: 0.95rem;">+ LIST NEW PROJECT</button>
+        </div>
+
+        <!-- SUMMARY CARDS (COMPACT) -->
+        <div class="summary-grid">
+          
+          <div class="compact-card">
+            <div style="font-size: 0.8rem; color: var(--color-gray-500); font-weight: 700; text-transform: uppercase;">Active Projects</div>
+            <div class="compact-card-val" style="color: var(--color-gold);" id="card-active-projects">3</div>
+            <div style="font-size: 0.75rem; color: #10B981; margin-top: 4px;">Live on SSoT Network</div>
+          </div>
+
+          <div class="compact-card">
+            <div style="font-size: 0.8rem; color: var(--color-gray-500); font-weight: 700; text-transform: uppercase;">Pending Approval</div>
+            <div class="compact-card-val" id="card-pending">0</div>
+            <div style="font-size: 0.75rem; color: var(--color-gray-500); margin-top: 4px;">Review timeframe &lt; 24h</div>
+          </div>
+
+          <div class="compact-card">
+            <div style="font-size: 0.8rem; color: var(--color-gray-500); font-weight: 700; text-transform: uppercase;">New Inquiries</div>
+            <div class="compact-card-val" style="color: #3B82F6;" id="card-inquiries">8</div>
+            <div style="font-size: 0.75rem; color: #3B82F6; margin-top: 4px;">Verified broker leads</div>
+          </div>
+
+          <div class="compact-card">
+            <div style="font-size: 0.8rem; color: var(--color-gray-500); font-weight: 700; text-transform: uppercase;">Unread Messages</div>
+            <div class="compact-card-val" style="color: #EF4444;" id="card-unread">2</div>
+            <div style="font-size: 0.75rem; color: #EF4444; margin-top: 4px;">Action required</div>
+          </div>
+
+        </div>
+
+        <!-- PERFORMANCE CHART (VIEWS & INQUIRIES OVER TIME) -->
+        <div class="chart-container">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <div>
+              <h3 style="font-size: 1.15rem; font-weight: 700;">Performance & Listing Impressions</h3>
+              <p style="font-size: 0.85rem; color: var(--color-gray-500);">Weekly breakdown of broker views and inquiry submissions.</p>
+            </div>
+            <div style="display: flex; gap: 16px; font-size: 0.8rem; font-weight: 700;">
+              <span style="color: var(--color-gold);">■ Listing Views (3,610)</span>
+              <span style="color: var(--color-black);">■ Buyer Inquiries (27)</span>
+            </div>
+          </div>
+
+          <div class="chart-bar-wrap">
+            <div class="chart-bar" style="height: 45%;" title="Mon: 420 Views"></div>
+            <div class="chart-bar" style="height: 65%;" title="Tue: 680 Views"></div>
+            <div class="chart-bar" style="height: 85%;" title="Wed: 920 Views"></div>
+            <div class="chart-bar" style="height: 55%;" title="Thu: 540 Views"></div>
+            <div class="chart-bar" style="height: 95%;" title="Fri: 1,050 Views"></div>
+            <div class="chart-bar" style="height: 40%;" title="Sat: 380 Views"></div>
+            <div class="chart-bar" style="height: 70%;" title="Sun: 720 Views"></div>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-top: 8px; font-size: 0.75rem; color: var(--color-gray-500);">
+            <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+          </div>
+        </div>
+
+        <!-- RECENT PROJECTS TABLE -->
+        <div style="background: var(--color-white); padding: 24px; border-radius: var(--radius-md); border: 1px solid var(--color-gray-200); box-shadow: var(--shadow-subtle); margin-bottom: 32px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h3 style="font-size: 1.15rem; font-weight: 700;">Recent Projects</h3>
+            <a href="#" onclick="openWizardModal()" style="font-size: 0.85rem; color: var(--color-gold); font-weight: 700; text-decoration: none;">+ Add Project</a>
+          </div>
+
+          <div id="dash-recent-projects">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+
+        <!-- RECENT INQUIRIES TABLE -->
+        <div style="background: var(--color-white); padding: 24px; border-radius: var(--radius-md); border: 1px solid var(--color-gray-200); box-shadow: var(--shadow-subtle);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h3 style="font-size: 1.15rem; font-weight: 700;">Recent Broker Inquiries</h3>
+            <span style="font-size: 0.8rem; color: var(--color-gray-500);">SSoT Stream Active</span>
+          </div>
+
+          <div id="dash-recent-inquiries">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+
+      </main>
+
+    </div>
+
+  </div>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      window.ecosystemStore.subscribe(state => {
+        renderDashboardState(state);
+      });
+    });
+
+    function renderDashboardState(state) {
+      const { listings, deals, users } = state;
+      const currentUser = users && users.length > 0 ? users[0] : { name: 'Rajesh Malhotra' };
+
+      document.getElementById('dash-welcome').textContent = `Welcome back, ${currentUser.name}`;
+      document.getElementById('topbar-name').textContent = currentUser.name;
+      document.getElementById('sb-owner-name').textContent = currentUser.name;
+
+      const myListings = (listings || []).filter(l => l.ownerId === 'usr-101' || !l.ownerId);
+      document.getElementById('card-active-projects').textContent = myListings.length;
+      document.getElementById('card-inquiries').textContent = (deals || []).length;
+
+      // Render Recent Projects Table
+      const pTable = document.getElementById('dash-recent-projects');
+      if (myListings.length === 0) {
+        pTable.innerHTML = '<p style="color: var(--color-gray-500);">No projects listed yet.</p>';
+      } else {
+        pTable.innerHTML = `
+          <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+            <thead>
+              <tr style="border-bottom: 1px solid var(--color-gray-200); color: var(--color-gray-500);">
+                <th style="padding: 12px 8px;">Project</th>
+                <th style="padding: 12px 8px;">Location</th>
+                <th style="padding: 12px 8px;">Status</th>
+                <th style="padding: 12px 8px;">Views</th>
+                <th style="padding: 12px 8px;">Inquiries</th>
+                <th style="padding: 12px 8px; text-align: right;">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${myListings.map(l => `
+                <tr style="border-bottom: 1px solid var(--color-gray-100);">
+                  <td style="padding: 12px 8px; display: flex; align-items: center; gap: 12px;">
+                    <img src="${l.image}" alt="" style="width: 44px; height: 44px; border-radius: 6px; object-fit: cover;">
+                    <strong>${l.title}</strong>
+                  </td>
+                  <td style="padding: 12px 8px; color: var(--color-gray-500);">${l.location}</td>
+                  <td style="padding: 12px 8px;"><span class="badge-tag" style="position: static; font-size: 0.7rem;">${l.isOffMarket ? 'Off-Market VIP' : 'Live'}</span></td>
+                  <td style="padding: 12px 8px; font-weight: 700;">${l.views || 1420}</td>
+                  <td style="padding: 12px 8px; font-weight: 700; color: var(--color-gold);">${l.inquiriesCount || 8}</td>
+                  <td style="padding: 12px 8px; text-align: right;">
+                    <button onclick="alert('Editing ${l.title}')" class="btn-outline-gold" style="font-size: 0.75rem; padding: 4px 10px;">Edit</button>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        `;
+      }
+
+      // Render Recent Inquiries Table
+      const iTable = document.getElementById('dash-recent-inquiries');
+      const myDeals = deals || [];
+      if (myDeals.length === 0) {
+        iTable.innerHTML = '<p style="color: var(--color-gray-500);">No buyer inquiries received yet.</p>';
+      } else {
+        iTable.innerHTML = `
+          <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem;">
+            <thead>
+              <tr style="border-bottom: 1px solid var(--color-gray-200); color: var(--color-gray-500);">
+                <th style="padding: 12px 8px;">Broker / Buyer</th>
+                <th style="padding: 12px 8px;">Project Target</th>
+                <th style="padding: 12px 8px;">Time</th>
+                <th style="padding: 12px 8px;">Status</th>
+                <th style="padding: 12px 8px; text-align: right;">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${myDeals.map(d => `
+                <tr style="border-bottom: 1px solid var(--color-gray-100);">
+                  <td style="padding: 12px 8px;">
+                    <strong>${d.buyerName}</strong>
+                    <div style="font-size: 0.75rem; color: var(--color-gold);">${d.offeredAmount}</div>
+                  </td>
+                  <td style="padding: 12px 8px; color: var(--color-gray-500);">${d.listingTitle}</td>
+                  <td style="padding: 12px 8px; font-size: 0.8rem; color: var(--color-gray-500);">${new Date(d.lastUpdated).toLocaleTimeString()}</td>
+                  <td style="padding: 12px 8px;"><span class="badge-tag" style="position: static; font-size: 0.7rem; background: var(--color-gold); color: #FFF;">${d.status}</span></td>
+                  <td style="padding: 12px 8px; text-align: right;">
+                    <button onclick="alert('Viewing Inquiry for ${d.listingTitle}')" class="btn-gold" style="font-size: 0.75rem; padding: 4px 12px;">View Inquiry</button>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        `;
+      }
+    }
+
+    function switchDashTab(tabId) {
+      alert(`Navigating to ${tabId}`);
+    }
+
+    function openWizardModal() {
+      window.location.href = 'index.html?action=openWizard';
+    }
+  </script>
+</body>
+</html>

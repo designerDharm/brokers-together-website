@@ -1,0 +1,222 @@
+{
+  "globalSettings": {
+    "appName": "Brokers Together",
+    "tagline": "The Premier Broker Network & Owner Real Estate Platform",
+    "primaryColor": "#B89555",
+    "darkBgColor": "#0A0D14",
+    "offWhiteBgColor": "#F7F5F0",
+    "accentColor": "#D4AF37",
+    "logoSvgPath": "/Logo_Brokers together.svg",
+    "currency": "USD",
+    "supportEmail": "concierge@brokerstogether.com",
+    "supportPhone": "+1 (800) 555-BROKER",
+    "webDomain": "propertyassist.info",
+    "heroTitle": "Connect Direct with Verified Real Estate Brokers",
+    "heroSubtitle": "List your high-value property, reach 800+ verified brokers, and close deals faster with total privacy control.",
+    "featureFlags": {
+      "enableCounsellorBooking": true,
+      "enableLiveDeals": true,
+      "enableDirectBrokerChat": true,
+      "enableOffMarketListings": true,
+      "enableOwnerWizard": true
+    },
+    "dynamicLabels": {
+      "userPortalTitle": "Owner & Investor Marketplace",
+      "adminPortalTitle": "Ecosystem Command Center",
+      "counsellorPortalTitle": "Broker & Advisory Workstation",
+      "browseListingsButton": "Explore Projects",
+      "connectCounsellorButton": "Find Verified Brokers",
+      "submitListingButton": "List Your Project"
+    },
+    "configurableClaims": {
+      "verifiedBrokersCount": "800+",
+      "appDownloadsCount": "1,600+",
+      "activeRequirementsCount": "400+",
+      "satisfactionRate": "96%",
+      "averageRating": "4.5 / 5.0",
+      "approvalTimeframe": "Under 24 Hours",
+      "domainVerificationStatus": "Pending Confirmation (propertyassist.info)",
+      "iosAppStatus": "Under Development / Confirmation Required"
+    }
+  },
+  "assetRegistry": {
+    "hero": {
+      "desktopUrl": "https://img.magnific.com/free-photo/modern-hotel-complex-low-angle-shot_181624-503.jpg",
+      "mobileUrl": "https://img.magnific.com/free-photo/modern-hotel-complex-low-angle-shot_181624-503.jpg",
+      "altText": "Daylight photography of luxury modern residential architectural complex",
+      "aiGenerated": false
+    },
+    "brokerNetwork": {
+      "desktopUrl": "https://img.magnific.com/free-photo/real-estate-agent-talking-with-couple-holding-documents-homeowning-contract-new-apartment_482257-22209.jpg",
+      "mobileUrl": "https://img.magnific.com/free-photo/real-estate-agent-talking-with-couple-holding-documents-homeowning-contract-new-apartment_482257-22209.jpg",
+      "altText": "Real estate broker consulting clients with property contract in modern office",
+      "aiGenerated": false
+    },
+    "howItWorks": {
+      "desktopUrl": "https://img.magnific.com/free-photo/team-architects-working-town-project-conference-room-architect-business-suit_482257-26513.jpg",
+      "mobileUrl": "https://img.magnific.com/free-photo/team-architects-working-town-project-conference-room-architect-business-suit_482257-26513.jpg",
+      "altText": "Real estate consultants reviewing property blueprints on digital tablet",
+      "aiGenerated": false
+    },
+    "dealsEnquiries": {
+      "desktopUrl": "https://img.magnific.com/free-photo/business-meeting-office_1268-21531.jpg",
+      "mobileUrl": "https://img.magnific.com/free-photo/business-meeting-office_1268-21531.jpg",
+      "altText": "Indian real estate professionals reviewing buying offer documents",
+      "aiGenerated": false
+    },
+    "testimonials": [
+      {
+        "id": "t1",
+        "url": "https://img.magnific.com/free-photo/content-indian-ceo-standing-smiling-portrait-successful-pensive-bearded-businessman-glasses-posing-office-room-business-expression-management-concept_74855-11642.jpg",
+        "altText": "Portrait of Karan Singhania, Managing Director of Landmark Developers",
+        "aiGenerated": false
+      },
+      {
+        "id": "t2",
+        "url": "https://img.magnific.com/free-photo/closeup-content-attractive-indian-business-lady_1262-2094.jpg",
+        "altText": "Portrait of Ananya Roy, Luxury Real Estate Investor",
+        "aiGenerated": false
+      }
+    ]
+  },
+  "users": [
+    {
+      "id": "usr-101",
+      "name": "Rajesh Malhotra",
+      "email": "rajesh@malhotraestates.com",
+      "role": "Property Owner",
+      "membership": "Platinum Owner",
+      "status": "Active",
+      "phone": "+91 98765 43210",
+      "createdAt": "2026-01-15T09:30:00Z"
+    }
+  ],
+  "counsellors": [
+    {
+      "id": "cns-201",
+      "name": "Vikramaditya Singhania",
+      "title": "Senior Luxury Real Estate Advisor",
+      "rating": 4.95,
+      "reviewsCount": 112,
+      "specialization": "High-End Penthouses & Commercial Portfolios",
+      "dealsClosedVolume": "$180M+",
+      "location": "Mumbai & Delhi NCR",
+      "status": "Available",
+      "avatar": "https://img.magnific.com/free-photo/positive-indian-financial-advisor-holding-open-folder_1262-17502.jpg",
+      "verified": true
+    },
+    {
+      "id": "cns-202",
+      "name": "Elena Rostova",
+      "title": "International Property Strategist",
+      "rating": 4.92,
+      "reviewsCount": 78,
+      "specialization": "Cross-Border Wealth & Off-Market Villas",
+      "dealsClosedVolume": "$125M+",
+      "location": "Dubai & London",
+      "status": "In Session",
+      "avatar": "https://img.magnific.com/free-photo/joyful-indian-businesswoman-feels-empowered-after-achieving-strategic-win_482257-117239.jpg",
+      "verified": true
+    },
+    {
+      "id": "cns-203",
+      "name": "Arjun Mehta",
+      "title": "Commercial & Tech Park Lead",
+      "rating": 4.89,
+      "reviewsCount": 64,
+      "specialization": "IT Parks, Warehousing & Retail Hubs",
+      "dealsClosedVolume": "$210M+",
+      "location": "Bengaluru & Hyderabad",
+      "status": "Available",
+      "avatar": "https://img.magnific.com/free-photo/content-indian-ceo-standing-smiling-portrait-successful-pensive-bearded-businessman-glasses-posing-office-room-business-expression-management-concept_74855-11642.jpg",
+      "verified": true
+    }
+  ],
+  "listings": [
+    {
+      "id": "lst-301",
+      "title": "The Imperial Sky Penthouse",
+      "category": "Residential",
+      "price": "$12,500,000",
+      "location": "Worli, Mumbai",
+      "specs": "5 Beds • 6.5 Baths • 6,800 sq ft • Private Sky Deck",
+      "image": "https://img.magnific.com/free-photo/modern-hotel-complex-low-angle-shot_181624-503.jpg",
+      "ownerId": "usr-101",
+      "brokerId": "cns-201",
+      "isOffMarket": true,
+      "status": "Live",
+      "views": 1420,
+      "inquiriesCount": 8,
+      "description": "Exquisite triplex penthouse featuring panoramic Arabian Sea views, floor-to-ceiling glass facades, private infinity plunge pool, and dedicated concierge elevator."
+    },
+    {
+      "id": "lst-302",
+      "title": "Cyber Pinnacle IT Park - Tower A",
+      "category": "Commercial",
+      "price": "$38,000,000",
+      "location": "Outer Ring Road, Bengaluru",
+      "specs": "14 Floors • 185,000 sq ft Office • Grade A Certified",
+      "image": "https://img.magnific.com/free-photo/tall-apartment-buildings-with-modern-design_1268-15585.jpg",
+      "ownerId": "usr-101",
+      "brokerId": "cns-203",
+      "isOffMarket": false,
+      "status": "Live",
+      "views": 2190,
+      "inquiriesCount": 14,
+      "description": "Institutional-grade commercial office building fully leased to Fortune 500 technology tenants with 8.2% gross rental yield."
+    },
+    {
+      "id": "lst-303",
+      "title": "Elysian Palm Waterfront Mansion",
+      "category": "Luxury Villa",
+      "price": "$24,500,000",
+      "location": "Palm Jumeirah, Dubai",
+      "specs": "6 Beds • Private Beach • Yacht Docking • 11,000 sq ft",
+      "image": "https://img.magnific.com/free-photo/skyscrapers-dubai-marina_231208-7597.jpg",
+      "ownerId": "usr-102",
+      "brokerId": "cns-202",
+      "isOffMarket": true,
+      "status": "Live",
+      "views": 980,
+      "inquiriesCount": 5,
+      "description": "Ultra-exclusive contemporary beachfront estate with customized Italian marble finishings, private cinema, and smart security integration."
+    }
+  ],
+  "deals": [
+    {
+      "id": "dl-401",
+      "listingId": "lst-301",
+      "listingTitle": "The Imperial Sky Penthouse",
+      "buyerName": "Alexander Vance",
+      "counsellorId": "cns-201",
+      "counsellorName": "Vikramaditya Singhania",
+      "offeredAmount": "$12,000,000",
+      "status": "Negotiation",
+      "lastUpdated": "2026-09-17T10:00:00Z"
+    }
+  ],
+  "testimonials": [
+    {
+      "id": "tst-1",
+      "name": "Karan Singhania",
+      "role": "Managing Director, Landmark Developers",
+      "text": "Listing our off-market commercial assets through Brokers Together gave us immediate access to 800+ vetted brokers without public exposure. Closed our transaction in 18 days.",
+      "avatar": "https://img.magnific.com/free-photo/content-indian-ceo-standing-smiling-portrait-successful-pensive-bearded-businessman-glasses-posing-office-room-business-expression-management-concept_74855-11642.jpg"
+    },
+    {
+      "id": "tst-2",
+      "name": "Ananya Roy",
+      "role": "Luxury Villa Owner & Investor",
+      "text": "The multi-step project wizard made listing our $15M beachfront estate effortless. The direct broker messaging UI kept inquiries organized and transparent.",
+      "avatar": "https://img.magnific.com/free-photo/closeup-content-attractive-indian-business-lady_1262-2094.jpg"
+    }
+  ],
+  "auditLogs": [
+    {
+      "id": "log-001",
+      "timestamp": "2026-09-17T11:00:00Z",
+      "action": "MEDIA_SOURCED",
+      "detail": "Camera-real Magnific stock photography assets registered in SSoT DB."
+    }
+  ]
+}

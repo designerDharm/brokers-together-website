@@ -1,0 +1,12 @@
+{
+  "name": "brokers-together-workspace",
+  "version": "1.0.0",
+  "description": "Brokers Together Full Stack Web Ecosystem",
+  "scripts": {
+    "start:backend": "cd backend && node server.js",
+    "start:apps": "node serve-apps.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

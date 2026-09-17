@@ -1,0 +1,26 @@
+{
+  "version": 2,
+  "cleanUrls": true,
+  "routes": [
+    {
+      "src": "^/shared/(.*)",
+      "dest": "/shared/$1"
+    },
+    {
+      "src": "^/admin/(.*)",
+      "dest": "/admin-panel/$1"
+    },
+    {
+      "src": "^/admin",
+      "dest": "/admin-panel/index.html"
+    },
+    {
+      "src": "^/logo.svg",
+      "dest": "/Logo_Brokers together.svg"
+    },
+    {
+      "src": "^/(.*)",
+      "dest": "/user-app/$1"
+    }
+  ]
+}

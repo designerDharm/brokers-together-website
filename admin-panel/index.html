@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="admin-page-title">Ecosystem Command Center - Admin Panel</title>
+  <link rel="stylesheet" href="../shared/style.css">
+  <script src="../shared/api.js" defer></script>
+</head>
+<body style="background: var(--color-black); color: var(--color-white);">
+
+  <!-- Admin Navbar -->
+  <header class="navbar" style="background: rgba(10, 13, 20, 0.95); border-bottom-color: var(--color-gold-border);">
+    <div class="navbar-inner">
+      <a href="#" class="navbar-brand" style="display: flex; align-items: center; gap: 14px; text-decoration: none;">
+        <img id="admin-logo" src="logo.svg" onerror="this.src='http://localhost:5050/logo.svg'" alt="Brokers Together Logo" style="height: 40px;">
+        <div>
+          <span style="font-family: var(--font-primary); font-size: 1.15rem; font-weight: 800; color: var(--color-gold);">Ecosystem Command Center</span>
+          <div style="font-size: 0.75rem; color: #A0AEC0;">Admin Panel • SSoT Master Controller</div>
+        </div>
+      </a>
+      
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <button onclick="triggerForceSync()" class="btn-outline-gold" style="font-size: 0.8rem; padding: 6px 14px;">⚡ Broadcast Force Sync</button>
+        <a href="http://localhost:5051" target="_blank" class="btn-gold" style="font-size: 0.85rem; padding: 8px 16px;">Open User Web App ↗</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Admin Main Dashboard -->
+  <main class="container" style="padding: 40px 24px 60px;">
+
+    <!-- Top KPI Bar -->
+    <div style="display: grid; grid-template-columns: repeat(5, 1fr); background: var(--color-charcoal); border: 1px solid var(--color-gold-border); border-radius: var(--radius-md); padding: 24px; gap: 16px; margin-bottom: 36px; text-align: center;">
+      <div>
+        <div style="font-size: 2rem; font-weight: 800; color: var(--color-gold);" id="kpi-users">0</div>
+        <div style="font-size: 0.8rem; color: #A0AEC0;">Registered Owners</div>
+      </div>
+      <div>
+        <div style="font-size: 2rem; font-weight: 800; color: var(--color-gold);" id="kpi-counsellors">0</div>
+        <div style="font-size: 0.8rem; color: #A0AEC0;">Verified Brokers</div>
+      </div>
+      <div>
+        <div style="font-size: 2rem; font-weight: 800; color: var(--color-gold);" id="kpi-listings">0</div>
+        <div style="font-size: 0.8rem; color: #A0AEC0;">Active Projects</div>
+      </div>
+      <div>
+        <div style="font-size: 2rem; font-weight: 800; color: #3B82F6;" id="kpi-deals">0</div>
+        <div style="font-size: 0.8rem; color: #A0AEC0;">Live Inquiries & Deals</div>
+      </div>
+      <div>
+        <div style="font-size: 2rem; font-weight: 800; color: #10B981;" id="kpi-ws-status">Connected</div>
+        <div style="font-size: 0.8rem; color: #A0AEC0;">WebSocket Stream</div>
+      </div>
+    </div>
+
+    <!-- Section 13 Claims & Domain Confirmation Banner -->
+    <div style="background: rgba(245, 158, 11, 0.1); border: 1px solid #F59E0B; padding: 24px; border-radius: var(--radius-md); margin-bottom: 36px;">
+      <span class="badge-tag" style="background: #F59E0B; color: #000; position: static; display: inline-block; margin-bottom: 10px;">Admin Confirmation & Fact Guardrails</span>
+      <h3 style="font-size: 1.2rem; color: #F59E0B; margin-bottom: 8px;">Section 13 Business Claims & Domain Review</h3>
+      <p style="font-size: 0.9rem; color: #FCD34D;">
+        All 9 marketing claims (800+ brokers, 1,600+ app downloads, 400+ requirements, 96% satisfaction, 4.5 rating, approval timeframe) are managed dynamically via SSoT below.
+        <br><strong>Domain Status:</strong> propertyassist.info • <strong>App Store Status:</strong> Android Live (Google Play) / iOS Confirmation Pending.
+      </p>
+    </div>
+
+    <!-- Tab Buttons -->
+    <div style="display: flex; gap: 12px; margin-bottom: 24px; border-bottom: 1px solid var(--color-gold-border); padding-bottom: 12px;">
+      <button onclick="switchTab('tab-claims')" id="btn-tab-claims" class="btn-gold">📌 Configurable Claims & Claims Guardrails</button>
+      <button onclick="switchTab('tab-settings')" id="btn-tab-settings" class="btn-outline-gold">⚙ RemoteConfig & SSoT Settings</button>
+      <button onclick="switchTab('tab-listings')" id="btn-tab-listings" class="btn-outline-gold">🏙 Manage Projects</button>
+      <button onclick="switchTab('tab-deals')" id="btn-tab-deals" class="btn-outline-gold">💼 Deal Pipelines</button>
+    </div>
+
+    <!-- TAB 1: Configurable Claims & Guardrails -->
+    <section id="tab-claims" class="admin-tab">
+      <div style="background: var(--color-charcoal); padding: 32px; border-radius: var(--radius-md); border: 1px solid var(--color-gold-border); max-width: 900px; margin: 0 auto;">
+        <h3 style="font-size: 1.4rem; color: var(--color-gold); margin-bottom: 16px;">Edit Configurable Business Claims (SSoT)</h3>
+        
+        <form onsubmit="saveClaims(event)">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <div class="form-group">
+              <label style="color: #FFF;">Verified Brokers Claim</label>
+              <input type="text" id="claim-brokers" class="form-control" style="background: #0A0D14; color: #FFF; border-color: var(--color-gold-border);" required>
+            </div>
+            <div class="form-group">
+              <label style="color: #FFF;">App Downloads Claim</label>
+              <input type="text" id="claim-downloads" class="form-control" style="background: #0A0D14; color: #FFF; border-color: var(--color-gold-border);" required>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <div class="form-group">
+              <label style="color: #FFF;">Buying Requirements Claim</label>
+              <input type="text" id="claim-reqs" class="form-control" style="background: #0A0D14; color: #FFF; border-color: var(--color-gold-border);" required>
+            </div>
+            <div class="form-group">
+              <label style="color: #FFF;">Satisfaction Rate Claim</label>
+              <input type="text" id="claim-satisfaction" class="form-control" style="background: #0A0D14; color: #FFF; border-color: var(--color-gold-border);" required>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <div class="form-group">
+              <label style="color: #FFF;">Average Rating</label>
+              <input type="text" id="claim-rating" class="form-control" style="background: #0A0D14; color: #FFF; border-color: var(--color-gold-border);" required>
+            </div>
+            <div class="form-group">
+              <label style="color: #FFF;">Listing Approval Timeframe</label>
+              <input type="text" id="claim-timeframe" class="form-control" style="background: #0A0D14; color: #FFF; border-color: var(--color-gold-border);" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label style="color: #FFF;">Primary Web Domain</label>
+            <input type="text" id="claim-domain" class="form-control" style="background: #0A0D14; color: #FFF; border-color: var(--color-gold-border);" required>
+          </div>
+
+          <button type="submit" class="btn-gold" style="width: 100%; justify-content: center; margin-top: 10px;">💾 Save & Broadcast Claims to Ecosystem</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- TAB 2: Settings -->
+    <section id="tab-settings" class="admin-tab" style="display: none;">
+      <div style="background: var(--color-charcoal); padding: 32px; border-radius: var(--radius-md); border: 1px solid var(--color-gold-border); max-width: 900px; margin: 0 auto;">
+        <h3 style="font-size: 1.4rem; color: var(--color-gold); margin-bottom: 16px;">RemoteConfig Global Settings</h3>
+        <form onsubmit="saveRemoteSettings(event)">
+          <div class="form-group">
+            <label style="color: #FFF;">App Name</label>
+            <input type="text" id="cfg-appName" class="form-control" style="background: #0A0D14; color: #FFF;" required>
+          </div>
+          <div class="form-group">
+            <label style="color: #FFF;">Hero Title</label>
+            <input type="text" id="cfg-heroTitle" class="form-control" style="background: #0A0D14; color: #FFF;" required>
+          </div>
+          <div class="form-group">
+            <label style="color: #FFF;">Hero Subtitle</label>
+            <textarea id="cfg-heroSubtitle" class="form-control" style="background: #0A0D14; color: #FFF;" rows="2" required></textarea>
+          </div>
+          <button type="submit" class="btn-gold" style="width: 100%; justify-content: center;">Save Settings</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- TAB 3: Listings -->
+    <section id="tab-listings" class="admin-tab" style="display: none;">
+      <div style="background: var(--color-charcoal); padding: 24px; border-radius: var(--radius-md);">
+        <h3 style="font-size: 1.2rem; color: var(--color-gold); margin-bottom: 16px;">Active SSoT Property Projects</h3>
+        <div id="admin-listings-container"></div>
+      </div>
+    </section>
+
+    <!-- TAB 4: Deals -->
+    <section id="tab-deals" class="admin-tab" style="display: none;">
+      <div style="background: var(--color-charcoal); padding: 24px; border-radius: var(--radius-md);">
+        <h3 style="font-size: 1.2rem; color: var(--color-gold); margin-bottom: 16px;">Live Inquiries & Deal Pipelines</h3>
+        <div id="admin-deals-container"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      window.ecosystemStore.subscribe(state => {
+        renderAdminDashboard(state);
+      });
+    });
+
+    function renderAdminDashboard(state) {
+      const { settings, users, counsellors, listings, deals } = state;
+
+      document.getElementById('kpi-users').textContent = (users || []).length;
+      document.getElementById('kpi-counsellors').textContent = (counsellors || []).length;
+      document.getElementById('kpi-listings').textContent = (listings || []).length;
+      document.getElementById('kpi-deals').textContent = (deals || []).length;
+
+      if (settings && settings.configurableClaims) {
+        const c = settings.configurableClaims;
+        document.getElementById('claim-brokers').value = c.verifiedBrokersCount || '800+';
+        document.getElementById('claim-downloads').value = c.appDownloadsCount || '1,600+';
+        document.getElementById('claim-reqs').value = c.activeRequirementsCount || '400+';
+        document.getElementById('claim-satisfaction').value = c.satisfactionRate || '96%';
+        document.getElementById('claim-rating').value = c.averageRating || '4.5 / 5.0';
+        document.getElementById('claim-timeframe').value = c.approvalTimeframe || 'Under 24 Hours';
+        document.getElementById('claim-domain').value = settings.webDomain || 'propertyassist.info';
+      }
+
+      if (settings) {
+        document.getElementById('cfg-appName').value = settings.appName || '';
+        document.getElementById('cfg-heroTitle').value = settings.heroTitle || '';
+        document.getElementById('cfg-heroSubtitle').value = settings.heroSubtitle || '';
+      }
+
+      renderAdminListings(listings || []);
+      renderAdminDeals(deals || []);
+    }
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.admin-tab').forEach(el => el.style.display = 'none');
+      document.getElementById(tabId).style.display = 'block';
+
+      ['claims', 'settings', 'listings', 'deals'].forEach(t => {
+        const btn = document.getElementById(`btn-tab-${t}`);
+        if (`tab-${t}` === tabId) {
+          btn.className = 'btn-gold';
+        } else {
+          btn.className = 'btn-outline-gold';
+        }
+      });
+    }
+
+    async function saveClaims(e) {
+      e.preventDefault();
+      const claims = {
+        verifiedBrokersCount: document.getElementById('claim-brokers').value,
+        appDownloadsCount: document.getElementById('claim-downloads').value,
+        activeRequirementsCount: document.getElementById('claim-reqs').value,
+        satisfactionRate: document.getElementById('claim-satisfaction').value,
+        averageRating: document.getElementById('claim-rating').value,
+        approvalTimeframe: document.getElementById('claim-timeframe').value
+      };
+      const webDomain = document.getElementById('claim-domain').value;
+
+      await window.ecosystemStore.updateRemoteSettings({
+        configurableClaims: claims,
+        webDomain
+      });
+      alert('⚡ Configurable claims saved and broadcasted across SSoT network!');
+    }
+
+    async function saveRemoteSettings(e) {
+      e.preventDefault();
+      await window.ecosystemStore.updateRemoteSettings({
+        appName: document.getElementById('cfg-appName').value,
+        heroTitle: document.getElementById('cfg-heroTitle').value,
+        heroSubtitle: document.getElementById('cfg-heroSubtitle').value
+      });
+      alert('⚡ SSoT RemoteConfig settings updated!');
+    }
+
+    function renderAdminListings(listings) {
+      const c = document.getElementById('admin-listings-container');
+      c.innerHTML = listings.map(l => `
+        <div style="display: flex; gap: 16px; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.08);">
+          <img src="${l.image}" alt="" style="width: 60px; height: 60px; border-radius: 8px; object-fit: cover;">
+          <div style="flex: 1;">
+            <strong style="color: #FFF;">${l.title}</strong>
+            <div style="font-size: 0.8rem; color: #A0AEC0;">${l.category} • ${l.location} • <span style="color: var(--color-gold);">${l.price}</span></div>
+          </div>
+          <span class="badge-tag" style="position: static;">${l.isOffMarket ? 'Off-Market' : 'Public'}</span>
+        </div>
+      `).join('');
+    }
+
+    function renderAdminDeals(deals) {
+      const c = document.getElementById('admin-deals-container');
+      c.innerHTML = deals.map(d => `
+        <div style="padding: 16px; background: rgba(10,13,20,0.8); border-radius: 8px; margin-bottom: 12px; border: 1px solid var(--color-gold-border);">
+          <strong style="color: var(--color-gold);">${d.listingTitle}</strong>
+          <div style="font-size: 0.85rem; color: #FFF; margin-top: 4px;">Buyer: ${d.buyerName} • Offer: ${d.offeredAmount}</div>
+          <div style="font-size: 0.8rem; color: #A0AEC0; margin-top: 4px;">Status: <strong>${d.status}</strong></div>
+        </div>
+      `).join('');
+    }
+
+    async function triggerForceSync() {
+      await window.ecosystemStore.triggerForceSync();
+      alert('⚡ Force SSoT Broadcast executed!');
+    }
+  </script>
+</body>
+</html>

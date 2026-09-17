@@ -1,0 +1,143 @@
+{
+  "canvas": {
+    "width": 1672,
+    "height": 941
+  },
+  "recommended_z_order": [
+    "00_base_background.png",
+    "01_decor_books_plant.png",
+    "07_gold_rings_visible.png",
+    "04_headline_body.png",
+    "05_hero_buttons.png",
+    "06_benefits.png",
+    "08_phone_mockup.png",
+    "09_inquiry_card.png",
+    "02_logo.png",
+    "03_header_nav_cta.png"
+  ],
+  "trimmed_assets": {
+    "01_decor_books_plant.png": {
+      "bbox": [
+        0,
+        175,
+        1672,
+        941
+      ],
+      "trimmed_file": "01_decor_books_plant_trim.png",
+      "trimmed_size": [
+        1672,
+        766
+      ]
+    },
+    "02_logo.png": {
+      "bbox": [
+        107,
+        36,
+        301,
+        97
+      ],
+      "trimmed_file": "02_logo_trim.png",
+      "trimmed_size": [
+        194,
+        61
+      ]
+    },
+    "03_header_nav_cta.png": {
+      "bbox": [
+        517,
+        25,
+        1575,
+        105
+      ],
+      "trimmed_file": "03_header_nav_cta_trim.png",
+      "trimmed_size": [
+        1058,
+        80
+      ]
+    },
+    "04_headline_body.png": {
+      "bbox": [
+        105,
+        222,
+        875,
+        555
+      ],
+      "trimmed_file": "04_headline_body_trim.png",
+      "trimmed_size": [
+        770,
+        333
+      ]
+    },
+    "05_hero_buttons.png": {
+      "bbox": [
+        105,
+        578,
+        704,
+        651
+      ],
+      "trimmed_file": "05_hero_buttons_trim.png",
+      "trimmed_size": [
+        599,
+        73
+      ]
+    },
+    "06_benefits.png": {
+      "bbox": [
+        106,
+        682,
+        733,
+        748
+      ],
+      "trimmed_file": "06_benefits_trim.png",
+      "trimmed_size": [
+        627,
+        66
+      ]
+    },
+    "07_gold_rings_visible.png": {
+      "bbox": [
+        760,
+        113,
+        1496,
+        776
+      ],
+      "trimmed_file": "07_gold_rings_visible_trim.png",
+      "trimmed_size": [
+        736,
+        663
+      ]
+    },
+    "08_phone_mockup.png": {
+      "bbox": [
+        938,
+        150,
+        1261,
+        824
+      ],
+      "trimmed_file": "08_phone_mockup_trim.png",
+      "trimmed_size": [
+        323,
+        674
+      ]
+    },
+    "09_inquiry_card.png": {
+      "bbox": [
+        1241,
+        335,
+        1593,
+        681
+      ],
+      "trimmed_file": "09_inquiry_card_trim.png",
+      "trimmed_size": [
+        352,
+        346
+      ]
+    }
+  },
+  "production_notes": [
+    "Use the original supplied SVG logo in production.",
+    "Rebuild navigation, headline, body, buttons, benefits and inquiry copy as semantic HTML/CSS.",
+    "Use raster layers mainly as visual references/phone-card assets.",
+    "Recreate gold circles as responsive SVG/CSS for clean scaling."
+  ]
+}

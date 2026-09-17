@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="auth-doc-title">Authentication — Brokers Together</title>
+  <link rel="stylesheet" href="../shared/style.css">
+  <script src="../shared/api.js" defer></script>
+  <style>
+    body {
+      background-color: var(--color-white);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .auth-split-container {
+      display: grid;
+      grid-template-columns: 45% 55%;
+      min-height: 100vh;
+    }
+    @media (max-width: 900px) {
+      .auth-split-container {
+        grid-template-columns: 1fr;
+      }
+      .auth-left-banner {
+        display: none;
+      }
+    }
+    .auth-left-banner {
+      position: relative;
+      background: var(--color-black);
+      overflow: hidden;
+    }
+    .auth-left-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.85;
+    }
+    .auth-overlay-card {
+      position: absolute;
+      bottom: 40px;
+      left: 40px;
+      right: 40px;
+      background: rgba(10, 13, 20, 0.85);
+      backdrop-filter: blur(12px);
+      padding: 32px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-gold-border);
+      color: var(--color-white);
+    }
+    .auth-right-form {
+      padding: 60px 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: var(--color-white);
+    }
+    @media (max-width: 1200px) {
+      .auth-right-form {
+        padding: 40px 32px;
+      }
+    }
+    .pw-wrap {
+      position: relative;
+    }
+    .pw-toggle {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 0.9rem;
+      color: var(--color-gray-500);
+      font-weight: 700;
+    }
+    .error-banner {
+      background-color: #FEF2F2;
+      border: 1px solid #F87171;
+      color: #991B1B;
+      padding: 12px 16px;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      margin-bottom: 20px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="auth-split-container">
+    
+    <!-- LEFT 45%: Camera-real Image & Brand Card -->
+    <div class="auth-left-banner">
+      <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1200&q=85" alt="Real Estate Professional Environment">
+      
+      <div class="auth-overlay-card">
+        <div style="background: rgba(255,255,255,0.95); padding: 10px 16px; border-radius: 8px; display: inline-block; margin-bottom: 16px;">
+          <img src="http://localhost:5050/logo.svg" alt="Brokers Together" style="height: 32px; display: block;">
+        </div>
+        <h3 style="font-size: 1.4rem; color: #FFF; margin-bottom: 8px;">The Premier Broker Network for Property Owners</h3>
+        <p style="font-size: 0.9rem; color: #A0AEC0;">Access over 800+ verified brokers, publish off-market listings, and manage serious buyer inquiries in real-time.</p>
+      </div>
+    </div>
+
+    <!-- RIGHT 55%: Authentication Form (Login / Register / Forgot Password) -->
+    <div class="auth-right-form">
+      
+      <div style="margin-bottom: 32px;">
+        <a href="index.html" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: var(--color-gold); font-weight: 700; font-size: 0.85rem; margin-bottom: 20px;">← Back to Explore Landing Page</a>
+        <h1 class="h2-title" id="auth-title" style="margin-bottom: 8px;">Create Your Account</h1>
+        <p class="lead-text" id="auth-subtitle" style="font-size: 0.95rem;">Join Brokers Together to list your property projects and connect with top brokers.</p>
+      </div>
+
+      <!-- Error State Banner -->
+      <div id="error-banner" class="error-banner">
+        <span id="error-message">Invalid credentials. Please check your details and try again.</span>
+      </div>
+
+      <!-- FORM 1: REGISTER FORM -->
+      <form id="register-form" onsubmit="handleRegisterSubmit(event)">
+        
+        <div class="form-group">
+          <label>Full Name / Company Name</label>
+          <input type="text" id="reg-name" class="form-control" placeholder="e.g. Rajesh Malhotra" required>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" id="reg-email" class="form-control" placeholder="name@company.com" required>
+          </div>
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" id="reg-phone" class="form-control" placeholder="+91 98765 43210" required>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div class="form-group">
+            <label>Password</label>
+            <div class="pw-wrap">
+              <input type="password" id="reg-pw" class="form-control" placeholder="At least 8 chars" required>
+              <button type="button" class="pw-toggle" onclick="togglePwVisibility('reg-pw', this)">SHOW</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Confirm Password</label>
+            <div class="pw-wrap">
+              <input type="password" id="reg-cpw" class="form-control" placeholder="Re-enter password" required>
+              <button type="button" class="pw-toggle" onclick="togglePwVisibility('reg-cpw', this)">SHOW</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin: 16px 0;">
+          <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; text-transform: none; font-size: 0.9rem;">
+            <input type="checkbox" id="reg-terms" style="width: 18px; height: 18px; accent-color: var(--color-gold);" required>
+            I agree to the <a href="#" style="color: var(--color-gold);">Terms of Service</a> and <a href="#" style="color: var(--color-gold);">Privacy Policy</a>.
+          </label>
+        </div>
+
+        <button type="submit" id="btn-reg-submit" class="btn-gold" style="width: 100%; justify-content: center; padding: 16px; font-size: 1rem; margin-top: 8px;">
+          <span>CREATE ACCOUNT</span>
+        </button>
+
+        <div style="text-align: center; margin-top: 24px; font-size: 0.9rem; color: var(--color-gray-500);">
+          Already registered? <a href="#" onclick="switchAuthView('login')" style="color: var(--color-gold); font-weight: 700; text-decoration: none;">Log in</a>
+        </div>
+      </form>
+
+      <!-- FORM 2: LOGIN FORM -->
+      <form id="login-form" onsubmit="handleLoginSubmit(event)" style="display: none;">
+        
+        <div class="form-group">
+          <label>Email Address or Mobile Number</label>
+          <input type="text" id="login-email" class="form-control" placeholder="name@company.com or +91..." required>
+        </div>
+
+        <div class="form-group">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <label>Password</label>
+            <a href="#" onclick="switchAuthView('forgot')" style="font-size: 0.8rem; color: var(--color-gold); text-decoration: none; font-weight: 700;">Forgot Password?</a>
+          </div>
+          <div class="pw-wrap">
+            <input type="password" id="login-pw" class="form-control" placeholder="Enter your password" required>
+            <button type="button" class="pw-toggle" onclick="togglePwVisibility('login-pw', this)">SHOW</button>
+          </div>
+        </div>
+
+        <button type="submit" id="btn-login-submit" class="btn-gold" style="width: 100%; justify-content: center; padding: 16px; font-size: 1rem; margin-top: 16px;">
+          <span>LOG IN</span>
+        </button>
+
+        <div style="text-align: center; margin-top: 24px; font-size: 0.9rem; color: var(--color-gray-500);">
+          Need an account? <a href="#" onclick="switchAuthView('register')" style="color: var(--color-gold); font-weight: 700; text-decoration: none;">Register</a>
+        </div>
+      </form>
+
+      <!-- FORM 3: FORGOT PASSWORD FORM -->
+      <form id="forgot-form" onsubmit="handleForgotSubmit(event)" style="display: none;">
+        
+        <p style="color: var(--color-gray-500); font-size: 0.9rem; margin-bottom: 24px;">Enter your registered email address and we'll send you a password reset link.</p>
+
+        <div class="form-group">
+          <label>Registered Email Address</label>
+          <input type="email" id="forgot-email" class="form-control" placeholder="name@company.com" required>
+        </div>
+
+        <button type="submit" id="btn-forgot-submit" class="btn-gold" style="width: 100%; justify-content: center; padding: 16px; font-size: 1rem; margin-top: 12px;">
+          <span>SEND RESET INSTRUCTIONS</span>
+        </button>
+
+        <div style="text-align: center; margin-top: 24px; font-size: 0.9rem; color: var(--color-gray-500);">
+          Remember password? <a href="#" onclick="switchAuthView('login')" style="color: var(--color-gold); font-weight: 700; text-decoration: none;">Log in</a>
+        </div>
+      </form>
+
+    </div>
+
+  </div>
+
+  <script>
+    // Route handler based on hash or query param (?mode=login|register|forgot)
+    window.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const mode = urlParams.get('mode') || 'register';
+      switchAuthView(mode);
+    });
+
+    function switchAuthView(mode) {
+      hideError();
+      const regForm = document.getElementById('register-form');
+      const loginForm = document.getElementById('login-form');
+      const forgotForm = document.getElementById('forgot-form');
+
+      const title = document.getElementById('auth-title');
+      const subtitle = document.getElementById('auth-subtitle');
+
+      regForm.style.display = 'none';
+      loginForm.style.display = 'none';
+      forgotForm.style.display = 'none';
+
+      if (mode === 'login') {
+        loginForm.style.display = 'block';
+        title.textContent = 'Welcome Back';
+        subtitle.textContent = 'Sign in to access your Owner Dashboard and manage broker inquiries.';
+      } else if (mode === 'forgot') {
+        forgotForm.style.display = 'block';
+        title.textContent = 'Reset Password';
+        subtitle.textContent = 'Recover access to your Brokers Together owner account.';
+      } else {
+        regForm.style.display = 'block';
+        title.textContent = 'Create Your Account';
+        subtitle.textContent = 'Join Brokers Together to list your property projects and connect with top brokers.';
+      }
+    }
+
+    function togglePwVisibility(inputId, btn) {
+      const input = document.getElementById(inputId);
+      if (input.type === 'password') {
+        input.type = 'text';
+        btn.textContent = 'HIDE';
+      } else {
+        input.type = 'password';
+        btn.textContent = 'SHOW';
+      }
+    }
+
+    function showError(msg) {
+      const banner = document.getElementById('error-banner');
+      document.getElementById('error-message').textContent = msg;
+      banner.style.display = 'block';
+    }
+
+    function hideError() {
+      document.getElementById('error-banner').style.display = 'none';
+    }
+
+    // REGISTER SUBMIT
+    async function handleRegisterSubmit(e) {
+      e.preventDefault();
+      hideError();
+
+      const name = document.getElementById('reg-name').value;
+      const email = document.getElementById('reg-email').value;
+      const phone = document.getElementById('reg-phone').value;
+      const pw = document.getElementById('reg-pw').value;
+      const cpw = document.getElementById('reg-cpw').value;
+
+      if (pw !== cpw) {
+        showError('Passwords do not match. Please verify and try again.');
+        return;
+      }
+
+      if (pw.length < 6) {
+        showError('Password must be at least 6 characters in length.');
+        return;
+      }
+
+      // Check if user already exists in SSoT state
+      const existingUsers = window.ecosystemStore.state.users || [];
+      if (existingUsers.some(u => u.email.toLowerCase() === email.toLowerCase())) {
+        showError('An account with this email address already exists. Please log in instead.');
+        return;
+      }
+
+      // Loading state
+      const btn = document.getElementById('btn-reg-submit');
+      btn.disabled = true;
+      btn.innerHTML = '<span>Creating Account...</span>';
+
+      try {
+        await fetch('http://localhost:5050/api/users', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, phone, role: 'Property Owner', membership: 'Standard Owner' })
+        });
+
+        alert('✨ Account created successfully! Redirecting to Owner Dashboard...');
+        window.location.href = 'index.html?action=openDashboard';
+      } catch (err) {
+        showError('Failed to connect to authentication server. Please try again.');
+        btn.disabled = false;
+        btn.innerHTML = '<span>CREATE ACCOUNT</span>';
+      }
+    }
+
+    // LOGIN SUBMIT
+    async function handleLoginSubmit(e) {
+      e.preventDefault();
+      hideError();
+
+      const email = document.getElementById('login-email').value;
+      const pw = document.getElementById('login-pw').value;
+
+      const btn = document.getElementById('btn-login-submit');
+      btn.disabled = true;
+      btn.innerHTML = '<span>Verifying...</span>';
+
+      setTimeout(() => {
+        if (pw === 'wrong') {
+          showError('Incorrect password. Please verify your credentials and try again.');
+          btn.disabled = false;
+          btn.innerHTML = '<span>LOG IN</span>';
+        } else {
+          alert('✨ Login successful! Redirecting to your Owner Dashboard...');
+          window.location.href = 'index.html?action=openDashboard';
+        }
+      }, 800);
+    }
+
+    // FORGOT SUBMIT
+    function handleForgotSubmit(e) {
+      e.preventDefault();
+      const email = document.getElementById('forgot-email').value;
+      alert(`✨ Password reset link sent to ${email}. Please check your inbox.`);
+      switchAuthView('login');
+    }
+  </script>
+</body>
+</html>

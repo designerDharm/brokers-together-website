@@ -1,0 +1,2101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="doc-title">Brokers Together — Explore Landing Page</title>
+  <link rel="stylesheet" href="../shared/style.css">
+  <script src="../shared/api.js" defer></script>
+  <style>
+    /* Benefit List Items */
+    .benefit-item {
+      padding: 24px;
+      border-left: 3px solid transparent;
+      cursor: pointer;
+      transition: background 0.25s ease, border-left-color 0.25s ease;
+      margin-bottom: 8px;
+    }
+    .benefit-item:hover, .benefit-item.active {
+      background: var(--color-white);
+      border-left-color: var(--color-gold);
+      box-shadow: var(--shadow-subtle);
+    }
+    .benefit-number {
+      font-family: var(--font-cinzel);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--color-gold);
+      margin-bottom: 4px;
+    }
+
+    /* Pinned Step Cards */
+    .step-card {
+      background: var(--color-white);
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: var(--radius-md);
+      padding: 32px;
+      position: relative;
+    }
+    .step-badge {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--color-black);
+      color: var(--color-gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+      border: 1px solid var(--color-gold-border);
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    /* Testimonial Snap Carousel */
+    .testimonial-carousel {
+      display: flex;
+      gap: 24px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 16px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .testimonial-slide {
+      flex: 0 0 calc(50% - 12px);
+      scroll-snap-align: start;
+      background: var(--color-off-white);
+      padding: 36px;
+      border-radius: var(--radius-md);
+      border-left: 4px solid var(--color-gold);
+    }
+    @media (max-width: 768px) {
+      .testimonial-slide {
+        flex: 0 0 100%;
+      }
+    }
+
+    /* Minimal Scroll Indicator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.7rem;
+      color: var(--color-gray-500);
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ====================================================
+       GLOBAL HEADER (105px height specification)
+       ==================================================== -->
+  <header class="hero-navbar" id="main-navbar">
+    <div class="hero-navbar-inner">
+      <a href="index.html" class="hero-brand">
+        <img id="logo-img" src="logo.svg" onerror="this.src='http://localhost:5050/logo.svg'" alt="Brokers Together Logo">
+      </a>
+
+      <nav>
+        <ul class="hero-nav-links">
+          <li><a href="#for-owners" class="hero-nav-link">For Owners</a></li>
+          <li><a href="#for-brokers" class="hero-nav-link">For Brokers</a></li>
+          <li><a href="#explore" class="hero-nav-link">Explore</a></li>
+          <li><a href="#about" class="hero-nav-link">About</a></li>
+        </ul>
+      </nav>
+
+      <div class="hero-nav-actions">
+        <a href="auth.html?mode=login" class="hero-nav-login">Log In</a>
+        <span class="hero-nav-divider"></span>
+        <a href="auth.html?mode=register" class="hero-nav-btn-gold">
+          <span>List Your Project</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ====================================================
+       SECTION 01 — HERO SECTION (Strict Task Correction)
+       ==================================================== -->
+  <section class="hero">
+    <!-- Clean background #F9F6F0 without transparent full-canvas artifacts -->
+    <div class="hero-container">
+      
+      <!-- HERO CONTENT (LEFT 48-50%) -->
+      <div class="hero-content">
+        <h1 class="hero-spec-title" id="hero-heading">
+          List Your Project.<br>
+          Reach the Right <span class="gold-text">Brokers.</span>
+        </h1>
+        
+        <p class="hero-spec-lead" id="hero-subtext">
+          Showcase your projects to a trusted network of professional brokers, gain premium visibility, and receive serious enquiries — without a recurring subscription.
+        </p>
+
+        <!-- CTA Area -->
+        <div class="hero-spec-cta-group">
+          <a href="auth.html?mode=register" class="btn-spec-primary">
+            <span>List Your Project</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+          <a href="#how-it-works" class="btn-spec-secondary">
+            <span class="play-icon-wrap">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            </span>
+            <span>See How It Works</span>
+          </a>
+        </div>
+
+        <!-- Benefit Row -->
+        <div class="hero-spec-benefits">
+          <div class="spec-benefit-item">
+            <div class="benefit-icon-circle">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B89555" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+            </div>
+            <span class="benefit-text-label">Verified<br>Brokers</span>
+          </div>
+
+          <div class="benefit-spec-divider"></div>
+
+          <div class="spec-benefit-item">
+            <div class="benefit-icon-circle">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B89555" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="20" x2="18" y2="10"></line>
+                <line x1="12" y1="20" x2="12" y2="4"></line>
+                <line x1="6" y1="20" x2="6" y2="14"></line>
+              </svg>
+            </div>
+            <span class="benefit-text-label">Premium<br>Exposure</span>
+          </div>
+
+          <div class="benefit-spec-divider"></div>
+
+          <div class="spec-benefit-item">
+            <div class="benefit-icon-circle">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B89555" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                <line x1="9" y1="10" x2="15" y2="10"></line>
+              </svg>
+            </div>
+            <span class="benefit-text-label">Serious<br>Enquiries</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- HERO VISUAL (RIGHT 50-52%) -->
+      <div class="hero-visual">
+        <!-- Recreated CSS/SVG Rings framing the phone with integrated Location Pins -->
+        <div class="visual-rings">
+          <div class="ring-circle ring-1"></div>
+          <div class="ring-circle ring-2"></div>
+          <div class="ring-circle ring-3"></div>
+
+          <!-- Integrated Location Pin Markers (Broker Network Reach Nodes) -->
+          <div class="ring-pin pin-top-left" title="Mumbai Network Node">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#B89555" stroke="#FFFFFF" stroke-width="1.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <span class="pin-pulse"></span>
+          </div>
+
+          <div class="ring-pin pin-upper-right" title="Delhi NCR Network Node">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#B89555" stroke="#FFFFFF" stroke-width="1.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <span class="pin-pulse"></span>
+          </div>
+
+          <div class="ring-pin pin-lower-left" title="Bengaluru Network Node">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#B89555" stroke="#FFFFFF" stroke-width="1.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+          </div>
+
+          <div class="ring-pin pin-bottom-right" title="Pune Network Node">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#B89555" stroke="#FFFFFF" stroke-width="1.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+          </div>
+        </div>
+
+        <!-- 08_phone_mockup_trim.png -->
+        <img src="assets/hero/08_phone_mockup_trim.png" alt="Brokers Together Mobile App" class="phone-mockup">
+
+        <!-- 09_inquiry_card_trim.png -->
+        <img src="assets/hero/09_inquiry_card_trim.png" alt="New Inquiry Notification" class="inquiry-card">
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====================================================
+       SECTION 02 — WHY BROKERS TOGETHER ("More Visibility. More Value.")
+       ==================================================== -->
+  <section id="why-us" class="visibility-section">
+    <div class="visibility-container">
+      
+      <!-- Top Grid: Left Intro + Right Visual Showcase -->
+      <div class="visibility-main-grid">
+        
+        <!-- Left Content -->
+        <div class="section-intro">
+          <span class="visibility-eyebrow" id="why-eyebrow">WHY BROKERS TOGETHER</span>
+          <h2 class="visibility-heading" id="why-heading">
+            More Visibility.<br>
+            More Value.
+          </h2>
+          <p class="visibility-lead" id="why-lead">
+            List your project once and get in front of a trusted network of property brokers.
+          </p>
+        </div>
+
+        <!-- Right Visual Showcase (3D Circular Orbit Carousel) -->
+        <div class="visual-showcase" id="3d-carousel-showcase">
+          <!-- Rebuilt SVG Orbit Circle & Node -->
+          <svg class="gold-orbit-svg" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="250" cy="250" rx="230" ry="110" stroke="rgba(184,149,85,0.4)" stroke-width="1.5" stroke-dasharray="8 6" class="orbit-path-circle"/>
+            <circle cx="110" cy="180" r="6" fill="#B89555" class="orbit-node-dot"/>
+          </svg>
+
+          <!-- Carousel Card 1 (Initial Front) -->
+          <div class="orbit-card pos-front" id="orbit-card-1" data-index="0">
+            <div class="main-card-img-container">
+              <img src="https://img.magnific.com/free-photo/modern-luxury-architectural-building_181624-420.jpg" alt="Your Project" class="main-card-img">
+              <button class="favorite-heart-btn" aria-label="Favorite Project">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+              </button>
+              <div class="high-exposure-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5C451E" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                <span>High Exposure</span>
+              </div>
+            </div>
+            <div class="main-card-info">
+              <h3 class="main-card-title">Your Project</h3>
+              <p class="main-card-sub">Visible to <span id="why-claim-brokers">800+</span> Brokers</p>
+            </div>
+          </div>
+
+          <!-- Carousel Card 2 (Initial Right) -->
+          <div class="orbit-card pos-right" id="orbit-card-2" data-index="1">
+            <div class="main-card-img-container">
+              <img src="https://img.magnific.com/free-photo/tall-apartment-buildings-with-modern-design_1268-15585.jpg" alt="Skyline Residences" class="main-card-img">
+              <button class="favorite-heart-btn" aria-label="Favorite Project">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+              </button>
+              <div class="high-exposure-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5C451E" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                <span>Top Investor Choice</span>
+              </div>
+            </div>
+            <div class="main-card-info">
+              <h3 class="main-card-title">Skyline Residences</h3>
+              <p class="main-card-sub">Pune · Prime Penthouse Tower</p>
+            </div>
+          </div>
+
+          <!-- Carousel Card 3 (Initial Left) -->
+          <div class="orbit-card pos-left" id="orbit-card-3" data-index="2">
+            <div class="main-card-img-container">
+              <img src="https://img.magnific.com/free-photo/modern-hotel-complex-low-angle-shot_181624-503.jpg" alt="Riverside Heights" class="main-card-img">
+              <button class="favorite-heart-btn" aria-label="Favorite Project">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+              </button>
+              <div class="high-exposure-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5C451E" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                <span>Verified Listing</span>
+              </div>
+            </div>
+            <div class="main-card-info">
+              <h3 class="main-card-title">Riverside Heights</h3>
+              <p class="main-card-sub">Mumbai · Waterfront Estate</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Metrics Panel (4 Equal Columns - Dark Theme) -->
+      <div class="metrics-panel">
+        <div class="metric-item">
+          <div class="metric-icon-wrap">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#B89555" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          </div>
+          <div class="metric-text-group">
+            <span class="metric-val" id="metric-brokers">800+</span>
+            <span class="metric-lbl">BROKERS</span>
+          </div>
+        </div>
+
+        <div class="metric-divider"></div>
+
+        <div class="metric-item">
+          <div class="metric-icon-wrap">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#B89555" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          </div>
+          <div class="metric-text-group">
+            <span class="metric-val" id="metric-downloads">1,600+</span>
+            <span class="metric-lbl">DOWNLOADS</span>
+          </div>
+        </div>
+
+        <div class="metric-divider"></div>
+
+        <div class="metric-item">
+          <div class="metric-icon-wrap">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#B89555" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          </div>
+          <div class="metric-text-group">
+            <span class="metric-val" id="metric-requirements">400+</span>
+            <span class="metric-lbl">BUYING REQUIREMENTS</span>
+          </div>
+        </div>
+
+        <div class="metric-divider"></div>
+
+        <div class="metric-item">
+          <div class="metric-icon-wrap">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#B89555" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+          </div>
+          <div class="metric-text-group">
+            <span class="metric-val metric-val-text">No Monthly</span>
+            <span class="metric-lbl">SUBSCRIPTION</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Benefits Row (5 Equal Columns - Dark Theme) -->
+      <div class="benefits-row">
+        <div class="benefit-col">
+          <div class="benefit-outline-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B89555" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+          </div>
+          <span class="benefit-col-label">No Subscription<br>Required</span>
+        </div>
+
+        <div class="benefit-col-divider"></div>
+
+        <div class="benefit-col">
+          <div class="benefit-outline-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B89555" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          </div>
+          <span class="benefit-col-label">Large Broker<br>Network</span>
+        </div>
+
+        <div class="benefit-col-divider"></div>
+
+        <div class="benefit-col">
+          <div class="benefit-outline-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B89555" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          </div>
+          <span class="benefit-col-label">Fast Listing<br>Review</span>
+        </div>
+
+        <div class="benefit-col-divider"></div>
+
+        <div class="benefit-col">
+          <div class="benefit-outline-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B89555" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+          </div>
+          <span class="benefit-col-label">Mobile App<br>Access</span>
+        </div>
+
+        <div class="benefit-col-divider"></div>
+
+        <div class="benefit-col">
+          <div class="benefit-outline-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B89555" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          </div>
+          <span class="benefit-col-label">Dedicated<br>Owner Support</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====================================================
+       SECTION 04 — REGISTER · LIST · CONNECT (4-Step Dynamic Journey Flow)
+       ==================================================== -->
+  <section id="how-it-works" class="journey-section">
+    <!-- Subtle Background Curved Gold Lines -->
+    <svg class="journey-bg-svg" viewBox="0 0 1600 750" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M-100 620 Q 300 680, 500 520 T 1100 450 T 1700 200" stroke="rgba(184,149,85,0.18)" stroke-width="1.5" stroke-dasharray="6 6"/>
+      <path d="M1200 40 Q 1450 60, 1650 180" stroke="rgba(184,149,85,0.22)" stroke-width="1.2"/>
+    </svg>
+
+    <div class="journey-container">
+      
+      <!-- Centered Header -->
+      <div class="journey-header">
+        <span class="journey-eyebrow">REGISTER · LIST · CONNECT</span>
+        <h2 class="journey-title">From Project Listing to<br>Serious Enquiries.</h2>
+        <p class="journey-subheading">A simpler, faster way to showcase your project and connect with verified global brokers.</p>
+      </div>
+
+      <!-- 4-Card Horizontal Flow Container -->
+      <div class="journey-flow-wrapper">
+        
+        <!-- 3 Flow Arrow Connectors (1->2, 2->3, 3->4) using arrow.svg asset -->
+        <div class="flow-arrow-item connector-1-2">
+          <svg viewBox="0 0 969 301" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M563.082 104L565.031 101.093L563.082 104ZM576.082 3.5V0V3.5ZM968.082 141.5L954.141 103.566L928.26 134.607L968.082 141.5ZM3.08203 299L6.16423 300.658C8.53945 296.244 10.9595 291.904 13.4228 287.637L10.3917 285.887L7.36064 284.137C4.86225 288.465 2.40808 292.866 -0.000168324 297.342L3.08203 299ZM26.0651 260.566L28.9824 262.5C34.5135 254.156 40.2203 246.128 46.0871 238.408L43.3005 236.29L40.5138 234.173C34.5556 242.013 28.7617 250.163 23.1479 258.632L26.0651 260.566ZM62.0831 213.207L64.7223 215.505C71.2786 207.978 77.9974 200.786 84.8602 193.918L82.3844 191.444L79.9087 188.97C72.9333 195.95 66.1054 203.26 59.4438 210.908L62.0831 213.207ZM104.192 171.091L106.489 173.732C114.013 167.187 121.676 160.99 129.457 155.129L127.351 152.333L125.245 149.538C117.334 155.497 109.544 161.797 101.895 168.451L104.192 171.091ZM151.749 135.264L153.653 138.201C161.995 132.791 170.44 127.732 178.966 123.011L177.27 119.949L175.575 116.887C166.909 121.686 158.324 126.828 149.844 132.328L151.749 135.264ZM203.843 106.41L205.324 109.582C214.335 105.373 223.406 101.515 232.508 97.9916L231.245 94.7276L229.981 91.4636C220.735 95.043 211.519 98.9629 202.362 103.239L203.843 106.41ZM259.351 84.9079L260.396 88.2484C269.909 85.2733 279.425 82.6439 288.915 80.3425L288.09 76.9411L287.265 73.5397C277.631 75.8763 267.967 78.5462 258.307 81.5674L259.351 84.9079ZM317.229 70.8586L317.834 74.3058C327.679 72.5777 337.459 71.1901 347.137 70.1229L346.753 66.644L346.369 63.1651C336.545 64.2484 326.618 65.657 316.624 67.4113L317.229 70.8586ZM376.433 64.3304L376.592 67.8267C386.63 67.3686 396.51 67.25 406.189 67.4466L406.26 63.9473L406.331 60.448C396.499 60.2484 386.465 60.3689 376.273 60.834L376.433 64.3304ZM435.965 65.5658L435.652 69.0519C445.746 69.9556 455.542 71.2068 464.982 72.7729L465.555 69.3201L466.128 65.8673C456.511 64.2718 446.541 62.9987 436.277 62.0798L435.965 65.5658ZM494.743 75.42L493.877 78.8113C503.841 81.3546 513.242 84.2705 521.994 87.507L523.208 84.2243L524.422 80.9415C515.425 77.6145 505.79 74.6277 495.608 72.0288L494.743 75.42ZM550.372 96.3656L548.709 99.4455C553.146 101.841 557.293 104.332 561.133 106.907L563.082 104L565.031 101.093C560.991 98.3839 556.651 95.7781 552.034 93.2858L550.372 96.3656ZM563.082 104L561.133 106.907C565.709 109.975 569.875 112.956 573.652 115.849L575.78 113.071L577.909 110.293C574.003 107.3 569.716 104.234 565.031 101.093L563.082 104ZM598.187 134.355L595.419 136.497C603.588 147.057 604.874 155.294 602.379 161.72L605.642 162.987L608.905 164.253C612.637 154.64 609.923 143.806 600.956 132.214L598.187 134.355ZM582.547 182.468L581.182 179.245C573.187 182.632 563.355 185.359 552.129 187.394L552.753 190.838L553.377 194.281C564.94 192.185 575.304 189.338 583.913 185.69L582.547 182.468ZM521.963 194.496L521.732 191.003C511.921 191.652 501.605 191.903 490.994 191.758L490.946 195.258L490.899 198.757C501.679 198.905 512.181 198.65 522.193 197.988L521.963 194.496ZM459.96 193.773L460.244 190.284C450.064 189.457 439.81 188.292 429.652 186.792L429.14 190.254L428.629 193.717C438.942 195.239 449.347 196.422 459.677 197.261L459.96 193.773ZM398.632 184.655L399.39 181.238C394.34 180.118 389.362 178.911 384.479 177.617L383.582 181L382.685 184.383C387.665 185.703 392.736 186.933 397.875 188.072L398.632 184.655ZM383.582 181L384.479 177.617C379.832 176.385 375.258 174.995 370.781 173.461L369.646 176.773L368.512 180.084C373.146 181.671 377.877 183.109 382.685 184.383L383.582 181ZM342.891 165.364L344.503 162.257C335.696 157.687 327.602 152.563 320.453 147.043L318.314 149.814L316.175 152.584C323.683 158.381 332.135 163.725 341.278 168.47L342.891 165.364ZM297.62 129.457L300.399 127.33C294.261 119.309 290.214 111.021 288.6 102.794L285.166 103.468L281.731 104.142C283.598 113.659 288.209 122.919 294.84 131.584L297.62 129.457ZM289.045 75.2181L292.173 76.789C295.683 69.7999 301.465 62.836 310.012 56.1481L307.855 53.3916L305.699 50.6351C296.508 57.8265 289.98 65.5578 285.917 73.6471L289.045 75.2181ZM332.849 38.4099L334.338 41.5773C342.088 37.9342 350.919 34.4773 360.915 31.2588L359.843 27.9272L358.77 24.5956C348.531 27.8925 339.416 31.4551 331.36 35.2424L332.849 38.4099ZM387.872 20.2636L388.661 23.6735C397.427 21.6444 406.842 19.7671 416.938 18.0606L416.355 14.6096L415.771 11.1585C405.55 12.8862 395.996 14.7904 387.082 16.8538L387.872 20.2636ZM445.217 10.4362L445.642 13.9103C454.797 12.7908 464.412 11.7941 474.502 10.9301L474.203 7.4429L473.905 3.95566C463.736 4.82643 454.037 5.83168 444.792 6.96207L445.217 10.4362ZM503.204 5.40493L503.399 8.89949C512.682 8.38087 522.314 7.9637 532.305 7.65387L532.197 4.15556L532.088 0.657238C522.042 0.96877 512.352 1.38839 503.009 1.91038L503.204 5.40493ZM561.211 3.57169L561.245 7.07153C566.114 7.024 571.059 6.99997 576.082 7V3.5V0C571.037 -3.21865e-05 566.069 0.0241032 561.177 0.0718608L561.211 3.57169ZM576.082 3.5V7C580.594 7.00003 585.564 7.13785 590.948 7.41946L591.131 3.92424L591.314 0.429018C585.827 0.142028 580.733 2.95639e-05 576.082 0V3.5ZM621.183 6.53692L620.778 10.0134C630.068 11.0951 640.01 12.476 650.476 14.1691L651.035 10.714L651.594 7.25897C641.031 5.55024 630.987 4.15476 621.588 3.06041L621.183 6.53692ZM680.723 16.1009L680.034 19.5326C689.553 21.4413 699.359 23.579 709.375 25.9531L710.183 22.5475L710.99 19.1418C700.893 16.7488 691.008 14.5937 681.411 12.6692L680.723 16.1009ZM739.42 30.0083L738.497 33.3843C748.015 35.988 757.649 38.7973 767.34 41.818L768.381 38.4765L769.423 35.1351C759.651 32.0892 749.938 29.2569 740.344 26.6324L739.42 30.0083ZM797.015 47.9815L795.851 51.282C805.242 54.596 814.63 58.1111 823.964 61.8323L825.261 58.5811L826.557 55.3299C817.132 51.5724 807.655 48.0246 798.18 44.681L797.015 47.9815ZM853.034 70.359L851.595 73.5496C860.732 77.6693 869.76 81.9977 878.629 86.5398L880.224 83.4245L881.82 80.3093C872.842 75.7113 863.708 71.3328 854.473 67.1684L853.034 70.359ZM906.681 97.914L904.911 100.934C913.595 106.023 922.054 111.339 930.235 116.888L932.2 113.991L934.164 111.095C925.848 105.454 917.258 100.056 908.451 94.8944L906.681 97.914Z" fill="#B89555"/>
+          </svg>
+        </div>
+
+        <div class="flow-arrow-item connector-2-3">
+          <svg viewBox="0 0 969 301" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M563.082 104L565.031 101.093L563.082 104ZM576.082 3.5V0V3.5ZM968.082 141.5L954.141 103.566L928.26 134.607L968.082 141.5ZM3.08203 299L6.16423 300.658C8.53945 296.244 10.9595 291.904 13.4228 287.637L10.3917 285.887L7.36064 284.137C4.86225 288.465 2.40808 292.866 -0.000168324 297.342L3.08203 299ZM26.0651 260.566L28.9824 262.5C34.5135 254.156 40.2203 246.128 46.0871 238.408L43.3005 236.29L40.5138 234.173C34.5556 242.013 28.7617 250.163 23.1479 258.632L26.0651 260.566ZM62.0831 213.207L64.7223 215.505C71.2786 207.978 77.9974 200.786 84.8602 193.918L82.3844 191.444L79.9087 188.97C72.9333 195.95 66.1054 203.26 59.4438 210.908L62.0831 213.207ZM104.192 171.091L106.489 173.732C114.013 167.187 121.676 160.99 129.457 155.129L127.351 152.333L125.245 149.538C117.334 155.497 109.544 161.797 101.895 168.451L104.192 171.091ZM151.749 135.264L153.653 138.201C161.995 132.791 170.44 127.732 178.966 123.011L177.27 119.949L175.575 116.887C166.909 121.686 158.324 126.828 149.844 132.328L151.749 135.264ZM203.843 106.41L205.324 109.582C214.335 105.373 223.406 101.515 232.508 97.9916L231.245 94.7276L229.981 91.4636C220.735 95.043 211.519 98.9629 202.362 103.239L203.843 106.41ZM259.351 84.9079L260.396 88.2484C269.909 85.2733 279.425 82.6439 288.915 80.3425L288.09 76.9411L287.265 73.5397C277.631 75.8763 267.967 78.5462 258.307 81.5674L259.351 84.9079ZM317.229 70.8586L317.834 74.3058C327.679 72.5777 337.459 71.1901 347.137 70.1229L346.753 66.644L346.369 63.1651C336.545 64.2484 326.618 65.657 316.624 67.4113L317.229 70.8586ZM376.433 64.3304L376.592 67.8267C386.63 67.3686 396.51 67.25 406.189 67.4466L406.26 63.9473L406.331 60.448C396.499 60.2484 386.465 60.3689 376.273 60.834L376.433 64.3304ZM435.965 65.5658L435.652 69.0519C445.746 69.9556 455.542 71.2068 464.982 72.7729L465.555 69.3201L466.128 65.8673C456.511 64.2718 446.541 62.9987 436.277 62.0798L435.965 65.5658ZM494.743 75.42L493.877 78.8113C503.841 81.3546 513.242 84.2705 521.994 87.507L523.208 84.2243L524.422 80.9415C515.425 77.6145 505.79 74.6277 495.608 72.0288L494.743 75.42ZM550.372 96.3656L548.709 99.4455C553.146 101.841 557.293 104.332 561.133 106.907L563.082 104L565.031 101.093C560.991 98.3839 556.651 95.7781 552.034 93.2858L550.372 96.3656ZM563.082 104L561.133 106.907C565.709 109.975 569.875 112.956 573.652 115.849L575.78 113.071L577.909 110.293C574.003 107.3 569.716 104.234 565.031 101.093L563.082 104ZM598.187 134.355L595.419 136.497C603.588 147.057 604.874 155.294 602.379 161.72L605.642 162.987L608.905 164.253C612.637 154.64 609.923 143.806 600.956 132.214L598.187 134.355ZM582.547 182.468L581.182 179.245C573.187 182.632 563.355 185.359 552.129 187.394L552.753 190.838L553.377 194.281C564.94 192.185 575.304 189.338 583.913 185.69L582.547 182.468ZM521.963 194.496L521.732 191.003C511.921 191.652 501.605 191.903 490.994 191.758L490.946 195.258L490.899 198.757C501.679 198.905 512.181 198.65 522.193 197.988L521.963 194.496ZM459.96 193.773L460.244 190.284C450.064 189.457 439.81 188.292 429.652 186.792L429.14 190.254L428.629 193.717C438.942 195.239 449.347 196.422 459.677 197.261L459.96 193.773ZM398.632 184.655L399.39 181.238C394.34 180.118 389.362 178.911 384.479 177.617L383.582 181L382.685 184.383C387.665 185.703 392.736 186.933 397.875 188.072L398.632 184.655ZM383.582 181L384.479 177.617C379.832 176.385 375.258 174.995 370.781 173.461L369.646 176.773L368.512 180.084C373.146 181.671 377.877 183.109 382.685 184.383L383.582 181ZM342.891 165.364L344.503 162.257C335.696 157.687 327.602 152.563 320.453 147.043L318.314 149.814L316.175 152.584C323.683 158.381 332.135 163.725 341.278 168.47L342.891 165.364ZM297.62 129.457L300.399 127.33C294.261 119.309 290.214 111.021 288.6 102.794L285.166 103.468L281.731 104.142C283.598 113.659 288.209 122.919 294.84 131.584L297.62 129.457ZM289.045 75.2181L292.173 76.789C295.683 69.7999 301.465 62.836 310.012 56.1481L307.855 53.3916L305.699 50.6351C296.508 57.8265 289.98 65.5578 285.917 73.6471L289.045 75.2181ZM332.849 38.4099L334.338 41.5773C342.088 37.9342 350.919 34.4773 360.915 31.2588L359.843 27.9272L358.77 24.5956C348.531 27.8925 339.416 31.4551 331.36 35.2424L332.849 38.4099ZM387.872 20.2636L388.661 23.6735C397.427 21.6444 406.842 19.7671 416.938 18.0606L416.355 14.6096L415.771 11.1585C405.55 12.8862 395.996 14.7904 387.082 16.8538L387.872 20.2636ZM445.217 10.4362L445.642 13.9103C454.797 12.7908 464.412 11.7941 474.502 10.9301L474.203 7.4429L473.905 3.95566C463.736 4.82643 454.037 5.83168 444.792 6.96207L445.217 10.4362ZM503.204 5.40493L503.399 8.89949C512.682 8.38087 522.314 7.9637 532.305 7.65387L532.197 4.15556L532.088 0.657238C522.042 0.96877 512.352 1.38839 503.009 1.91038L503.204 5.40493ZM561.211 3.57169L561.245 7.07153C566.114 7.024 571.059 6.99997 576.082 7V3.5V0C571.037 -3.21865e-05 566.069 0.0241032 561.177 0.0718608L561.211 3.57169ZM576.082 3.5V7C580.594 7.00003 585.564 7.13785 590.948 7.41946L591.131 3.92424L591.314 0.429018C585.827 0.142028 580.733 2.95639e-05 576.082 0V3.5ZM621.183 6.53692L620.778 10.0134C630.068 11.0951 640.01 12.476 650.476 14.1691L651.035 10.714L651.594 7.25897C641.031 5.55024 630.987 4.15476 621.588 3.06041L621.183 6.53692ZM680.723 16.1009L680.034 19.5326C689.553 21.4413 699.359 23.579 709.375 25.9531L710.183 22.5475L710.99 19.1418C700.893 16.7488 691.008 14.5937 681.411 12.6692L680.723 16.1009ZM739.42 30.0083L738.497 33.3843C748.015 35.988 757.649 38.7973 767.34 41.818L768.381 38.4765L769.423 35.1351C759.651 32.0892 749.938 29.2569 740.344 26.6324L739.42 30.0083ZM797.015 47.9815L795.851 51.282C805.242 54.596 814.63 58.1111 823.964 61.8323L825.261 58.5811L826.557 55.3299C817.132 51.5724 807.655 48.0246 798.18 44.681L797.015 47.9815ZM853.034 70.359L851.595 73.5496C860.732 77.6693 869.76 81.9977 878.629 86.5398L880.224 83.4245L881.82 80.3093C872.842 75.7113 863.708 71.3328 854.473 67.1684L853.034 70.359ZM906.681 97.914L904.911 100.934C913.595 106.023 922.054 111.339 930.235 116.888L932.2 113.991L934.164 111.095C925.848 105.454 917.258 100.056 908.451 94.8944L906.681 97.914Z" fill="#B89555"/>
+          </svg>
+        </div>
+
+        <div class="flow-arrow-item connector-3-4">
+          <svg viewBox="0 0 969 301" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M563.082 104L565.031 101.093L563.082 104ZM576.082 3.5V0V3.5ZM968.082 141.5L954.141 103.566L928.26 134.607L968.082 141.5ZM3.08203 299L6.16423 300.658C8.53945 296.244 10.9595 291.904 13.4228 287.637L10.3917 285.887L7.36064 284.137C4.86225 288.465 2.40808 292.866 -0.000168324 297.342L3.08203 299ZM26.0651 260.566L28.9824 262.5C34.5135 254.156 40.2203 246.128 46.0871 238.408L43.3005 236.29L40.5138 234.173C34.5556 242.013 28.7617 250.163 23.1479 258.632L26.0651 260.566ZM62.0831 213.207L64.7223 215.505C71.2786 207.978 77.9974 200.786 84.8602 193.918L82.3844 191.444L79.9087 188.97C72.9333 195.95 66.1054 203.26 59.4438 210.908L62.0831 213.207ZM104.192 171.091L106.489 173.732C114.013 167.187 121.676 160.99 129.457 155.129L127.351 152.333L125.245 149.538C117.334 155.497 109.544 161.797 101.895 168.451L104.192 171.091ZM151.749 135.264L153.653 138.201C161.995 132.791 170.44 127.732 178.966 123.011L177.27 119.949L175.575 116.887C166.909 121.686 158.324 126.828 149.844 132.328L151.749 135.264ZM203.843 106.41L205.324 109.582C214.335 105.373 223.406 101.515 232.508 97.9916L231.245 94.7276L229.981 91.4636C220.735 95.043 211.519 98.9629 202.362 103.239L203.843 106.41ZM259.351 84.9079L260.396 88.2484C269.909 85.2733 279.425 82.6439 288.915 80.3425L288.09 76.9411L287.265 73.5397C277.631 75.8763 267.967 78.5462 258.307 81.5674L259.351 84.9079ZM317.229 70.8586L317.834 74.3058C327.679 72.5777 337.459 71.1901 347.137 70.1229L346.753 66.644L346.369 63.1651C336.545 64.2484 326.618 65.657 316.624 67.4113L317.229 70.8586ZM376.433 64.3304L376.592 67.8267C386.63 67.3686 396.51 67.25 406.189 67.4466L406.26 63.9473L406.331 60.448C396.499 60.2484 386.465 60.3689 376.273 60.834L376.433 64.3304ZM435.965 65.5658L435.652 69.0519C445.746 69.9556 455.542 71.2068 464.982 72.7729L465.555 69.3201L466.128 65.8673C456.511 64.2718 446.541 62.9987 436.277 62.0798L435.965 65.5658ZM494.743 75.42L493.877 78.8113C503.841 81.3546 513.242 84.2705 521.994 87.507L523.208 84.2243L524.422 80.9415C515.425 77.6145 505.79 74.6277 495.608 72.0288L494.743 75.42ZM550.372 96.3656L548.709 99.4455C553.146 101.841 557.293 104.332 561.133 106.907L563.082 104L565.031 101.093C560.991 98.3839 556.651 95.7781 552.034 93.2858L550.372 96.3656ZM563.082 104L561.133 106.907C565.709 109.975 569.875 112.956 573.652 115.849L575.78 113.071L577.909 110.293C574.003 107.3 569.716 104.234 565.031 101.093L563.082 104ZM598.187 134.355L595.419 136.497C603.588 147.057 604.874 155.294 602.379 161.72L605.642 162.987L608.905 164.253C612.637 154.64 609.923 143.806 600.956 132.214L598.187 134.355ZM582.547 182.468L581.182 179.245C573.187 182.632 563.355 185.359 552.129 187.394L552.753 190.838L553.377 194.281C564.94 192.185 575.304 189.338 583.913 185.69L582.547 182.468ZM521.963 194.496L521.732 191.003C511.921 191.652 501.605 191.903 490.994 191.758L490.946 195.258L490.899 198.757C501.679 198.905 512.181 198.65 522.193 197.988L521.963 194.496ZM459.96 193.773L460.244 190.284C450.064 189.457 439.81 188.292 429.652 186.792L429.14 190.254L428.629 193.717C438.942 195.239 449.347 196.422 459.677 197.261L459.96 193.773ZM398.632 184.655L399.39 181.238C394.34 180.118 389.362 178.911 384.479 177.617L383.582 181L382.685 184.383C387.665 185.703 392.736 186.933 397.875 188.072L398.632 184.655ZM383.582 181L384.479 177.617C379.832 176.385 375.258 174.995 370.781 173.461L369.646 176.773L368.512 180.084C373.146 181.671 377.877 183.109 382.685 184.383L383.582 181ZM342.891 165.364L344.503 162.257C335.696 157.687 327.602 152.563 320.453 147.043L318.314 149.814L316.175 152.584C323.683 158.381 332.135 163.725 341.278 168.47L342.891 165.364ZM297.62 129.457L300.399 127.33C294.261 119.309 290.214 111.021 288.6 102.794L285.166 103.468L281.731 104.142C283.598 113.659 288.209 122.919 294.84 131.584L297.62 129.457ZM289.045 75.2181L292.173 76.789C295.683 69.7999 301.465 62.836 310.012 56.1481L307.855 53.3916L305.699 50.6351C296.508 57.8265 289.98 65.5578 285.917 73.6471L289.045 75.2181ZM332.849 38.4099L334.338 41.5773C342.088 37.9342 350.919 34.4773 360.915 31.2588L359.843 27.9272L358.77 24.5956C348.531 27.8925 339.416 31.4551 331.36 35.2424L332.849 38.4099ZM387.872 20.2636L388.661 23.6735C397.427 21.6444 406.842 19.7671 416.938 18.0606L416.355 14.6096L415.771 11.1585C405.55 12.8862 395.996 14.7904 387.082 16.8538L387.872 20.2636ZM445.217 10.4362L445.642 13.9103C454.797 12.7908 464.412 11.7941 474.502 10.9301L474.203 7.4429L473.905 3.95566C463.736 4.82643 454.037 5.83168 444.792 6.96207L445.217 10.4362ZM503.204 5.40493L503.399 8.89949C512.682 8.38087 522.314 7.9637 532.305 7.65387L532.197 4.15556L532.088 0.657238C522.042 0.96877 512.352 1.38839 503.009 1.91038L503.204 5.40493ZM561.211 3.57169L561.245 7.07153C566.114 7.024 571.059 6.99997 576.082 7V3.5V0C571.037 -3.21865e-05 566.069 0.0241032 561.177 0.0718608L561.211 3.57169ZM576.082 3.5V7C580.594 7.00003 585.564 7.13785 590.948 7.41946L591.131 3.92424L591.314 0.429018C585.827 0.142028 580.733 2.95639e-05 576.082 0V3.5ZM621.183 6.53692L620.778 10.0134C630.068 11.0951 640.01 12.476 650.476 14.1691L651.035 10.714L651.594 7.25897C641.031 5.55024 630.987 4.15476 621.588 3.06041L621.183 6.53692ZM680.723 16.1009L680.034 19.5326C689.553 21.4413 699.359 23.579 709.375 25.9531L710.183 22.5475L710.99 19.1418C700.893 16.7488 691.008 14.5937 681.411 12.6692L680.723 16.1009ZM739.42 30.0083L738.497 33.3843C748.015 35.988 757.649 38.7973 767.34 41.818L768.381 38.4765L769.423 35.1351C759.651 32.0892 749.938 29.2569 740.344 26.6324L739.42 30.0083ZM797.015 47.9815L795.851 51.282C805.242 54.596 814.63 58.1111 823.964 61.8323L825.261 58.5811L826.557 55.3299C817.132 51.5724 807.655 48.0246 798.18 44.681L797.015 47.9815ZM853.034 70.359L851.595 73.5496C860.732 77.6693 869.76 81.9977 878.629 86.5398L880.224 83.4245L881.82 80.3093C872.842 75.7113 863.708 71.3328 854.473 67.1684L853.034 70.359ZM906.681 97.914L904.911 100.934C913.595 106.023 922.054 111.339 930.235 116.888L932.2 113.991L934.164 111.095C925.848 105.454 917.258 100.056 908.451 94.8944L906.681 97.914Z" fill="#B89555"/>
+          </svg>
+        </div>
+
+        <!-- CARD 1 -->
+        <div class="journey-card card-step-1">
+          <div class="card-badge">01</div>
+          <h3 class="card-title">Create Your Profile</h3>
+          <p class="card-body">Set up your owner or developer account in under 2 minutes with zero upfront subscription.</p>
+          
+          <!-- Mockup 1: Sign-up / Account UI -->
+          <div class="card-mockup signup-mockup">
+            <div class="mockup-header-brand">
+              <span class="mockup-logo-dot"></span>
+              <span class="mockup-brand-txt">BROKERS TOGETHER</span>
+            </div>
+            <h4 class="mockup-welcome">Welcome to Brokers Together</h4>
+            <p class="mockup-subtxt">List. Connect. Grow Globally.</p>
+            <div class="mockup-field">
+              <label>Full Name</label>
+              <div class="mockup-input-val">Rajesh Sharma</div>
+            </div>
+            <div class="mockup-field">
+              <label>Company</label>
+              <div class="mockup-input-val">Sharma Realty Group</div>
+            </div>
+            <div class="mockup-field">
+              <label>Email</label>
+              <div class="mockup-input-val">r.sharma@sharmarealty.in</div>
+            </div>
+            <button class="mockup-cta-btn">Create Account →</button>
+          </div>
+
+          <div class="card-pill-tag">
+            <span class="pill-dot"></span>
+            <span>Under 2 minutes</span>
+          </div>
+        </div>
+
+        <!-- CARD 2 -->
+        <div class="journey-card card-step-2">
+          <div class="card-badge">02</div>
+          <h3 class="card-title">Add Your Project</h3>
+          <p class="card-body">Input specifications, upload photography, set pricing, and choose off-market privacy mode.</p>
+          
+          <!-- Mockup 2: Project Listing Form -->
+          <div class="card-mockup form-mockup">
+            <div class="form-mockup-bar">
+              <span class="form-title">Add New Project</span>
+              <span class="form-draft-act">Save Draft</span>
+            </div>
+            <div class="form-progress-steps">
+              <span class="step-chip done">Basic</span>
+              <span class="step-chip active">Media</span>
+              <span class="step-chip">Pricing</span>
+              <span class="step-chip">Privacy</span>
+            </div>
+            <div class="form-img-preview">
+              <img src="https://img.magnific.com/free-photo/modern-luxury-architectural-building_181624-420.jpg" alt="Project Preview">
+              <span class="upload-tag">+ Upload Photos</span>
+            </div>
+            <div class="mockup-field compact">
+              <label>Project Title</label>
+              <div class="mockup-input-val">Marine Drive Sky Penthouses</div>
+            </div>
+            <div class="mockup-field compact">
+              <label>Property Type</label>
+              <div class="mockup-input-val">Luxury Sea-Facing Residential (Mumbai)</div>
+            </div>
+          </div>
+
+          <div class="card-pill-tag">
+            <span class="pill-dot"></span>
+            <span>Upload stunning visuals</span>
+          </div>
+        </div>
+
+        <!-- CARD 3 -->
+        <div class="journey-card card-step-3">
+          <div class="card-badge">03</div>
+          <h3 class="card-title">Go Live After Review</h3>
+          <p class="card-body">Our team verifies project details (under 24h) and broadcasts your listing to 800+ brokers.</p>
+          
+          <!-- Mockup 3: Review Status Timeline -->
+          <div class="card-mockup review-mockup">
+            <div class="review-header-bar">
+              <span class="review-title">Listing Review Status</span>
+              <span class="status-pill-green">● In Progress</span>
+            </div>
+            <div class="review-timeline">
+              <div class="timeline-row completed">
+                <span class="chk-icon">✓</span>
+                <span class="tl-label">Project Submitted</span>
+                <span class="tl-time">10:42 AM</span>
+              </div>
+              <div class="timeline-row active-now">
+                <span class="chk-icon-spinner"></span>
+                <span class="tl-label">Under Verification</span>
+                <span class="tl-time">Active</span>
+              </div>
+              <div class="timeline-row upcoming">
+                <span class="chk-icon-empty"></span>
+                <span class="tl-label">Compliance Approval</span>
+                <span class="tl-time">Pending</span>
+              </div>
+              <div class="timeline-row upcoming">
+                <span class="chk-icon-empty"></span>
+                <span class="tl-label">Go Live to 800+ Brokers</span>
+                <span class="tl-time">Scheduled</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="trust-highlight-panel">
+            <span class="trust-panel-title">Quality you can trust</span>
+            <p class="trust-panel-text">Every listing is verified to ensure serious, high-quality opportunities.</p>
+          </div>
+        </div>
+
+        <!-- CARD 4 -->
+        <div class="journey-card card-step-4">
+          <div class="card-badge">04</div>
+          <h3 class="card-title">Receive Inquiries & Connect</h3>
+          <p class="card-body">Receive direct broker offers, review buyer profiles, and schedule confidential site viewings.</p>
+          
+          <!-- Mockup 4: Inquiries Dashboard -->
+          <div class="card-mockup inquiries-mockup">
+            <div class="inq-header-bar">
+              <span class="inq-title">Inquiries (12)</span>
+              <span class="inq-link">View All →</span>
+            </div>
+            <div class="inquiry-rows-list">
+              <div class="inq-item-row">
+                <div class="inq-avatar">RV</div>
+                <div class="inq-info">
+                  <span class="inq-name">Rajesh Verma</span>
+                  <span class="inq-meta">Verma Realty · Mumbai 3 BDR Client</span>
+                </div>
+                <span class="inq-time">2m ago</span>
+              </div>
+              <div class="inq-item-row">
+                <div class="inq-avatar gold">PM</div>
+                <div class="inq-info">
+                  <span class="inq-name">Priya Mehta</span>
+                  <span class="inq-meta">Mehta Advisory · Bengaluru HNW Buyer</span>
+                </div>
+                <span class="inq-time">1h ago</span>
+              </div>
+              <div class="inq-item-row">
+                <div class="inq-avatar">AP</div>
+                <div class="inq-info">
+                  <span class="inq-name">Amit Patel</span>
+                  <span class="inq-meta">Patel Estate Advisors · Delhi NCR</span>
+                </div>
+                <span class="inq-time">3h ago</span>
+              </div>
+            </div>
+            <button class="inq-cta-btn">Reply to Inquiries →</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom Decorative Footer Elements -->
+      <div class="journey-footer-decor">
+        <div class="footer-decor-left">
+          <span class="gold-line-decor"></span>
+          <span class="footer-decor-txt">GLOBAL PROJECTS. SERIOUS BROKERS. REAL OPPORTUNITIES.</span>
+        </div>
+        <div class="footer-decor-right">
+          <span class="script-slogan">More Opportunities Ahead</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====================================================
+       SECTION 05 — BUILT FOR REAL ESTATE OWNERS (Prop-Tech Capabilities)
+       ==================================================== -->
+  <section id="features" class="proptech-timeline-section">
+    <div class="proptech-container">
+      
+      <!-- Section Header -->
+      <div class="proptech-header">
+        <span class="proptech-eyebrow">BUILT FOR REAL ESTATE OWNERS</span>
+        <h2 class="proptech-title">Comprehensive Prop-Tech Capabilities</h2>
+        <p class="proptech-subheading">Powerful tools. Real-world results. Everything you need to market, match, and manage high-value properties — all in one platform.</p>
+      </div>
+
+      <!-- Master Alternating Vertical Timeline Composition -->
+      <div class="proptech-timeline-wrapper">
+        
+        <!-- Central Vertical Gold Spine & Progress Bar -->
+        <div class="timeline-central-spine">
+          <div class="timeline-base-line"></div>
+          <div class="timeline-progress-line" id="timelineProgressLine"></div>
+        </div>
+
+        <!-- STAGE 01 (Left: Visual UI, Right: Content) -->
+        <div class="proptech-stage-row stage-left-visual" id="stage-01">
+          <!-- Left Column: Property Visual UI -->
+          <div class="proptech-col proptech-visual-col">
+            <div class="proptech-ui-panel profile-ui-panel">
+              <div class="panel-header-bar">
+                <div class="panel-window-dots">
+                  <span class="dot-red"></span>
+                  <span class="dot-yellow"></span>
+                  <span class="dot-green"></span>
+                </div>
+                <span class="panel-title-text">PROPERTY PROFILE PREVIEW</span>
+              </div>
+              
+              <div class="profile-ui-layout">
+                <!-- Slim Left Nav -->
+                <div class="profile-side-nav">
+                  <span class="nav-item active">OVERVIEW</span>
+                  <span class="nav-item">GALLERY</span>
+                  <span class="nav-item">FLOOR PLANS</span>
+                  <span class="nav-item">AMENITIES</span>
+                  <span class="nav-item">LOCATION</span>
+                  <span class="nav-item">DOCUMENTS</span>
+                </div>
+                
+                <!-- Main Content Area -->
+                <div class="profile-main-content">
+                  <div class="profile-hero-frame">
+                    <img id="mainProfileHeroImg" src="https://img.magnific.com/free-photo/modern-hotel-complex-low-angle-shot_181624-503.jpg" alt="The Imperial Penthouse">
+                    <div class="profile-hero-overlay">
+                      <h4 class="hero-prop-name">The Imperial Penthouse</h4>
+                      <p class="hero-prop-loc">Worli, Mumbai</p>
+                    </div>
+                  </div>
+                  
+                  <div class="profile-meta-strip">
+                    <div class="meta-item">
+                      <span class="meta-val">5 Beds</span>
+                    </div>
+                    <div class="meta-item">
+                      <span class="meta-val">8,200 sq ft</span>
+                    </div>
+                    <div class="meta-item">
+                      <span class="meta-val">Penthouse</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Right Thumbnail Strip -->
+                <div class="profile-thumbs-strip">
+                  <img class="thumb-img active" src="https://img.magnific.com/free-photo/modern-hotel-complex-low-angle-shot_181624-503.jpg" alt="Exterior" onclick="document.getElementById('mainProfileHeroImg').src=this.src">
+                  <img class="thumb-img" src="https://img.magnific.com/free-photo/modern-luxury-architectural-building_181624-420.jpg" alt="Interior" onclick="document.getElementById('mainProfileHeroImg').src=this.src">
+                  <img class="thumb-img" src="https://img.magnific.com/free-photo/view-city-from-balcony_181624-332.jpg" alt="View" onclick="document.getElementById('mainProfileHeroImg').src=this.src">
+                  <span class="view-gallery-btn">View Gallery</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Central Timeline Node 01 -->
+          <div class="proptech-col proptech-center-col">
+            <div class="timeline-node" id="node-01">01</div>
+          </div>
+
+          <!-- Right Column: Text Content -->
+          <div class="proptech-col proptech-text-col">
+            <span class="stage-eyebrow">FEATURE 01</span>
+            <h3 class="stage-serif-title">Detailed Real Estate<br>Project Profiles</h3>
+            <p class="stage-body-text">Showcase high-resolution photography, floor plans, comprehensive amenity lists, interactive location maps, and commercial terms in one structured profile.</p>
+            <a href="projects.html" class="stage-cta-link">
+              <span>EXPLORE A SAMPLE PROFILE</span>
+              <span class="cta-arrow">→</span>
+            </a>
+          </div>
+        </div>
+
+
+        <!-- STAGE 02 (Left: Content, Right: Search/Matching UI) -->
+        <div class="proptech-stage-row stage-right-visual" id="stage-02">
+          <!-- Left Column: Text Content -->
+          <div class="proptech-col proptech-text-col">
+            <span class="stage-eyebrow">FEATURE 02</span>
+            <h3 class="stage-serif-title">Smart Search & Matching</h3>
+            <p class="stage-body-text">Algorithms match your property listing against active broker buying requirements filtered by location, price bracket, asset category, and size.</p>
+            <a href="search.html" class="stage-cta-link">
+              <span>SEE MATCHING IN ACTION</span>
+              <span class="cta-arrow">→</span>
+            </a>
+          </div>
+
+          <!-- Central Timeline Node 02 -->
+          <div class="proptech-col proptech-center-col">
+            <div class="timeline-node" id="node-02">02</div>
+          </div>
+
+          <!-- Right Column: Search/Matching UI -->
+          <div class="proptech-col proptech-visual-col">
+            <div class="proptech-ui-panel search-ui-panel">
+              <div class="panel-header-bar">
+                <div class="panel-window-dots">
+                  <span class="dot-red"></span>
+                  <span class="dot-yellow"></span>
+                  <span class="dot-green"></span>
+                </div>
+                <span class="panel-title-text">BROKER REQUIREMENT MATCHING ENGINE</span>
+              </div>
+
+              <div class="search-ui-body">
+                <!-- Search Input Bar -->
+                <div class="search-input-group">
+                  <span class="search-icon">🔍</span>
+                  <input type="text" class="search-field" value="Worli, Mumbai" readonly>
+                  <button class="search-gold-btn">Search</button>
+                </div>
+
+                <!-- Filter Chips -->
+                <div class="filter-chips-row">
+                  <span class="chip-item active">Penthouse</span>
+                  <span class="chip-item active">₹50Cr+</span>
+                  <span class="chip-item">Any Size</span>
+                </div>
+
+                <!-- Matching Counter Indicator -->
+                <div class="match-count-banner">
+                  <span class="pulse-green-dot"></span>
+                  <span class="match-txt"><strong>14 active broker requirements</strong> matched your parameters</span>
+                </div>
+
+                <!-- Sample Result Card -->
+                <div class="matching-result-card">
+                  <div class="res-card-top">
+                    <div>
+                      <h5 class="res-title">Ultra Luxury Penthouse</h5>
+                      <span class="res-location">Worli, Mumbai</span>
+                    </div>
+                    <span class="bookmark-icon">🔖</span>
+                  </div>
+                  <div class="res-card-details">
+                    <span class="res-price">₹125 Cr</span>
+                    <span class="res-specs">5,000+ sq ft</span>
+                  </div>
+                  <button class="res-action-btn">View Match</button>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- STAGE 03 (Left: Messaging UI, Right: Content) -->
+        <div class="proptech-stage-row stage-left-visual" id="stage-03">
+          <!-- Left Column: Messaging UI -->
+          <div class="proptech-col proptech-visual-col chat-panel-outer-wrapper">
+            
+            <!-- Floating New Inquiry Notification Banner -->
+            <div class="inquiry-notification-card">
+              <div class="notif-bell-icon">🔔</div>
+              <div class="notif-info">
+                <span class="notif-title">New Inquiry Received</span>
+                <span class="notif-sub">A verified broker has inquired about your property.</span>
+              </div>
+              <span class="notif-time">2m ago</span>
+            </div>
+
+            <div class="proptech-ui-panel chat-ui-panel">
+              <div class="panel-header-bar">
+                <div class="panel-window-dots">
+                  <span class="dot-red"></span>
+                  <span class="dot-yellow"></span>
+                  <span class="dot-green"></span>
+                </div>
+                <span class="panel-title-text">DIRECT BROKER CHAT</span>
+                <span class="online-indicator">
+                  <span class="online-dot"></span> Online
+                </span>
+              </div>
+
+              <div class="chat-ui-body">
+                <!-- Broker Message -->
+                <div class="chat-msg-row broker-msg">
+                  <div class="msg-avatar">VS</div>
+                  <div class="msg-bubble-wrap">
+                    <span class="sender-name">Vikramaditya S. (Broker)</span>
+                    <div class="msg-bubble">
+                      “Submitted NDA for The Imperial Penthouse. Buyer ready for Friday viewing.”
+                    </div>
+                    <span class="msg-time">10:24 AM</span>
+                  </div>
+                </div>
+
+                <!-- Owner Reply Message (Gold) -->
+                <div class="chat-msg-row owner-msg">
+                  <div class="msg-bubble-wrap">
+                    <span class="sender-name">You (Property Owner)</span>
+                    <div class="msg-bubble gold-bubble">
+                      “Great. Let’s coordinate the viewing details.”
+                    </div>
+                    <span class="msg-time">10:26 AM</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Central Timeline Node 03 -->
+          <div class="proptech-col proptech-center-col">
+            <div class="timeline-node" id="node-03">03</div>
+          </div>
+
+          <!-- Right Column: Text Content -->
+          <div class="proptech-col proptech-text-col">
+            <span class="stage-eyebrow">FEATURE 03</span>
+            <h3 class="stage-serif-title">Instant Inquiry Alerts &<br>Direct Messaging</h3>
+            <p class="stage-body-text">Get real-time push notifications the moment a verified broker submits a client inquiry. Communicate directly via secure platform messaging.</p>
+            <a href="inquiries.html" class="stage-cta-link">
+              <span>STAY CONNECTED</span>
+              <span class="cta-arrow">→</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====================================================
+       SECTION 06 — BROKER NETWORK ECOSYSTEM
+       ==================================================== -->
+  <section class="broker-network-section">
+    <div class="broker-network-container">
+
+      <!-- Left Content Column -->
+      <div class="broker-network-content">
+        <!-- Eyebrow with Short Gold Line -->
+        <div class="eyebrow-wrapper">
+          <span class="broker-eyebrow">BROKER NETWORK ECOSYSTEM</span>
+          <span class="eyebrow-gold-rule"></span>
+        </div>
+
+        <!-- Headline (Two Lines Desktop) -->
+        <h2 class="broker-headline">Your Project. Their<br>Next Opportunity.</h2>
+
+        <!-- Description -->
+        <p class="broker-description">
+          Connect directly with institutional brokers, wealth strategists, and private real estate advisors managing portfolios globally.
+        </p>
+
+        <!-- Metrics Row (Inside Left Column) -->
+        <div class="metrics-row">
+          <!-- Metric 1 -->
+          <div class="metric-item">
+            <svg class="metric-icon" viewBox="0 0 24 24" fill="none" stroke="#B89555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+            <div class="metric-text-group">
+              <span class="metric-val">5,000+</span>
+              <span class="metric-lbl">Verified Brokers</span>
+            </div>
+          </div>
+
+          <div class="metric-divider"></div>
+
+          <!-- Metric 2 -->
+          <div class="metric-item">
+            <svg class="metric-icon" viewBox="0 0 24 24" fill="none" stroke="#B89555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="2" y1="12" x2="22" y2="12"></line>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+            </svg>
+            <div class="metric-text-group">
+              <span class="metric-val">50+</span>
+              <span class="metric-lbl">Global Reach</span>
+            </div>
+          </div>
+
+          <div class="metric-divider"></div>
+
+          <!-- Metric 3 -->
+          <div class="metric-item">
+            <svg class="metric-icon" viewBox="0 0 24 24" fill="none" stroke="#B89555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+              <line x1="9" y1="6" x2="9.01" y2="6"></line>
+              <line x1="15" y1="6" x2="15.01" y2="6"></line>
+              <line x1="9" y1="10" x2="9.01" y2="10"></line>
+              <line x1="15" y1="10" x2="15.01" y2="10"></line>
+              <line x1="9" y1="14" x2="9.01" y2="14"></line>
+              <line x1="15" y1="14" x2="15.01" y2="14"></line>
+              <line x1="9" y1="18" x2="15" y2="18"></line>
+            </svg>
+            <div class="metric-text-group">
+              <span class="metric-val">Exclusive</span>
+              <span class="metric-lbl">Private Opportunities</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Styled Button CTA -->
+        <a href="auth.html?mode=register" class="broker-cta-button">
+          <span>List Your Project Now</span>
+          <span class="cta-arrow">→</span>
+        </a>
+
+      </div>
+
+      <!-- Right Visual Column (Image + Attached Editorial Side Panel) -->
+      <div class="broker-network-visual">
+        <div class="broker-photo">
+          <img src="https://img.magnific.com/free-photo/real-estate-agent-talking-with-couple-holding-documents-homeowning-contract-new-apartment_482257-22209.jpg" alt="Brokers Meeting Client">
+        </div>
+
+        <div class="broker-editorial-panel">
+          <div class="editorial-gold-line"></div>
+          <div class="editorial-words">
+            <span>PEOPLE</span>
+            <span>CAPITAL</span>
+            <span>PLACES</span>
+            <span>POSSIBILITIES</span>
+          </div>
+          <div class="editorial-gold-line"></div>
+          <p class="editorial-slogan">
+            A more connected<br>real estate world.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====================================================
+       SECTION A — ZERO SUBSCRIPTION. FULL CONTROL.
+       ==================================================== -->
+  <section id="pricing" class="terms-hero-section">
+    <div class="terms-hero-media">
+      <!-- Full-Width Luxury Architecture Background Image -->
+      <img src="https://img.magnific.com/free-photo/modern-luxury-architectural-building_181624-420.jpg" alt="Luxury Residence Terrace" class="terms-hero-bg-img">
+
+      <!-- Floating Left White Content Card -->
+      <div class="terms-hero-card">
+        <span class="terms-card-eyebrow">FLEXIBLE COMMERCIAL TERMS</span>
+        <h2 class="terms-card-headline">Zero Subscription.<br>Full Control.</h2>
+        <p class="terms-card-body">
+          No monthly or annual subscription fee. Pay only when you utilize specialized listing functions or coin-based features.
+        </p>
+        
+        <!-- Primary Pill Button CTA -->
+        <a href="auth.html?mode=register" class="terms-card-cta">
+          <span>START LISTING NOW</span>
+          <span class="cta-arrow">→</span>
+        </a>
+
+        <!-- Mini Value Icon Row -->
+        <div class="terms-card-divider"></div>
+        <div class="terms-mini-value-row">
+          <div class="mini-value-item">
+            <div class="mini-icon-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#B89555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+            </div>
+            <span class="mini-value-txt">No subscription fees</span>
+          </div>
+
+          <div class="mini-value-item">
+            <div class="mini-icon-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#B89555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polygon points="12 8 8 12 12 16 12 8"></polygon>
+              </svg>
+            </div>
+            <span class="mini-value-txt">Full listing control</span>
+          </div>
+
+          <div class="mini-value-item">
+            <div class="mini-icon-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#B89555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 1v22"></path>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+              </svg>
+            </div>
+            <span class="mini-value-txt">Pay only when you use</span>
+          </div>
+        </div>
+      </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ====================================================
+       SECTION B — EVERYTHING YOU NEED. NOTHING YOU DON’T.
+       ==================================================== -->
+  <section class="benefits-section">
+    <div class="benefits-container">
+      
+      <!-- Centered Header Block -->
+      <div class="benefits-header">
+        <span class="benefits-eyebrow">WHY OWNERS CHOOSE US</span>
+        <h2 class="benefits-headline">Everything You Need. Nothing You Don’t.</h2>
+        <p class="benefits-subheading">
+          Powerful tools, dedicated support, and the freedom to manage your listings on your terms.
+        </p>
+      </div>
+
+      <!-- 4 Equal Feature Cards Row -->
+      <div class="benefits-cards-grid">
+        
+        <!-- Card 1 -->
+        <div class="benefit-card">
+          <div class="benefit-icon-holder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#B89555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+          </div>
+          <h3 class="benefit-card-title">All Property Categories Supported</h3>
+          <p class="benefit-card-desc">
+            List residential luxury, commercial towers, land parcels, penthouses, or industrial hubs effortlessly.
+          </p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="benefit-card">
+          <div class="benefit-icon-holder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#B89555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+            </svg>
+          </div>
+          <h3 class="benefit-card-title">Unlimited Edits & Updates</h3>
+          <p class="benefit-card-desc">
+            Update images, adjust asking prices, revise descriptions, and upload new floor plans at any time.
+          </p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="benefit-card">
+          <div class="benefit-icon-holder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#B89555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </div>
+          <h3 class="benefit-card-title">Dedicated Owner Support</h3>
+          <p class="benefit-card-desc">
+            Access concierge assistance for project onboarding, documentation, and broker matching.
+          </p>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="benefit-card">
+          <div class="benefit-icon-holder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#B89555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
+            </svg>
+          </div>
+          <h3 class="benefit-card-title">No Lock-In Contract</h3>
+          <p class="benefit-card-desc">
+            Deactivate or permanently remove your project listing whenever your transaction closes.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====================================================
+       SECTION 08 — SOCIAL PROOF
+       ==================================================== -->
+  <!-- ====================================================
+       SECTION 08 — SOCIAL PROOF / TESTIMONIALS
+       ==================================================== -->
+  <section class="section-testimonials" id="testimonials">
+    <div class="testimonials-container">
+      
+      <!-- Top Eyebrow -->
+      <div class="testimonials-eyebrow-wrapper">
+        <span class="eyebrow-line"></span>
+        <span class="testimonials-eyebrow">REAL STORIES · REAL RESULTS</span>
+        <span class="eyebrow-line"></span>
+      </div>
+
+      <!-- Main Heading -->
+      <h2 class="testimonials-heading">
+        Property Professionals Using<br>Brokers Together
+      </h2>
+
+      <!-- Supporting Description -->
+      <p class="testimonials-description">
+        From off-market deals to commercial towers, see how brokers, investors and developers are closing faster and going further — together.
+      </p>
+
+      <!-- Interactive Multi-Card Editorial Carousel Container -->
+      <div class="testimonials-carousel-wrapper">
+        
+        <!-- Navigation Buttons -->
+        <button class="carousel-nav-btn prev-btn" id="carouselPrevBtn" aria-label="Previous Testimonials">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <button class="carousel-nav-btn next-btn" id="carouselNextBtn" aria-label="Next Testimonials">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+
+        <!-- Carousel Viewport (Clips sliding cards) -->
+        <div class="testimonials-carousel-viewport" id="testimonialsViewport">
+          <!-- Continuous Card Track -->
+          <div class="testimonials-cards-track" id="testimonialsTrack">
+            
+            <!-- CARD 01 — Karan Singhania -->
+            <div class="testimonial-card card-large">
+              <div class="card-portrait-wrapper">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80" alt="Karan Singhania" class="card-portrait-img">
+              </div>
+              <div class="card-content-wrapper">
+                <div class="quote-mark">“</div>
+                <p class="quote-text">
+                  Listing our off-market penthouse gave us immediate access to 800+ vetted brokers without public exposure. Closed our deal in 18 days.
+                </p>
+                <div class="quote-divider"></div>
+                <div class="author-name">Karan Singhania</div>
+                <div class="author-role">Managing Director, Landmark Developers</div>
+                <div class="card-microcopy">REAL CONNECTIONS. REAL OPPORTUNITIES.</div>
+              </div>
+            </div>
+
+            <!-- CARD 02 — Ananya Roy -->
+            <div class="testimonial-card card-small">
+              <div class="card-content-wrapper">
+                <div class="quote-mark">“</div>
+                <p class="quote-text">
+                  The project wizard made listing our $15M commercial tower effortless. Direct broker messaging kept inquiries organized and transparent.
+                </p>
+                <div class="quote-divider"></div>
+                <div class="author-name">Ananya Roy</div>
+                <div class="author-role">Commercial Real Estate Investor</div>
+              </div>
+              <div class="card-portrait-wrapper">
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80" alt="Ananya Roy" class="card-portrait-img">
+                <div class="portrait-overlay-microcopy">
+                  BIGGER<br>OPPORTUNITIES<br>TOGETHER
+                </div>
+              </div>
+            </div>
+
+            <!-- CARD 03 — Vikram Malhotra -->
+            <div class="testimonial-card card-small">
+              <div class="card-content-wrapper">
+                <div class="quote-mark">“</div>
+                <p class="quote-text">
+                  Brokers Together transformed how our firm sources luxury land parcels. The verified network ensures zero time wasted on unvetted contacts.
+                </p>
+                <div class="quote-divider"></div>
+                <div class="author-name">Vikram Malhotra</div>
+                <div class="author-role">Partner, Apex Realty Group</div>
+              </div>
+              <div class="card-portrait-wrapper">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80" alt="Vikram Malhotra" class="card-portrait-img">
+                <div class="portrait-overlay-microcopy">
+                  TRUSTED<br>NETWORKS<br>ALWAYS
+                </div>
+              </div>
+            </div>
+
+            <!-- CARD 04 — Ritu Sharma -->
+            <div class="testimonial-card card-large">
+              <div class="card-portrait-wrapper">
+                <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=800&q=80" alt="Ritu Sharma" class="card-portrait-img">
+              </div>
+              <div class="card-content-wrapper">
+                <div class="quote-mark">“</div>
+                <p class="quote-text">
+                  Secured 3 institutional buyer requirements within 48 hours of publishing. The real-time messaging and privacy controls are unmatched.
+                </p>
+                <div class="quote-divider"></div>
+                <div class="author-name">Ritu Sharma</div>
+                <div class="author-role">Head of Commercial Capital, Prime Assets</div>
+                <div class="card-microcopy">SPEED. DISCRETION. RESULTS.</div>
+              </div>
+            </div>
+
+            <!-- CARD 05 — Devansh Kapoor -->
+            <div class="testimonial-card card-large">
+              <div class="card-portrait-wrapper">
+                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80" alt="Devansh Kapoor" class="card-portrait-img">
+              </div>
+              <div class="card-content-wrapper">
+                <div class="quote-mark">“</div>
+                <p class="quote-text">
+                  From initial pitch to final agreement, the workflow is streamlined. It’s become an indispensable tool for our senior advisory desk.
+                </p>
+                <div class="quote-divider"></div>
+                <div class="author-name">Devansh Kapoor</div>
+                <div class="author-role">VP Advisory, Horizon Properties</div>
+                <div class="card-microcopy">PREMIUM WORKFLOW. FASTER CLOSING.</div>
+              </div>
+            </div>
+
+            <!-- CARD 06 — Meera Nair -->
+            <div class="testimonial-card card-small">
+              <div class="card-content-wrapper">
+                <div class="quote-mark">“</div>
+                <p class="quote-text">
+                  The platform's co-brokering integrity gives our clients peace of mind. We've scaled our transaction velocity by 40% this year.
+                </p>
+                <div class="quote-divider"></div>
+                <div class="author-name">Meera Nair</div>
+                <div class="author-role">Principal Broker, Sovereign Estates</div>
+              </div>
+              <div class="card-portrait-wrapper">
+                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=80" alt="Meera Nair" class="card-portrait-img">
+                <div class="portrait-overlay-microcopy">
+                  SCALING<br>SUCCESS<br>TOGETHER
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Carousel Pagination Dots -->
+        <div class="carousel-controls-bar">
+          <div class="carousel-dots" id="carouselDots">
+            <span class="dot active" data-index="0"></span>
+            <span class="dot" data-index="1"></span>
+            <span class="dot" data-index="2"></span>
+            <span class="dot" data-index="3"></span>
+            <span class="dot" data-index="4"></span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- METRIC / TRUST ROW -->
+      <div class="metric-trust-divider"></div>
+
+      <div class="metric-trust-grid">
+        
+        <div class="metric-trust-item">
+          <div class="metric-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+          </div>
+          <div class="metric-value gold" id="soc-brokers">800+</div>
+          <div class="metric-label">VERIFIED BROKERS</div>
+          <div class="metric-supporting">A trusted network, built for results.</div>
+        </div>
+
+        <div class="metric-trust-item">
+          <div class="metric-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              <polyline points="9 12 11 14 15 10"></polyline>
+            </svg>
+          </div>
+          <div class="metric-value dark" id="soc-sat">96%</div>
+          <div class="metric-label">SATISFACTION RATE</div>
+          <div class="metric-supporting">Brokers love working together.</div>
+        </div>
+
+        <div class="metric-trust-item">
+          <div class="metric-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+          </div>
+          <div class="metric-value gold" id="soc-rating">4.5 ★</div>
+          <div class="metric-label">AVERAGE RATING</div>
+          <div class="metric-supporting">Real feedback from real professionals.</div>
+        </div>
+
+        <div class="metric-trust-item">
+          <div class="metric-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+          </div>
+          <div class="metric-value gold" id="soc-reqs">400+</div>
+          <div class="metric-label">ACTIVE BUYER REQS</div>
+          <div class="metric-supporting">More demand. More deals.</div>
+        </div>
+
+      </div>
+
+      <!-- BOTTOM MICROCOPY -->
+      <div class="testimonials-bottom-slogan">
+        <span class="slogan-line"></span>
+        <span class="slogan-text">A STRONGER REAL ESTATE INDUSTRY TOGETHER</span>
+        <span class="slogan-line"></span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====================================================
+       SECTION 09 — FAQ
+       ==================================================== -->
+  <!-- ====================================================
+       SECTION 09 — QUESTIONS & ANSWERS / FAQ
+       ==================================================== -->
+  <section id="faqs" class="faq-section">
+    
+    <!-- Faded Luxury Property Background Image (Bottom-Left Masked) -->
+    <div class="faq-property-bg-mask">
+      <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80" alt="Luxury Property Architecture" class="faq-property-img">
+    </div>
+
+    <div class="faq-container">
+      
+      <!-- LEFT COLUMN (44%) -->
+      <div class="faq-left-content">
+        
+        <!-- Eyebrow with gold line -->
+        <div class="faq-eyebrow-wrapper">
+          <span class="eyebrow-line-short"></span>
+          <span class="faq-eyebrow">QUESTIONS & ANSWERS</span>
+        </div>
+        
+        <!-- Main 2-line Headline -->
+        <h2 class="faq-heading">
+          Everything You<br>Need to Know
+        </h2>
+
+        <!-- Supporting Copy -->
+        <p class="faq-description">
+          Have custom questions about listing your real estate project?<br>Our concierge team is ready to help.
+        </p>
+
+        <!-- CTA Button -->
+        <a href="auth.html?mode=register" class="faq-cta-btn">
+          <span>List Your Project</span>
+          <span class="cta-arrow">→</span>
+        </a>
+
+        <!-- Lower Secondary Trust Block -->
+        <div class="faq-trust-block">
+          <span class="trust-eyebrow">PREMIUM REAL ESTATE OPPORTUNITIES</span>
+          <p class="trust-description">
+            Brokers Together connects exceptional projects with a global network of qualified brokers.
+          </p>
+          
+          <div class="trust-indicators-row">
+            <div class="trust-indicator-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="2" y1="12" x2="22" y2="12"></line>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+              </svg>
+              <span>GLOBAL REACH</span>
+            </div>
+            <span class="trust-dot-sep">·</span>
+            <div class="trust-indicator-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              </svg>
+              <span>TRUSTED NETWORK</span>
+            </div>
+            <span class="trust-dot-sep">·</span>
+            <div class="trust-indicator-item">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+              </svg>
+              <span>EXCEPTIONAL OPPORTUNITIES</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT COLUMN (56%): Accordion Card Panel -->
+      <div class="faq-right-panel">
+        <div class="faq-accordion-list" id="faqAccordionList">
+          
+          <!-- FAQ ITEM 01 (Default Open) -->
+          <div class="faq-accordion-item active">
+            <button class="faq-accordion-header" type="button" aria-expanded="true" aria-controls="faq-ans-01" onclick="toggleFaqAccordion(this)">
+              <div class="faq-header-left">
+                <span class="faq-number-chip">01</span>
+                <span class="faq-question-text">Do I need an annual or monthly subscription?</span>
+              </div>
+              <span class="faq-accordion-icon">–</span>
+            </button>
+            <div id="faq-ans-01" class="faq-accordion-body">
+              <div class="faq-accordion-body-inner">
+                <p>No. Brokers Together operates without mandatory recurring subscriptions. Pay only when utilizing specialized listing functions.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ ITEM 02 -->
+          <div class="faq-accordion-item">
+            <button class="faq-accordion-header" type="button" aria-expanded="false" aria-controls="faq-ans-02" onclick="toggleFaqAccordion(this)">
+              <div class="faq-header-left">
+                <span class="faq-number-chip">02</span>
+                <span class="faq-question-text">Who can list a project?</span>
+              </div>
+              <span class="faq-accordion-icon">+</span>
+            </button>
+            <div id="faq-ans-02" class="faq-accordion-body">
+              <div class="faq-accordion-body-inner">
+                <p>Property owners, real estate developers, institutional asset managers, and authorized broker representatives can list projects.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ ITEM 03 -->
+          <div class="faq-accordion-item">
+            <button class="faq-accordion-header" type="button" aria-expanded="false" aria-controls="faq-ans-03" onclick="toggleFaqAccordion(this)">
+              <div class="faq-header-left">
+                <span class="faq-number-chip">03</span>
+                <span class="faq-question-text">What types of projects can be listed?</span>
+              </div>
+              <span class="faq-accordion-icon">+</span>
+            </button>
+            <div id="faq-ans-03" class="faq-accordion-body">
+              <div class="faq-accordion-body-inner">
+                <p>Residential developments, commercial towers, penthouses, luxury villas, land parcels, and industrial hubs.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ ITEM 04 -->
+          <div class="faq-accordion-item">
+            <button class="faq-accordion-header" type="button" aria-expanded="false" aria-controls="faq-ans-04" onclick="toggleFaqAccordion(this)">
+              <div class="faq-header-left">
+                <span class="faq-number-chip">04</span>
+                <span class="faq-question-text">How quickly does a listing go live?</span>
+              </div>
+              <span class="faq-accordion-icon">+</span>
+            </button>
+            <div id="faq-ans-04" class="faq-accordion-body">
+              <div class="faq-accordion-body-inner">
+                <p>Listings undergo verification and typically go live to our broker network in under 24 hours.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ ITEM 05 -->
+          <div class="faq-accordion-item">
+            <button class="faq-accordion-header" type="button" aria-expanded="false" aria-controls="faq-ans-05" onclick="toggleFaqAccordion(this)">
+              <div class="faq-header-left">
+                <span class="faq-number-chip">05</span>
+                <span class="faq-question-text">How do I manage and respond to inquiries?</span>
+              </div>
+              <span class="faq-accordion-icon">+</span>
+            </button>
+            <div id="faq-ans-05" class="faq-accordion-body">
+              <div class="faq-accordion-body-inner">
+                <p>All buyer inquiries appear in real time inside your Owner Dashboard with direct messaging capabilities.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ ITEM 06 -->
+          <div class="faq-accordion-item">
+            <button class="faq-accordion-header" type="button" aria-expanded="false" aria-controls="faq-ans-06" onclick="toggleFaqAccordion(this)">
+              <div class="faq-header-left">
+                <span class="faq-number-chip">06</span>
+                <span class="faq-question-text">Can I edit or remove a listing?</span>
+              </div>
+              <span class="faq-accordion-icon">+</span>
+            </button>
+            <div id="faq-ans-06" class="faq-accordion-body">
+              <div class="faq-accordion-body-inner">
+                <p>Yes. You can edit images, update pricing, deactivate, or delete listings at any time without penalty.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ ITEM 07 -->
+          <div class="faq-accordion-item">
+            <button class="faq-accordion-header" type="button" aria-expanded="false" aria-controls="faq-ans-07" onclick="toggleFaqAccordion(this)">
+              <div class="faq-header-left">
+                <span class="faq-number-chip">07</span>
+                <span class="faq-question-text">Is my personal information private?</span>
+              </div>
+              <span class="faq-accordion-icon">+</span>
+            </button>
+            <div id="faq-ans-07" class="faq-accordion-body">
+              <div class="faq-accordion-body-inner">
+                <p>Yes. Off-market privacy controls ensure contact info and exact locations remain masked until NDA confirmation.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====================================================
+       SECTION 10 — FINAL CTA (Black Immersive Section)
+       ==================================================== -->
+  <section class="section-final-cta">
+    <div class="final-cta-container">
+      
+      <!-- Eyebrow with gold side lines -->
+      <div class="final-cta-eyebrow-wrapper">
+        <span class="eyebrow-line"></span>
+        <span class="final-cta-eyebrow">GROW FURTHER TOGETHER</span>
+        <span class="eyebrow-line"></span>
+      </div>
+
+      <!-- Main Headline (3-Line Structure) -->
+      <h2 class="final-cta-headline">
+        Your Project.<br>
+        Our Network.<br>
+        <span class="gold-text">Faster Connections.</span>
+      </h2>
+
+      <!-- Supporting Copy (2 Lines) -->
+      <p class="final-cta-description">
+        List your projects and connect with verified brokers faster.<br>
+        More visibility. More opportunities. Real results.
+      </p>
+
+      <!-- Primary CTA Buttons -->
+      <div class="final-cta-buttons-wrapper">
+        <a href="auth.html?mode=register" class="cta-btn-primary">
+          <span>LIST YOUR PROJECT</span>
+          <span class="cta-arrow">→</span>
+        </a>
+        <button class="cta-btn-secondary" onclick="alert('App download coming soon to iOS & Android!')">
+          <span>DOWNLOAD THE APP</span>
+        </button>
+      </div>
+
+      <!-- Bottom Feature Strip (3 Columns with vertical dividers) -->
+      <div class="final-cta-feature-strip">
+        
+        <!-- Feature 1 -->
+        <div class="feature-strip-item">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              <polyline points="9 12 11 14 15 10"></polyline>
+            </svg>
+          </div>
+          <div class="feature-content">
+            <div class="feature-title">Verified Brokers</div>
+            <div class="feature-desc">Trusted. Qualified. Real.</div>
+          </div>
+        </div>
+
+        <div class="feature-strip-divider"></div>
+
+        <!-- Feature 2 -->
+        <div class="feature-strip-item">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="20" x2="18" y2="10"></line>
+              <line x1="12" y1="20" x2="12" y2="4"></line>
+              <line x1="6" y1="20" x2="6" y2="14"></line>
+            </svg>
+          </div>
+          <div class="feature-content">
+            <div class="feature-title">Premium Exposure</div>
+            <div class="feature-desc">Reach the right audience.</div>
+          </div>
+        </div>
+
+        <div class="feature-strip-divider"></div>
+
+        <!-- Feature 3 -->
+        <div class="feature-strip-item">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+            </svg>
+          </div>
+          <div class="feature-content">
+            <div class="feature-title">Faster Enquiries</div>
+            <div class="feature-desc">Turn opportunities into results.</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====================================================
+       SECTION 11 — FOOTER
+       ==================================================== -->
+  <footer class="main-site-footer">
+    <div class="container footer-grid">
+      
+      <div class="footer-brand-col">
+        <img src="logo.svg" onerror="this.src='http://localhost:5050/logo.svg'" alt="Brokers Together Logo" class="footer-logo">
+        <p class="footer-tagline">Empowering real estate owners, developers, and brokers with direct SSoT network connectivity.</p>
+      </div>
+
+      <div class="footer-nav-col">
+        <strong class="footer-col-title">Explore</strong>
+        <ul class="footer-links-list">
+          <li><a href="#explore" class="footer-link">Projects Feed</a></li>
+          <li><a href="#why-us" class="footer-link">Why Brokers Together</a></li>
+          <li><a href="#how-it-works" class="footer-link">How It Works</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-nav-col">
+        <strong class="footer-col-title">Features</strong>
+        <ul class="footer-links-list">
+          <li><a href="#features" class="footer-link">Off-Market Privacy</a></li>
+          <li><a href="#features" class="footer-link">Broker Matching</a></li>
+          <li><a href="#pricing" class="footer-link">Flexible Listing</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-nav-col">
+        <strong class="footer-col-title">Account</strong>
+        <ul class="footer-links-list">
+          <li><a href="auth.html?mode=login" class="footer-link">Owner Login</a></li>
+          <li><a href="auth.html?mode=register" class="footer-link gold-link">List Your Project</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-nav-col">
+        <strong class="footer-col-title">Contact & Legal</strong>
+        <ul class="footer-links-list">
+          <li id="ftr-email" class="footer-meta-item">concierge@brokerstogether.com</li>
+          <li id="ftr-domain" class="footer-meta-item">Domain: propertyassist.info</li>
+          <li><a href="#" class="footer-link-muted">Privacy Policy</a></li>
+          <li><a href="#" class="footer-link-muted">Terms of Service</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="container footer-bottom-bar">
+      © 2026 Brokers Together. All rights reserved. Dynamic Single Source of Truth Enabled.
+    </div>
+  </footer>
+
+
+  <!-- SSoT Dynamic Script Engine & Motion Controllers -->
+  <script>
+    const benefitVisuals = {
+      1: "https://img.magnific.com/free-photo/real-estate-agent-talking-with-couple-holding-documents-homeowning-contract-new-apartment_482257-22209.jpg",
+      2: "https://img.magnific.com/free-photo/business-meeting-office_1268-21531.jpg",
+      3: "https://img.magnific.com/free-photo/modern-hotel-complex-low-angle-shot_181624-503.jpg",
+      4: "https://img.magnific.com/free-photo/view-serious-business-partners-having-meeting-cafe_1262-16866.jpg",
+      5: "https://img.magnific.com/free-photo/team-architects-working-town-project-conference-room-architect-business-suit_482257-26513.jpg",
+      6: "https://img.magnific.com/free-photo/tall-apartment-buildings-with-modern-design_1268-15585.jpg"
+    };
+
+    window.addEventListener('DOMContentLoaded', () => {
+      window.ecosystemStore.subscribe(state => {
+        renderUI(state);
+      });
+
+      // Navbar scroll trigger
+      window.addEventListener('scroll', () => {
+        const nav = document.getElementById('main-navbar');
+        if (window.scrollY > 40) {
+          nav.classList.add('scrolled');
+        } else {
+          nav.classList.remove('scrolled');
+        }
+      });
+
+      // 3D Circular Orbit Carousel Animation Engine
+      init3DOrbitCarousel();
+    });
+
+    function renderUI(state) {
+      const { settings } = state;
+      if (settings.supportEmail) document.getElementById('ftr-email').textContent = settings.supportEmail;
+      if (settings.webDomain) document.getElementById('ftr-domain').textContent = `Domain: ${settings.webDomain}`;
+      
+      // SSoT metric values binding
+      if (settings.configurableClaims) {
+        const claims = settings.configurableClaims;
+        if (claims.verifiedBrokersCount) {
+          const el1 = document.getElementById('metric-brokers');
+          const el2 = document.getElementById('why-claim-brokers');
+          if (el1) el1.textContent = claims.verifiedBrokersCount;
+          if (el2) el2.textContent = claims.verifiedBrokersCount;
+        }
+        if (claims.appDownloadsCount) {
+          const el = document.getElementById('metric-downloads');
+          if (el) el.textContent = claims.appDownloadsCount;
+        }
+        if (claims.activeRequirementsCount) {
+          const el = document.getElementById('metric-requirements');
+          if (el) el.textContent = claims.activeRequirementsCount;
+        }
+      }
+    }
+
+    function switchBenefitVisual(num, el) {
+      document.querySelectorAll('.benefit-item').forEach(item => item.classList.remove('active'));
+      el.classList.add('active');
+      const img = document.getElementById('benefit-image');
+      img.style.opacity = '0';
+      img.style.transform = 'translateY(6px)';
+      setTimeout(() => {
+        img.src = benefitVisuals[num];
+        img.style.opacity = '1';
+        img.style.transform = 'translateY(0)';
+      }, 150);
+    }
+
+    function toggleFaq(el) {
+      el.classList.toggle('open');
+    }
+
+    // 3D Circular Orbit Carousel Engine
+    function init3DOrbitCarousel() {
+      const showcase = document.getElementById('3d-carousel-showcase');
+      if (!showcase) return;
+
+      const cards = Array.from(showcase.querySelectorAll('.orbit-card'));
+      if (cards.length < 3) return;
+
+      // Positions array matching the circular sequence:
+      // Index 0: pos-front
+      // Index 1: pos-right
+      // Index 2: pos-left
+      const positions = ['pos-front', 'pos-right', 'pos-left'];
+      let currentIndices = [0, 1, 2]; // Card 1 => pos 0, Card 2 => pos 1, Card 3 => pos 2
+
+      function updatePositions() {
+        cards.forEach((card, cardIdx) => {
+          const posIdx = currentIndices[cardIdx];
+          card.className = `orbit-card ${positions[posIdx]}`;
+        });
+      }
+
+      // Rotate counter-clockwise: right -> front, front -> left, left -> right
+      function rotateNext() {
+        currentIndices = currentIndices.map(idx => (idx + 2) % 3);
+        updatePositions();
+      }
+
+      // Rotate clockwise: left -> front, front -> right, right -> left
+      function rotatePrev() {
+        currentIndices = currentIndices.map(idx => (idx + 1) % 3);
+        updatePositions();
+      }
+
+      // Auto rotation timer every 3.5s
+      let timer = setInterval(rotateNext, 3500);
+
+      // Pause on hover over showcase
+      showcase.addEventListener('mouseenter', () => clearInterval(timer));
+      showcase.addEventListener('mouseleave', () => {
+        clearInterval(timer);
+        timer = setInterval(rotateNext, 3500);
+      });
+
+      // Click card to bring it front
+      cards.forEach((card, cardIdx) => {
+        card.addEventListener('click', () => {
+          const posIdx = currentIndices[cardIdx];
+          if (posIdx === 1) {
+            rotateNext(); // Right card clicked -> comes front
+          } else if (posIdx === 2) {
+            rotatePrev(); // Left card clicked -> comes front
+          }
+        });
+      });
+    }
+
+    // Prop-Tech Alternating Timeline Scroll Observer
+    document.addEventListener('DOMContentLoaded', () => {
+      const stages = document.querySelectorAll('.proptech-stage-row');
+      const nodes = [
+        document.getElementById('node-01'),
+        document.getElementById('node-02'),
+        document.getElementById('node-03')
+      ];
+      const progressLine = document.getElementById('timelineProgressLine');
+      const timelineWrapper = document.querySelector('.proptech-timeline-wrapper');
+
+      function updateTimelineOnScroll() {
+        if (!timelineWrapper) return;
+        
+        const rect = timelineWrapper.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+        
+        // Calculate scroll progress through wrapper
+        const totalHeight = rect.height;
+        const currentTop = -rect.top + (windowHeight / 2);
+        let progressPercent = Math.min(Math.max((currentTop / totalHeight) * 100, 0), 100);
+        
+        if (progressLine) {
+          progressLine.style.height = `${progressPercent}%`;
+        }
+
+        // Activate stages and nodes
+        stages.forEach((stage, idx) => {
+          stage.classList.add('active');
+          const stageRect = stage.getBoundingClientRect();
+          if (stageRect.top < windowHeight * 0.75 && stageRect.bottom > 0) {
+            if (nodes[idx]) nodes[idx].classList.add('active');
+          } else {
+            if (stageRect.top > windowHeight * 0.75) {
+              if (nodes[idx]) nodes[idx].classList.remove('active');
+            }
+          }
+        });
+      }
+
+      window.addEventListener('scroll', updateTimelineOnScroll);
+      updateTimelineOnScroll();
+    });
+
+    // ====================================================
+    // SECTION 08 — TESTIMONIALS MULTI-CARD CAROUSEL LOGIC
+    // ====================================================
+    document.addEventListener('DOMContentLoaded', () => {
+      const viewport = document.getElementById('testimonialsViewport');
+      const track = document.getElementById('testimonialsTrack');
+      const cards = Array.from(track ? track.children : []);
+      const dots = Array.from(document.querySelectorAll('#carouselDots .dot'));
+      const prevBtn = document.getElementById('carouselPrevBtn');
+      const nextBtn = document.getElementById('carouselNextBtn');
+      
+      if (!track || !viewport || cards.length === 0) return;
+
+      let currentIndex = 0;
+      let autoplayTimer = null;
+      const autoplayInterval = 5000;
+
+      // Mouse & Touch Drag State
+      let isDragging = false;
+      let startX = 0;
+      let currentTranslate = 0;
+      let prevTranslate = 0;
+      let dragOffset = 0;
+
+      function getCardOffset(index) {
+        if (index <= 0) return 0;
+        let offset = 0;
+        const gap = 28; // matching CSS gap
+        for (let i = 0; i < index && i < cards.length; i++) {
+          offset += cards[i].offsetWidth + gap;
+        }
+        // Clamp offset so track does not scroll beyond last card
+        const maxScroll = Math.max(0, track.offsetWidth - viewport.offsetWidth);
+        return Math.min(offset, maxScroll);
+      }
+
+      function goToSlide(index, animate = true) {
+        if (index < 0) index = cards.length - 1;
+        if (index >= cards.length) index = 0;
+
+        currentIndex = index;
+        const targetOffset = getCardOffset(currentIndex);
+        currentTranslate = -targetOffset;
+        prevTranslate = currentTranslate;
+
+        if (animate) {
+          track.style.transition = 'transform 600ms cubic-bezier(0.16, 1, 0.3, 1)';
+        } else {
+          track.style.transition = 'none';
+        }
+
+        track.style.transform = `translateX(${currentTranslate}px)`;
+
+        // Highlight corresponding dot
+        dots.forEach((dot, i) => {
+          dot.classList.toggle('active', i === Math.min(currentIndex, dots.length - 1));
+        });
+      }
+
+      function nextSlide() {
+        if (currentIndex >= cards.length - 1) {
+          goToSlide(0);
+        } else {
+          goToSlide(currentIndex + 1);
+        }
+      }
+
+      function prevSlide() {
+        if (currentIndex <= 0) {
+          goToSlide(cards.length - 1);
+        } else {
+          goToSlide(currentIndex - 1);
+        }
+      }
+
+      function startAutoplay() {
+        stopAutoplay();
+        autoplayTimer = setInterval(nextSlide, autoplayInterval);
+      }
+
+      function stopAutoplay() {
+        if (autoplayTimer) clearInterval(autoplayTimer);
+      }
+
+      function getPositionX(e) {
+        return e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+      }
+
+      // Drag Event Handlers
+      function dragStart(e) {
+        isDragging = true;
+        startX = getPositionX(e);
+        stopAutoplay();
+        track.style.transition = 'none';
+        viewport.classList.add('grabbing');
+      }
+
+      function dragMove(e) {
+        if (!isDragging) return;
+        const currentX = getPositionX(e);
+        dragOffset = currentX - startX;
+        const newTranslate = prevTranslate + dragOffset;
+        
+        // Add elastic bounds
+        const maxScroll = -Math.max(0, track.offsetWidth - viewport.offsetWidth);
+        if (newTranslate > 50) return;
+        if (newTranslate < maxScroll - 50) return;
+
+        currentTranslate = newTranslate;
+        track.style.transform = `translateX(${currentTranslate}px)`;
+      }
+
+      function dragEnd() {
+        if (!isDragging) return;
+        isDragging = false;
+        viewport.classList.remove('grabbing');
+
+        const threshold = 60;
+        if (dragOffset < -threshold) {
+          nextSlide();
+        } else if (dragOffset > threshold) {
+          prevSlide();
+        } else {
+          goToSlide(currentIndex);
+        }
+        dragOffset = 0;
+        startAutoplay();
+      }
+
+      // Nav Button Events
+      if (nextBtn) {
+        nextBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          nextSlide();
+          startAutoplay();
+        });
+      }
+
+      if (prevBtn) {
+        prevBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          prevSlide();
+          startAutoplay();
+        });
+      }
+
+      // Dot Navigation Events
+      dots.forEach((dot) => {
+        dot.addEventListener('click', (e) => {
+          const idx = parseInt(e.target.dataset.index, 10);
+          goToSlide(idx);
+          startAutoplay();
+        });
+      });
+
+      // Mouse & Touch Drag Attachments
+      viewport.addEventListener('mousedown', dragStart);
+      window.addEventListener('mousemove', dragMove);
+      window.addEventListener('mouseup', dragEnd);
+
+      viewport.addEventListener('touchstart', dragStart, { passive: true });
+      viewport.addEventListener('touchmove', dragMove, { passive: true });
+      viewport.addEventListener('touchend', dragEnd);
+
+      viewport.addEventListener('mouseenter', stopAutoplay);
+      viewport.addEventListener('mouseleave', () => {
+        if (!isDragging) startAutoplay();
+      });
+
+      window.addEventListener('resize', () => {
+        goToSlide(currentIndex, false);
+      });
+
+      // Init
+      goToSlide(0);
+      startAutoplay();
+    });
+
+    // ====================================================
+    // SECTION 09 — ACCORDION TOGGLE FUNCTION
+    // ====================================================
+    function toggleFaqAccordion(headerBtn) {
+      const currentItem = headerBtn.closest('.faq-accordion-item');
+      if (!currentItem) return;
+
+      const isAlreadyActive = currentItem.classList.contains('active');
+      const allItems = document.querySelectorAll('.faq-accordion-item');
+
+      // Close all other items for single-open accordion behavior
+      allItems.forEach((item) => {
+        if (item !== currentItem) {
+          item.classList.remove('active');
+          const btn = item.querySelector('.faq-accordion-header');
+          const icon = item.querySelector('.faq-accordion-icon');
+          if (btn) btn.setAttribute('aria-expanded', 'false');
+          if (icon) icon.textContent = '+';
+        }
+      });
+
+      // Toggle current item state
+      const icon = currentItem.querySelector('.faq-accordion-icon');
+      if (isAlreadyActive) {
+        currentItem.classList.remove('active');
+        headerBtn.setAttribute('aria-expanded', 'false');
+        if (icon) icon.textContent = '+';
+      } else {
+        currentItem.classList.add('active');
+        headerBtn.setAttribute('aria-expanded', 'true');
+        if (icon) icon.textContent = '–';
+      }
+    }
+  </script>
+</body>
+</html>
