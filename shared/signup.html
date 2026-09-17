@@ -241,18 +241,41 @@
       letter-spacing: normal;
     }
 
+    /* Role Selection Tabs (Clean, Flat, Modern Luxury) */
+    .role-selection-wrapper {
+      margin-bottom: 26px;
+    }
+
+    .role-selection-label {
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #64748B;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .role-selection-label .selected-indicator {
+      color: #B89555;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+
     .role-tabs-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      position: relative;
+      gap: 12px;
     }
 
     .role-tab-card {
-      position: relative;
       background: #FFFFFF;
       border: 1.5px solid #E2E8F0;
-      border-radius: 16px;
+      border-radius: 14px;
       padding: 16px 14px;
       display: flex;
       flex-direction: column;
@@ -260,51 +283,18 @@
       gap: 10px;
       cursor: pointer;
       text-align: left;
-      transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
-      overflow: hidden;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
-    }
-
-    /* Subtle decorative ambient glow on card */
-    .role-tab-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, transparent, #B89555, transparent);
-      opacity: 0;
-      transition: opacity 0.25s ease;
+      transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
     }
 
     .role-tab-card:hover {
-      border-color: #D1B888;
+      border-color: #B89555;
       background: #FFFFFF;
-      transform: translateY(-3px);
-      box-shadow: 0 10px 24px rgba(184, 149, 85, 0.12);
     }
 
-    .role-tab-card:hover::before {
-      opacity: 0.6;
-    }
-
-    /* Active Creative State: Rich Luxury Gold with subtle inner sheen */
+    /* Active State: Clean Flat Brand Gold (No gradients, no textures, no reflections, no depth/insets) */
     .role-tab-card.active {
-      background: 
-        radial-gradient(ellipse at 80% 0%, rgba(255, 255, 255, 0.22) 0%, transparent 60%),
-        linear-gradient(140deg, #CA9F53 0%, #B89555 50%, #A47F40 100%);
-      border-color: #9C7738;
-      box-shadow: 
-        0 10px 28px rgba(184, 149, 85, 0.35),
-        inset 0 1px 1px rgba(255, 255, 255, 0.4);
-      transform: translateY(-3px) scale(1.01);
-    }
-
-    .role-tab-card.active::before {
-      opacity: 1;
-      height: 3px;
-      background: #FFF;
+      background: #B89555;
+      border-color: #B89555;
     }
 
     .role-card-top {
@@ -315,61 +305,32 @@
     }
 
     .role-icon-box {
-      width: 38px;
-      height: 38px;
-      border-radius: 11px;
-      background: rgba(184, 149, 85, 0.10);
-      border: 1px solid rgba(184, 149, 85, 0.22);
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: #F8F5EE;
       display: flex;
       align-items: center;
       justify-content: center;
       color: #B89555;
-      transition: all 0.25s ease;
-      box-shadow: 0 2px 6px rgba(184, 149, 85, 0.08);
-    }
-
-    .role-tab-card:hover .role-icon-box {
-      background: rgba(184, 149, 85, 0.18);
-      transform: scale(1.05);
+      transition: background 0.2s ease, color 0.2s ease;
     }
 
     .role-tab-card.active .role-icon-box {
-      background: rgba(255, 255, 255, 0.25);
-      border-color: rgba(255, 255, 255, 0.45);
+      background: rgba(255, 255, 255, 0.22);
       color: #FFFFFF;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-      transform: none;
-    }
-
-    /* Status badge on top right of each tab */
-    .role-badge-pill {
-      font-size: 9.5px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 3px 7px;
-      border-radius: 999px;
-      background: #F1F5F9;
-      color: #64748B;
-      transition: all 0.25s ease;
-    }
-
-    .role-tab-card.active .role-badge-pill {
-      background: rgba(255, 255, 255, 0.24);
-      color: #FFFFFF;
-      border: 1px solid rgba(255, 255, 255, 0.4);
     }
 
     /* Checkmark radio indicator */
     .role-check-dot {
-      width: 16px;
-      height: 16px;
+      width: 18px;
+      height: 18px;
       border-radius: 50%;
       border: 1.5px solid #CBD5E1;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.22s ease;
+      transition: all 0.2s ease;
     }
 
     .role-tab-card.active .role-check-dot {
@@ -389,10 +350,10 @@
     }
 
     .role-tab-title {
-      font-size: 14.5px;
+      font-size: 14px;
       font-weight: 700;
       color: #0C1017;
-      letter-spacing: -0.015em;
+      letter-spacing: -0.01em;
       transition: color 0.2s ease;
     }
 
@@ -404,12 +365,12 @@
       font-size: 11.5px;
       color: #64748B;
       line-height: 1.3;
-      font-weight: 500;
+      font-weight: 400;
       transition: color 0.2s ease;
     }
 
     .role-tab-card.active .role-tab-subtitle {
-      color: rgba(255, 255, 255, 0.92);
+      color: rgba(255, 255, 255, 0.9);
     }
 
     /* Signup Form Grid Layout */
