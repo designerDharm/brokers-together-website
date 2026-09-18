@@ -53,14 +53,21 @@
       padding: 0;
     }
 
-    body {
+    html, body {
+      width: 100%;
+      max-width: 100vw;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
       background-color: var(--dash-bg);
       color: var(--dash-text-main);
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       min-height: 100vh;
-      display: flex;
-      overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      display: flex;
     }
 
     /* ==========================================================================
@@ -69,7 +76,9 @@
     .dashboard-container {
       display: flex;
       width: 100%;
+      max-width: 100vw;
       min-height: 100vh;
+      overflow-x: hidden;
     }
 
     /* --------------------------------------------------------------------------
@@ -598,9 +607,10 @@
        -------------------------------------------------------------------------- */
     .metrics-row {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 16px;
       margin-bottom: 24px;
+      width: 100%;
     }
 
     .metric-card {
@@ -1351,11 +1361,19 @@
     }
 
     /* --------------------------------------------------------------------------
-       11. COMPREHENSIVE RESPONSIVE BREAKPOINTS
+       11. COMPREHENSIVE RESPONSIVE BREAKPOINTS (Large, Laptop, Tablet, Mobile)
        -------------------------------------------------------------------------- */
+    /* 1. Laptop / Compact Desktop: 1024px – 1360px */
     @media (max-width: 1360px) {
+      .dashboard-body {
+        padding: 20px 24px 40px 24px;
+      }
+      .metrics-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
       .dashboard-main-grid {
-        grid-template-columns: minmax(0, 1fr) 360px;
+        grid-template-columns: minmax(0, 1fr) 340px;
         gap: 20px;
       }
       .donut-card-inner {
@@ -1368,24 +1386,23 @@
       }
     }
 
-    @media (max-width: 1100px) {
+    /* Stack to 1-column layout at <= 1160px so laptop content doesn't squeeze right column */
+    @media (max-width: 1160px) {
       .dashboard-main-grid {
         grid-template-columns: 1fr;
-        gap: 20px;
-      }
-      .metrics-row {
-        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
       }
       .hero-skyline-bg {
-        width: 42%;
-        opacity: 0.6;
+        width: 44%;
+        opacity: 0.65;
       }
       .dash-hero-left {
-        max-width: 60%;
+        max-width: 65%;
       }
     }
 
-    @media (max-width: 860px) {
+    /* 2. Tablet: 768px – 1024px (Compact Sidebar & Off-Canvas Transition) */
+    @media (max-width: 1024px) {
       .mobile-menu-btn {
         display: flex;
         align-items: center;
@@ -1393,27 +1410,27 @@
       }
       .sidebar {
         position: fixed;
-        left: -260px;
+        left: -270px;
         top: 0;
         bottom: 0;
         width: 260px;
         height: 100vh;
         z-index: 1000;
         transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.3);
+        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.35);
       }
       .sidebar.open {
         left: 0;
       }
       .dashboard-body {
-        padding: 16px;
+        padding: 18px 20px 36px 20px;
       }
       .topbar {
-        padding: 0 16px;
-        gap: 12px;
+        padding: 0 20px;
+        gap: 14px;
       }
       .search-box {
-        max-width: 220px;
+        max-width: 240px;
       }
       .dash-hero-left {
         max-width: 100%;
@@ -1427,24 +1444,37 @@
       }
     }
 
-    @media (max-width: 640px) {
+    /* 3. Mobile / Small Screen: 0 – 767px */
+    @media (max-width: 767px) {
       .metrics-row {
         grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .dashboard-body {
+        padding: 14px 14px 28px 14px;
       }
       .dash-hero {
         flex-direction: column;
         align-items: flex-start;
-        padding: 20px;
+        padding: 18px;
         gap: 16px;
+        min-height: auto;
       }
       .dash-hero-left {
         padding: 0;
         max-width: 100%;
       }
+      .hero-welcome-title {
+        font-size: 1.6rem;
+      }
       .dash-hero-right {
         padding: 0;
         align-items: flex-start;
         width: 100%;
+      }
+      .btn-list-project {
+        width: 100%;
+        justify-content: center;
       }
       .hero-motto-watermark {
         text-align: left;
@@ -1458,14 +1488,25 @@
       }
       .chart-legend {
         flex-wrap: wrap;
-        gap: 12px;
+        gap: 10px;
       }
       .table-container {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
       }
       .data-table {
-        min-width: 600px;
+        min-width: 580px;
+      }
+      .dash-box-header {
+        padding: 14px 16px;
+      }
+      .activity-row {
+        padding: 12px 14px;
+      }
+      .donut-card-inner,
+      .privacy-card-inner,
+      .help-card-inner {
+        padding: 14px 16px;
       }
     }
   </style>
