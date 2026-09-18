@@ -473,6 +473,12 @@
   ],
   "auditLogs": [
     {
+      "id": "log-1789730832025",
+      "timestamp": "2026-09-18T11:27:12.025Z",
+      "action": "AUTH_SUCCESS",
+      "detail": "Successful sign-in: Rajesh Malhotra (Property Owner)"
+    },
+    {
       "id": "log-1789730741710",
       "timestamp": "2026-09-18T11:25:41.710Z",
       "action": "AUTH_SUCCESS",
