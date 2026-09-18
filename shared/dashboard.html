@@ -1262,6 +1262,9 @@
 
     .help-icon {
       color: var(--dash-gold-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     /* --------------------------------------------------------------------------
@@ -1314,9 +1317,19 @@
     .modal-close-btn {
       background: none;
       border: none;
-      font-size: 1.2rem;
       color: #9CA3AF;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+      border-radius: 6px;
+      transition: color 0.15s ease, background 0.15s ease;
+    }
+
+    .modal-close-btn:hover {
+      color: #111827;
+      background: #F3F4F6;
     }
 
     .modal-body {
@@ -1590,7 +1603,9 @@
         </div>
         <div class="promo-title">Greater Opportunities Together</div>
         <div class="promo-desc">Connect with verified brokers. Showcase your properties. Get results.</div>
-        <button onclick="window.location.href='new-project.html'" class="promo-arrow-btn" title="Create New Listing">→</button>
+        <button onclick="window.location.href='new-project.html'" class="promo-arrow-btn" title="Create New Listing" aria-label="Create New Listing">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </button>
       </div>
 
     </aside>
@@ -1634,11 +1649,23 @@
 
             <!-- Profile Menu -->
             <div class="profile-dropdown-menu" id="profile-dropdown-menu">
-              <a href="settings.html" class="dropdown-item">👤 Account Profile</a>
-              <a href="my-projects.html" class="dropdown-item">🏙 My Projects</a>
-              <a href="settings.html?tab=privacy" class="dropdown-item">🔒 Privacy & Visibility</a>
+              <a href="settings.html" class="dropdown-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                <span>Account Profile</span>
+              </a>
+              <a href="my-projects.html" class="dropdown-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="9" y1="22" x2="9" y2="2"></line><path d="M8 6h.01M16 6h.01M8 10h.01M16 10h.01M8 14h.01M16 14h.01M8 18h.01M16 18h.01"></path></svg>
+                <span>My Projects</span>
+              </a>
+              <a href="settings.html?tab=privacy" class="dropdown-item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                <span>Privacy &amp; Visibility</span>
+              </a>
               <div class="dropdown-divider"></div>
-              <a href="javascript:void(0)" onclick="window.AuthManager.logout('index.html')" class="dropdown-item" style="color: #DC2626;">🚪 Sign Out</a>
+              <a href="javascript:void(0)" onclick="window.AuthManager.logout('index.html')" class="dropdown-item" style="color: #DC2626;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                <span>Sign Out</span>
+              </a>
             </div>
           </div>
 
@@ -1984,15 +2011,21 @@
                 <p style="font-size: 0.76rem; color: #6B7280; line-height: 1.4;">Control what information brokers can see on your listings.</p>
                 <ul class="privacy-checklist">
                   <li class="privacy-item">
-                    <span class="privacy-check-icon">✓</span>
+                    <span class="privacy-check-icon">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </span>
                     <span>Manage project visibility</span>
                   </li>
                   <li class="privacy-item">
-                    <span class="privacy-check-icon">✓</span>
+                    <span class="privacy-check-icon">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </span>
                     <span>Control contact information</span>
                   </li>
                   <li class="privacy-item">
-                    <span class="privacy-check-icon">✓</span>
+                    <span class="privacy-check-icon">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    </span>
                     <span>Update sharing preferences</span>
                   </li>
                 </ul>
@@ -2015,21 +2048,27 @@
                 <div class="help-link-list">
                   <a href="javascript:void(0)" onclick="openSupportModal()" class="help-link-item">
                     <div class="help-link-left">
-                      <span class="help-icon">✉</span>
+                      <span class="help-icon">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                      </span>
                       <span>Contact Support</span>
                     </div>
                     <span>›</span>
                   </a>
                   <a href="javascript:void(0)" onclick="openBookCallModal()" class="help-link-item">
                     <div class="help-link-left">
-                      <span class="help-icon">📅</span>
+                      <span class="help-icon">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                      </span>
                       <span>Book a Call</span>
                     </div>
                     <span>›</span>
                   </a>
                   <a href="javascript:void(0)" onclick="openHelpCenterModal()" class="help-link-item">
                     <div class="help-link-left">
-                      <span class="help-icon">📖</span>
+                      <span class="help-icon">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                      </span>
                       <span>Visit Help Center</span>
                     </div>
                     <span>›</span>
@@ -2057,7 +2096,9 @@
     <div class="modal-box">
       <div class="modal-header">
         <h3 class="modal-title" id="inq-modal-title">Inquiry Details</h3>
-        <button class="modal-close-btn" onclick="closeInquiryModal()">✕</button>
+        <button class="modal-close-btn" onclick="closeInquiryModal()" aria-label="Close modal">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
       </div>
       <div class="modal-body">
         <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 16px;">
@@ -2092,7 +2133,9 @@
     <div class="modal-box" style="max-width: 580px;">
       <div class="modal-header">
         <h3 class="modal-title" id="prev-title">Project Overview</h3>
-        <button class="modal-close-btn" onclick="closeProjectModal()">✕</button>
+        <button class="modal-close-btn" onclick="closeProjectModal()" aria-label="Close modal">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
       </div>
       <div class="modal-body">
         <img id="prev-img" src="" alt="" style="width: 100%; height: 220px; object-fit: cover; border-radius: 8px; margin-bottom: 14px;">
@@ -2115,7 +2158,9 @@
     <div class="modal-box">
       <div class="modal-header">
         <h3 class="modal-title">Privacy & Visibility Preferences</h3>
-        <button class="modal-close-btn" onclick="closePrivacyModal()">✕</button>
+        <button class="modal-close-btn" onclick="closePrivacyModal()" aria-label="Close modal">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
       </div>
       <div class="modal-body">
         <div style="display: flex; flex-direction: column; gap: 14px;">

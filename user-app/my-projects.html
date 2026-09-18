@@ -164,7 +164,9 @@
 
     <!-- EMPTY STATE BOX -->
     <div id="empty-state" class="empty-state-box" style="display: none;">
-      <div style="font-size: 3rem; margin-bottom: 12px;">🏛</div>
+      <div style="margin-bottom: 16px; display: flex; justify-content: center; color: var(--color-gold-dark);">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M3 10h18M5 10v11M9 10v11M15 10v11M19 10v11M12 2L2 7h20L12 2z"></path></svg>
+      </div>
       <h3 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 8px;">No Projects Found</h3>
       <p style="color: var(--color-gray-500); font-size: 0.95rem; max-width: 480px; margin: 0 auto 24px;">You have no real estate project listings matching the selected status tab or filters.</p>
       <a href="new-project.html" class="btn-gold">LIST YOUR FIRST PROJECT</a>
@@ -260,10 +262,19 @@
               ${p.category} • ${p.location} • <strong style="color: var(--color-black);">${p.priceDisplay || p.price}</strong>
             </div>
 
-            <div style="display: flex; gap: 20px; font-size: 0.8rem; color: var(--color-gray-500);">
-              <span>👁 <strong>${p.views || 1420}</strong> Views</span>
-              <span>💼 <strong>${p.inquiriesCount || 8}</strong> Inquiries</span>
-              <span>🕒 Last Updated: <strong>Today</strong></span>
+            <div style="display: flex; gap: 20px; font-size: 0.8rem; color: var(--color-gray-500); align-items: center;">
+              <span style="display: inline-flex; align-items: center; gap: 5px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                <span><strong>${p.views || 1420}</strong> Views</span>
+              </span>
+              <span style="display: inline-flex; align-items: center; gap: 5px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                <span><strong>${p.inquiriesCount || 8}</strong> Inquiries</span>
+              </span>
+              <span style="display: inline-flex; align-items: center; gap: 5px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                <span>Last Updated: <strong>Today</strong></span>
+              </span>
             </div>
           </div>
 
@@ -273,7 +284,9 @@
             <button onclick="alert('Editing ${p.title}')" class="btn-outline-gold" style="font-size: 0.8rem; padding: 6px 12px;">Edit</button>
             <button onclick="alert('Analytics for ${p.title}')" class="btn-outline-gold" style="font-size: 0.8rem; padding: 6px 12px;">Analytics</button>
             <button onclick="deactivateProject('${p.id}')" class="btn-black" style="font-size: 0.8rem; padding: 6px 12px;">Deactivate</button>
-            <button onclick="deleteProject('${p.id}')" style="background: none; border: none; color: #EF4444; font-size: 1.1rem; cursor: pointer; padding: 4px 8px;" title="Delete Project">🗑</button>
+            <button onclick="deleteProject('${p.id}')" style="background: none; border: none; color: #EF4444; cursor: pointer; padding: 6px 8px; display: inline-flex; align-items: center; justify-content: center; border-radius: 4px; transition: background 0.15s ease;" title="Delete Project" aria-label="Delete Project">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+            </button>
           </div>
         </div>
       `;
