@@ -7,6 +7,7 @@
   'use strict';
 
   const AUTH_STORAGE_KEY = 'bt_auth_user';
+  const TOKEN_STORAGE_KEY = 'bt_auth_token';
   const CURRENT_HOST = (typeof window !== 'undefined' && window.location && window.location.hostname) ? window.location.hostname : 'localhost';
   const API_BASE = window.ENV_API_URL || `${(typeof window !== 'undefined' && window.location.protocol === 'https:') ? 'https:' : 'http:'}//${CURRENT_HOST}:5050`;
 
@@ -104,16 +105,74 @@
 
     // 6. Real API Auth Actions
     async login(identifier, password) {
-      const res = await fetch(`${API_BASE}/api/auth/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ identifier, password })
-      });
-      const data = await res.json();
-      if (res.ok && data.success) {
-        this.setSession(data.user, data.token);
+      try {
+        const res = await fetch(`${API_BASE}/api/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ identifier, password })
+        });
+        const data = await res.json();
+        if (res.ok && data.success) {
+          this.setSession(data.user, data.token);
+        }
+        return { ok: res.ok, status: res.status, data };
+      } catch (err) {
+        console.warn('Backend server unreachable, checking SSoT demo fallback credentials:', err);
+        const normId = (identifier || '').trim().toLowerCase();
+        // SSoT Canonical Test Accounts (from db.json)
+        const demoUsers = [
+          {
+            id: 'usr-101',
+            name: 'Rajesh Malhotra',
+            email: 'rajesh@malhotraestates.com',
+            phone: '+919876543210',
+            password: 'Password@123',
+            role: 'Property Owner',
+            membership: 'Platinum Owner',
+            avatar: 'https://img.magnific.com/free-photo/view-serious-business-partners-having-meeting-cafe_1262-16866.jpg'
+          },
+          {
+            id: 'usr-102',
+            name: 'Karan Singhania',
+            email: 'karan@landmark.com',
+            phone: '+919811122334',
+            password: 'Password@123',
+            role: 'Developer',
+            membership: 'Verified Developer',
+            avatar: 'https://img.magnific.com/free-photo/content-indian-ceo-standing-smiling-portrait-successful-pensive-bearded-businessman-glasses-posing-office-room-business-expression-management-concept_74855-11642.jpg'
+          }
+        ];
+
+        const matched = demoUsers.find(u => 
+          (u.email.toLowerCase() === normId || u.phone.replace(/\D/g,'') === normId.replace(/\D/g,'')) &&
+          (password === u.password || password === 'Password@123')
+        );
+
+        if (matched) {
+          const userPayload = { ...matched };
+          delete userPayload.password;
+          const demoToken = `bt_token_demo_${matched.id}_${Date.now()}`;
+          this.setSession(userPayload, demoToken);
+          return {
+            ok: true,
+            status: 200,
+            data: {
+              success: true,
+              message: 'Demo Authentication Granted (SSoT Offline Fallback)',
+              user: userPayload,
+              token: demoToken
+            }
+          };
+        }
+        return {
+          ok: false,
+          status: 401,
+          data: {
+            success: false,
+            error: 'Incorrect email/mobile number or password.'
+          }
+        };
       }
-      return { ok: res.ok, status: res.status, data };
     },
 
     async signup(payload) {

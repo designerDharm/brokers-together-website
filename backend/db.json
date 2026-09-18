@@ -280,6 +280,20 @@
       "inquiriesCount": 5,
       "updated": "01 Mar 2024",
       "description": "Ultra-exclusive contemporary beachfront estate with customized Italian marble finishings, private cinema, and smart security integration."
+    },
+    {
+      "id": "lst-1789722379073",
+      "status": "Submitted for Review",
+      "title": "fgsf",
+      "category": "Commercial",
+      "location": "df, dfd",
+      "price": "dfd",
+      "specs": "dfd • fdf sq m",
+      "description": "ff",
+      "image": "https://img.magnific.com/free-photo/modern-hotel-complex-low-angle-shot_181624-503.jpg",
+      "isOffMarket": true,
+      "ownerId": "usr-101",
+      "ownerName": "Rajesh Malhotra"
     }
   ],
   "deals": [
@@ -297,7 +311,7 @@
       "offeredAmount": 900000000,
       "offeredAmountDisplay": "₹90 Cr",
       "status": "New",
-      "lastUpdated": "2026-03-16T14:30:00Z"
+      "lastUpdated": "2026-09-18T09:09:22.156Z"
     },
     {
       "id": "dl-402",
@@ -313,7 +327,7 @@
       "offeredAmount": 3050000000,
       "offeredAmountDisplay": "₹305 Cr",
       "status": "Replied",
-      "lastUpdated": "2026-03-15T11:00:00Z"
+      "lastUpdated": "2026-09-18T09:09:19.375Z"
     },
     {
       "id": "dl-403",
@@ -329,7 +343,7 @@
       "offeredAmount": 920000000,
       "offeredAmountDisplay": "₹92 Cr",
       "status": "New",
-      "lastUpdated": "2026-03-13T09:15:00Z"
+      "lastUpdated": "2026-09-18T09:09:15.422Z"
     }
   ],
   "dashboardMetrics": {
@@ -365,10 +379,42 @@
     },
     "performanceData": {
       "currentRange": "10 Mar 2024 – 16 Mar 2024",
-      "days": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-      "views": [260, 420, 520, 580, 680, 320, 440],
-      "inquiries": [4, 7, 9, 12, 16, 8, 6],
-      "deals": [1, 2, 2, 4, 5, 2, 1]
+      "days": [
+        "Mon",
+        "Tue",
+        "Wed",
+        "Thu",
+        "Fri",
+        "Sat",
+        "Sun"
+      ],
+      "views": [
+        260,
+        420,
+        520,
+        580,
+        680,
+        320,
+        440
+      ],
+      "inquiries": [
+        4,
+        7,
+        9,
+        12,
+        16,
+        8,
+        6
+      ],
+      "deals": [
+        1,
+        2,
+        2,
+        4,
+        5,
+        2,
+        1
+      ]
     }
   },
   "activities": [
@@ -426,6 +472,42 @@
     }
   ],
   "auditLogs": [
+    {
+      "id": "log-1789727681256",
+      "timestamp": "2026-09-18T10:34:41.256Z",
+      "action": "AUTH_SUCCESS",
+      "detail": "Successful sign-in: Rajesh Malhotra (Property Owner)"
+    },
+    {
+      "id": "log-1789727397904",
+      "timestamp": "2026-09-18T10:29:57.904Z",
+      "action": "AUTH_SUCCESS",
+      "detail": "Successful sign-in: Rajesh Malhotra (Property Owner)"
+    },
+    {
+      "id": "log-1789722562159",
+      "timestamp": "2026-09-18T09:09:22.159Z",
+      "action": "DEAL_UPDATED",
+      "detail": "Deal status updated to: New"
+    },
+    {
+      "id": "log-1789722559378",
+      "timestamp": "2026-09-18T09:09:19.378Z",
+      "action": "DEAL_UPDATED",
+      "detail": "Deal status updated to: Replied"
+    },
+    {
+      "id": "log-1789722555427",
+      "timestamp": "2026-09-18T09:09:15.427Z",
+      "action": "DEAL_UPDATED",
+      "detail": "Deal status updated to: New"
+    },
+    {
+      "id": "log-1789722379079",
+      "timestamp": "2026-09-18T09:06:19.079Z",
+      "action": "LISTING_CREATED",
+      "detail": "New listing published: fgsf"
+    },
     {
       "id": "log-1789710538478",
       "timestamp": "2026-09-18T05:48:58.478Z",

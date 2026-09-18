@@ -133,12 +133,17 @@
 
     .brand-motto-sub {
       color: var(--dash-gold);
-      font-size: 0.52rem;
+      font-size: 0.48rem;
       font-weight: 700;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.08em;
       margin-top: 5px;
       text-transform: uppercase;
       font-family: 'Cinzel', serif;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+      display: block;
     }
 
     /* Navigation Menu */
@@ -556,11 +561,12 @@
       display: flex;
       flex-direction: column;
       align-items: flex-end;
-      justify-content: center;
-      padding-right: 36px;
+      justify-content: space-between;
+      padding: 24px 36px 20px 0;
       position: relative;
       z-index: 3;
-      gap: 10px;
+      height: 100%;
+      min-height: 140px;
     }
 
     /* + List New Project Gold Button */
@@ -608,15 +614,22 @@
 
     .hero-motto-watermark {
       font-family: 'Cinzel', serif;
-      font-size: 0.64rem;
+      font-size: 0.60rem;
       font-weight: 800;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.16em;
       color: rgba(17, 24, 39, 0.75);
-      text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
-      line-height: 1.5;
+      text-shadow: 0 1px 3px rgba(255, 255, 255, 0.9);
+      line-height: 1.4;
       text-transform: uppercase;
       text-align: right;
       pointer-events: none;
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 6px 14px;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      margin-top: 14px;
     }
 
     /* --------------------------------------------------------------------------
@@ -915,8 +928,18 @@
     }
 
     .status-pill.review {
-      background: #E0E7FF;
-      color: #3730A3;
+      background: #FEF9EC;
+      color: #B89555;
+    }
+
+    .status-pill.changes {
+      background: #FFF7ED;
+      color: #EA580C;
+    }
+
+    .status-pill.draft {
+      background: #F1F5F9;
+      color: #64748B;
     }
 
     .status-pill.inactive {
@@ -2678,7 +2701,16 @@
       document.getElementById('prev-price').textContent    = priceStr;
       document.getElementById('prev-location').textContent = `${l.location} · ${l.specs || ''}`;
       document.getElementById('prev-desc').textContent     = l.description || '';
-      document.getElementById('prev-status').textContent   = SST ? SST.getStatusDisplay(l.status, l.isOffMarket).label : (l.status || 'Live');
+      const statusDisplayObj = SST ? SST.getStatusDisplay(l.status, l.isOffMarket) : null;
+      const statusEl = document.getElementById('prev-status');
+      if (statusEl) {
+        statusEl.textContent = statusDisplayObj ? statusDisplayObj.label : (l.status || 'Live');
+        statusEl.className = `status-pill ${statusDisplayObj ? statusDisplayObj.cssClass : 'live'}`;
+        if (statusDisplayObj) {
+          statusEl.style.color = statusDisplayObj.color;
+          statusEl.style.background = statusDisplayObj.bg;
+        }
+      }
       document.getElementById('prev-edit-btn').onclick     = () => window.location.href = `new-project.html?editId=${l.id}`;
       document.getElementById('project-preview-modal').classList.add('active');
     }
