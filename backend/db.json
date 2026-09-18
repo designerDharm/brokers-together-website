@@ -89,6 +89,7 @@
       "membership": "Platinum Owner",
       "status": "Active",
       "phone": "+91 98765 43210",
+      "avatar": "https://img.magnific.com/free-photo/view-serious-business-partners-having-meeting-cafe_1262-16866.jpg",
       "createdAt": "2026-01-15T09:30:00Z"
     },
     {
@@ -100,6 +101,7 @@
       "membership": "Verified Developer",
       "status": "Active",
       "phone": "+91 98111 22334",
+      "avatar": "https://img.magnific.com/free-photo/content-indian-ceo-standing-smiling-portrait-successful-pensive-bearded-businessman-glasses-posing-office-room-business-expression-management-concept_74855-11642.jpg",
       "createdAt": "2026-02-10T10:00:00Z"
     },
     {
@@ -111,6 +113,7 @@
       "role": "Broker",
       "membership": "Verified Member",
       "status": "Active",
+      "avatar": "https://img.magnific.com/free-photo/positive-indian-financial-advisor-holding-open-folder_1262-17502.jpg",
       "createdAt": "2026-09-17T13:19:47.555Z"
     },
     {
@@ -123,6 +126,7 @@
       "membership": "Verified Owner",
       "status": "Active",
       "profileComplete": true,
+      "avatar": "https://img.magnific.com/free-photo/positive-indian-financial-advisor-holding-open-folder_1262-17502.jpg",
       "createdAt": "2026-09-17T13:46:23.413Z"
     }
   ],
@@ -179,9 +183,10 @@
       "ownerId": "usr-101",
       "brokerId": "cns-201",
       "isOffMarket": true,
-      "status": "Live",
+      "status": "Off-Market VIP",
       "views": 1420,
       "inquiriesCount": 8,
+      "updated": "Mar 12, 2024",
       "description": "Exquisite triplex penthouse featuring panoramic Arabian Sea views, floor-to-ceiling glass facades, private infinity plunge pool, and dedicated concierge elevator."
     },
     {
@@ -198,6 +203,7 @@
       "status": "Live",
       "views": 2190,
       "inquiriesCount": 14,
+      "updated": "Mar 08, 2024",
       "description": "Institutional-grade commercial office building fully leased to Fortune 500 technology tenants with 8.2% gross rental yield."
     },
     {
@@ -214,6 +220,7 @@
       "status": "Live",
       "views": 980,
       "inquiriesCount": 5,
+      "updated": "Mar 01, 2024",
       "description": "Ultra-exclusive contemporary beachfront estate with customized Italian marble finishings, private cinema, and smart security integration."
     }
   ],
@@ -223,11 +230,103 @@
       "listingId": "lst-301",
       "listingTitle": "The Imperial Sky Penthouse",
       "buyerName": "Alexander Vance",
+      "agency": "Vertex Realty",
       "counsellorId": "cns-201",
       "counsellorName": "Vikramaditya Singhania",
+      "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
+      "messagePreview": "Interested in scheduling a site visit this week.",
+      "time": "2h ago",
       "offeredAmount": "$12,000,000",
-      "status": "Negotiation",
-      "lastUpdated": "2026-09-17T10:00:00Z"
+      "status": "New",
+      "lastUpdated": "2026-03-16T14:30:00Z"
+    },
+    {
+      "id": "dl-402",
+      "listingId": "lst-302",
+      "listingTitle": "Cyber Pinnacle IT Park - Tower A",
+      "buyerName": "Priya Sharma",
+      "agency": "Capital Partners",
+      "counsellorId": "cns-203",
+      "counsellorName": "Arjun Mehta",
+      "avatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80",
+      "messagePreview": "Can you share more details on leasing terms?",
+      "time": "1d ago",
+      "offeredAmount": "$36,500,000",
+      "status": "Replied",
+      "lastUpdated": "2026-03-15T11:00:00Z"
+    }
+  ],
+  "dashboardMetrics": {
+    "activeProjects": {
+      "count": 2,
+      "delta": "+100%",
+      "deltaDirection": "up",
+      "subtitle": "Visible to Broker Network"
+    },
+    "pendingReview": {
+      "count": 1,
+      "subtitle": "Awaiting approval"
+    },
+    "newInquiries": {
+      "count": 5,
+      "delta": "+67%",
+      "deltaDirection": "up",
+      "subtitle": "In the last 7 days"
+    },
+    "unreadMessages": {
+      "count": 2,
+      "delta": "+100%",
+      "deltaDirection": "up",
+      "subtitle": "Action required"
+    },
+    "statusOverview": {
+      "total": 4,
+      "live": 2,
+      "underReview": 1,
+      "draft": 0,
+      "requiresChanges": 1,
+      "inactive": 0
+    },
+    "performanceData": {
+      "currentRange": "Mar 10, 2024 - Mar 16, 2024",
+      "days": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+      "views": [260, 420, 520, 580, 680, 320, 440],
+      "inquiries": [4, 7, 9, 12, 16, 8, 6],
+      "deals": [1, 2, 2, 4, 5, 2, 1]
+    }
+  },
+  "activities": [
+    {
+      "id": "act-1",
+      "type": "inquiry",
+      "title": "New inquiry from Alexander Vance",
+      "project": "The Imperial Sky Penthouse",
+      "time": "2h ago",
+      "icon": "inquiry"
+    },
+    {
+      "id": "act-2",
+      "type": "approval",
+      "title": "Your project has been approved and is now live",
+      "project": "Cyber Pinnacle IT Park - Tower A",
+      "time": "5h ago",
+      "icon": "approved"
+    },
+    {
+      "id": "act-3",
+      "type": "message",
+      "title": "New message from Priya Sharma",
+      "project": "Regarding The Imperial Sky Penthouse",
+      "time": "1d ago",
+      "icon": "message"
+    },
+    {
+      "id": "act-4",
+      "type": "visibility",
+      "title": "Project visibility updated",
+      "project": "You updated contact visibility settings",
+      "time": "2d ago",
+      "icon": "visibility"
     }
   ],
   "testimonials": [
@@ -247,6 +346,12 @@
     }
   ],
   "auditLogs": [
+    {
+      "id": "log-1789706008740",
+      "timestamp": "2026-09-18T04:33:28.740Z",
+      "action": "AUTH_SUCCESS",
+      "detail": "Successful sign-in: Rajesh Malhotra (Property Owner)"
+    },
     {
       "id": "log-1789653045222",
       "timestamp": "2026-09-17T13:50:45.222Z",

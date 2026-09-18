@@ -201,6 +201,24 @@ class EcosystemStore {
     return res.json();
   }
 
+  async updateListingStatus(id, status) {
+    const res = await fetch(`${API_BASE_URL}/api/listings/${id}/status`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status })
+    });
+    return res.json();
+  }
+
+  async replyToDeal(id, replyText) {
+    const res = await fetch(`${API_BASE_URL}/api/deals/${id}/reply`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ replyText })
+    });
+    return res.json();
+  }
+
   async triggerForceSync() {
     const res = await fetch(`${API_BASE_URL}/api/sync-broadcast`, { method: 'POST' });
     return res.json();

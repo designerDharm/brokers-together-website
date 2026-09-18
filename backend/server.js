@@ -419,10 +419,37 @@ app.put('/api/listings/:id', (req, res) => {
   res.json(db.listings[idx]);
 });
 
+app.patch('/api/listings/:id/status', (req, res) => {
+  const db = readDB();
+  const idx = db.listings.findIndex(l => l.id === req.params.id);
+  if (idx === -1) return res.status(404).json({ error: 'Listing not found' });
+  const { status } = req.body;
+  db.listings[idx].status = status;
+  db.listings[idx].updated = new Date().toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
+  writeDB(db);
+  logAction('LISTING_STATUS_CHANGED', `Listing ${db.listings[idx].title} status changed to: ${status}`);
+  broadcast('LISTING_UPDATED', db.listings[idx]);
+  res.json(db.listings[idx]);
+});
+
 // 6. Deals & Consultations
 app.get('/api/deals', (req, res) => {
   const db = readDB();
   res.json(db.deals || []);
+});
+
+app.post('/api/deals/:id/reply', (req, res) => {
+  const db = readDB();
+  const idx = db.deals.findIndex(d => d.id === req.params.id);
+  if (idx === -1) return res.status(404).json({ error: 'Deal not found' });
+  const { replyText } = req.body;
+  db.deals[idx].status = 'Replied';
+  db.deals[idx].lastReply = replyText;
+  db.deals[idx].lastUpdated = new Date().toISOString();
+  writeDB(db);
+  logAction('DEAL_REPLIED', `Replied to inquiry: ${db.deals[idx].buyerName} regarding ${db.deals[idx].listingTitle}`);
+  broadcast('DEAL_UPDATED', db.deals[idx]);
+  res.json(db.deals[idx]);
 });
 
 app.post('/api/deals', (req, res) => {
