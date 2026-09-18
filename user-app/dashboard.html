@@ -473,10 +473,9 @@
        3. DASHBOARD MAIN INNER WRAPPER & HERO HEADER
        -------------------------------------------------------------------------- */
     .dashboard-body {
-      padding: 24px 36px 48px 36px;
-      max-width: 1600px;
+      padding: 24px 32px 48px 32px;
       width: 100%;
-      margin: 0 auto;
+      box-sizing: border-box;
     }
 
     /* Hero Banner Area */
@@ -1320,59 +1319,150 @@
       gap: 10px;
     }
 
+    /* Mobile Sidebar Toggle Button */
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: #374151;
+      padding: 6px;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+
+    .mobile-menu-btn:hover {
+      background: #F3F4F6;
+    }
+
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(2px);
+      z-index: 999;
+    }
+
+    .sidebar-overlay.active {
+      display: block;
+    }
+
     /* --------------------------------------------------------------------------
-       11. RESPONSIVE BREAKPOINTS
+       11. COMPREHENSIVE RESPONSIVE BREAKPOINTS
        -------------------------------------------------------------------------- */
-    @media (max-width: 1200px) {
+    @media (max-width: 1360px) {
+      .dashboard-main-grid {
+        grid-template-columns: 1fr 380px;
+        gap: 20px;
+      }
+      .donut-card-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+      .status-breakdown-list {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 1100px) {
       .dashboard-main-grid {
         grid-template-columns: 1fr;
+        gap: 20px;
       }
       .metrics-row {
         grid-template-columns: repeat(2, 1fr);
       }
       .hero-skyline-bg {
-        width: 45%;
+        width: 42%;
+        opacity: 0.6;
+      }
+      .dash-hero-left {
+        max-width: 60%;
       }
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 860px) {
+      .mobile-menu-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
       .sidebar {
-        display: none;
+        position: fixed;
+        left: -260px;
+        top: 0;
+        bottom: 0;
+        width: 260px;
+        height: 100vh;
+        z-index: 1000;
+        transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.3);
+      }
+      .sidebar.open {
+        left: 0;
       }
       .dashboard-body {
-        padding: 20px 16px;
+        padding: 16px;
       }
       .topbar {
         padding: 0 16px;
+        gap: 12px;
       }
       .search-box {
-        width: 220px;
+        max-width: 220px;
       }
       .dash-hero-left {
         max-width: 100%;
+        padding: 24px 20px;
+      }
+      .dash-hero-right {
+        padding-right: 20px;
       }
       .hero-skyline-bg {
         display: none;
       }
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 640px) {
       .metrics-row {
         grid-template-columns: 1fr;
       }
       .dash-hero {
         flex-direction: column;
+        align-items: flex-start;
         padding: 20px;
+        gap: 16px;
       }
       .dash-hero-left {
-        padding: 0 0 16px 0;
+        padding: 0;
+        max-width: 100%;
       }
       .dash-hero-right {
         padding: 0;
+        align-items: flex-start;
+        width: 100%;
+      }
+      .hero-motto-watermark {
+        text-align: left;
+      }
+      .topbar-user-name,
+      .topbar-chevron {
+        display: none;
+      }
+      .search-box {
+        display: none;
       }
       .chart-legend {
         flex-wrap: wrap;
-        gap: 10px;
+        gap: 12px;
+      }
+      .table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      .data-table {
+        min-width: 600px;
       }
     }
   </style>
@@ -1381,10 +1471,13 @@
 
   <div class="dashboard-container">
 
+    <!-- Mobile Sidebar Backdrop Overlay -->
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleMobileSidebar()"></div>
+
     <!-- ====================================================================
          1. DARK LUXURY SIDEBAR
          ==================================================================== -->
-    <aside class="sidebar">
+    <aside class="sidebar" id="dashboard-sidebar">
       
       <!-- Brand Logo -->
       <a href="index.html" class="sidebar-brand">
@@ -1481,6 +1574,11 @@
       <!-- Top Utility Header -->
       <header class="topbar">
         
+        <!-- Mobile Sidebar Toggle -->
+        <button class="mobile-menu-btn" onclick="toggleMobileSidebar()" aria-label="Toggle Menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+
         <!-- Live Project & Inquiry Search Input -->
         <div class="search-box">
           <span class="search-icon">
@@ -2446,6 +2544,13 @@
       const current = document.getElementById('chart-date-label').textContent;
       const next = current.includes('Mar 10') ? 'Feb 25, 2024 - Mar 02, 2024' : 'Mar 10, 2024 - Mar 16, 2024';
       document.getElementById('chart-date-label').textContent = next;
+    }
+
+    function toggleMobileSidebar() {
+      const sidebar = document.getElementById('dashboard-sidebar');
+      const overlay = document.getElementById('sidebar-overlay');
+      if (sidebar) sidebar.classList.toggle('open');
+      if (overlay) overlay.classList.toggle('active');
     }
 
     function openNotificationsModal() {
