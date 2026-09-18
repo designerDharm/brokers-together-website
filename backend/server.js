@@ -491,7 +491,7 @@ app.post('/api/sync-broadcast', (req, res) => {
   res.json({ success: true, message: 'Full ecosystem real-time sync triggered' });
 });
 
-server.listen(PORT, () => {
-  console.log(`🚀 Brokers Together SSoT Backend & WebSocket Server running at http://localhost:${PORT}`);
-  console.log(`📌 Primary SVG Logo endpoint: http://localhost:${PORT}/logo.svg`);
+server.listen(PORT, '0.0.0.0', () => {
+  console.log(`🚀 Brokers Together SSoT Backend & WebSocket Server running at http://0.0.0.0:${PORT}`);
+  console.log(`📌 Primary SVG Logo endpoint: http://0.0.0.0:${PORT}/logo.svg`);
 });

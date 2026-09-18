@@ -7,8 +7,8 @@
   'use strict';
 
   const AUTH_STORAGE_KEY = 'bt_auth_user';
-  const TOKEN_STORAGE_KEY = 'bt_auth_token';
-  const API_BASE = window.ENV_API_URL || 'http://localhost:5050';
+  const CURRENT_HOST = (typeof window !== 'undefined' && window.location && window.location.hostname) ? window.location.hostname : 'localhost';
+  const API_BASE = window.ENV_API_URL || `${(typeof window !== 'undefined' && window.location.protocol === 'https:') ? 'https:' : 'http:'}//${CURRENT_HOST}:5050`;
 
   const AuthManager = {
     // 1. Session & Storage

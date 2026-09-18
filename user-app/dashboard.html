@@ -11,6 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,500;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="../shared/style.css">
+  <script src="assets/ssot.js"></script>
   <script src="../shared/api.js" defer></script>
   <script src="../shared/auth.js"></script>
   
@@ -53,50 +54,52 @@
       padding: 0;
     }
 
-    html, body {
-      width: 100%;
-      max-width: 100vw;
+    html {
+      height: 100%;
+    }
+
+    body {
+      min-height: 100dvh;
       margin: 0;
       padding: 0;
       overflow-x: hidden;
       background-color: var(--dash-bg);
       color: var(--dash-text-main);
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      min-height: 100vh;
       -webkit-font-smoothing: antialiased;
     }
 
-    body {
-      display: flex;
-    }
-
     /* ==========================================================================
-       LAYOUT STRUCTURE (Sidebar 250px + Main Area)
+       ROOT LAYOUT — SIDEBAR + WORKSPACE (Flex, no fixed/calc hacks)
        ========================================================================== */
     .dashboard-container {
       display: flex;
+      align-items: flex-start;
       width: 100%;
-      max-width: 100vw;
-      min-height: 100vh;
-      overflow-x: hidden;
+      min-height: 100dvh;
     }
 
     /* --------------------------------------------------------------------------
-       1. LEFT SIDEBAR (Dark Luxury Obsidian)
+       1. LEFT SIDEBAR — position:sticky so it stays IN flex flow
        -------------------------------------------------------------------------- */
     .sidebar {
+      /* Flex: sidebar takes exactly 250px, never grows/shrinks */
+      flex: 0 0 250px;
       width: 250px;
-      min-width: 250px;
+      /* Sticky: stays visible while page scrolls */
+      position: sticky;
+      top: 0;
+      height: 100dvh;
+      /* Internal layout */
       background: var(--dash-sidebar-bg);
       display: flex;
       flex-direction: column;
       padding: 24px 16px 20px 16px;
       border-right: 1px solid var(--dash-sidebar-border);
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      overflow-y: auto;
+      overflow-y: hidden;
       z-index: 100;
+      /* Ensure sidebar never shrinks below content */
+      align-self: flex-start;
     }
 
     /* Brand Header in Sidebar */
@@ -145,6 +148,14 @@
       flex-direction: column;
       gap: 4px;
       margin-top: 10px;
+      flex: 1;
+      overflow-y: auto;
+      min-height: 0;
+      /* Hide scrollbar but allow scroll if nav overflows */
+      scrollbar-width: none;
+    }
+    .nav-menu::-webkit-scrollbar {
+      display: none;
     }
 
     .nav-item-link {
@@ -203,7 +214,8 @@
 
     /* Sidebar Promo Card: "Greater Opportunities Together" */
     .sidebar-promo-card {
-      margin-top: auto;
+      margin-top: 16px;
+      flex-shrink: 0;
       margin-bottom: 16px;
       background: radial-gradient(circle at top left, rgba(184, 149, 85, 0.18), rgba(20, 24, 33, 0.8));
       border: 1px solid rgba(184, 149, 85, 0.35);
@@ -269,6 +281,7 @@
       padding: 10px 6px;
       border-top: 1px solid var(--dash-sidebar-border);
       text-decoration: none;
+      flex-shrink: 0;
     }
 
     .sidebar-user-avatar {
@@ -301,14 +314,18 @@
     }
 
     /* --------------------------------------------------------------------------
-       2. MAIN APPLICATION CONTENT AREA
+       2. MAIN WORKSPACE — fills all remaining space beside the sidebar
        -------------------------------------------------------------------------- */
     .main-workspace {
-      flex: 1;
+      /* Take all remaining width — flex does the math, no calc needed */
+      flex: 1 1 auto;
+      min-width: 0;        /* Prevent flex overflow */
+      /* Internal layout */
       display: flex;
       flex-direction: column;
-      min-width: 0;
+      min-height: 100dvh;
       background: var(--dash-bg);
+      overflow-x: hidden;
     }
 
     /* Top Utility Bar */
@@ -1402,25 +1419,34 @@
     }
 
     /* 2. Tablet: 768px – 1024px (Compact Sidebar & Off-Canvas Transition) */
+    /* Tablet & below: sidebar goes off-canvas, workspace fills full width */
     @media (max-width: 1024px) {
       .mobile-menu-btn {
         display: flex;
         align-items: center;
         justify-content: center;
       }
+      /* On tablet/mobile sidebar leaves flex flow → goes off-canvas */
       .sidebar {
         position: fixed;
+        flex: 0 0 0;        /* Takes no flex space */
+        width: 260px;
         left: -270px;
         top: 0;
         bottom: 0;
-        width: 260px;
-        height: 100vh;
+        height: 100dvh;
         z-index: 1000;
         transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         box-shadow: 4px 0 24px rgba(0, 0, 0, 0.35);
       }
       .sidebar.open {
         left: 0;
+      }
+      /* Workspace now takes full width since sidebar is out of flow */
+      .main-workspace {
+        flex: 1 1 100%;
+        width: 100%;
+        min-width: 0;
       }
       .dashboard-body {
         padding: 18px 20px 36px 20px;
@@ -1553,14 +1579,14 @@
           <a href="inquiries.html" class="nav-item-link">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
             <span>Inquiries</span>
-            <span class="nav-badge">14</span>
+            <span class="nav-badge" id="nav-badge-inquiries" style="display:none;"></span>
           </a>
         </li>
         <li>
           <a href="inquiries.html?filter=messages" class="nav-item-link">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
             <span>Messages</span>
-            <span class="nav-badge badge-amber">2</span>
+            <span class="nav-badge badge-amber" id="nav-badge-messages" style="display:none;"></span>
           </a>
         </li>
         <li>
@@ -1636,7 +1662,7 @@
           <!-- Notifications Bell with Badge -->
           <button class="bell-btn" onclick="openNotificationsModal()" title="View Notifications">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-            <span class="bell-badge">3</span>
+            <span class="bell-badge" id="bell-badge-count" style="display:none;"></span>
           </button>
 
           <!-- User Pill & Dropdown Toggle -->
@@ -1703,8 +1729,8 @@
             </div>
             <span class="metric-card-title">Active Projects</span>
             <div class="metric-val-row">
-              <span class="metric-number" id="metric-active-count">2</span>
-              <span class="metric-badge green">▲ +100%</span>
+              <span class="metric-number" id="metric-active-count">—</span>
+              <span class="metric-badge green" id="metric-active-delta" style="display:none;"></span>
             </div>
             <span class="metric-subtext">Visible to Broker Network</span>
           </div>
@@ -1717,11 +1743,11 @@
               </div>
               <span class="metric-chevron">›</span>
             </div>
-            <span class="metric-card-title">Pending Review</span>
+            <span class="metric-card-title">Under Review</span>
             <div class="metric-val-row">
-              <span class="metric-number" id="metric-pending-count">1</span>
+              <span class="metric-number" id="metric-pending-count">—</span>
             </div>
-            <span class="metric-subtext">Awaiting approval</span>
+            <span class="metric-subtext">Under Review</span>
           </div>
 
           <!-- Card 3: New Inquiries -->
@@ -1734,8 +1760,8 @@
             </div>
             <span class="metric-card-title">New Inquiries</span>
             <div class="metric-val-row">
-              <span class="metric-number" id="metric-inquiries-count">5</span>
-              <span class="metric-badge green">▲ +67%</span>
+              <span class="metric-number" id="metric-inquiries-count">—</span>
+              <span class="metric-badge green" id="metric-inq-delta" style="display:none;"></span>
             </div>
             <span class="metric-subtext">In the last 7 days</span>
           </div>
@@ -1750,8 +1776,8 @@
             </div>
             <span class="metric-card-title">Unread Messages</span>
             <div class="metric-val-row">
-              <span class="metric-number" id="metric-unread-count">2</span>
-              <span class="metric-badge red">▲ +100%</span>
+              <span class="metric-number" id="metric-unread-count">—</span>
+              <span class="metric-badge red" id="metric-msg-delta" style="display:none;"></span>
             </div>
             <span class="metric-subtext">Action required</span>
           </div>
@@ -1780,7 +1806,7 @@
                 <!-- Date Filter Dropdown -->
                 <div class="chart-date-filter" onclick="toggleDateFilterModal()">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                  <span id="chart-date-label">Mar 10, 2024 - Mar 16, 2024</span>
+                  <span id="chart-date-label">Loading...</span>
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
                 </div>
               </div>
@@ -1843,7 +1869,7 @@
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B89555" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="9" y1="22" x2="9" y2="2"></line></svg>
                   <h2 class="dash-box-title">Recent Projects</h2>
                 </div>
-                <a href="new-project.html" class="dash-box-link">+ Add Project</a>
+                <a href="new-project.html" class="dash-box-link">List New Project</a>
               </div>
 
               <div class="table-container">
@@ -2167,221 +2193,358 @@
        REACTIVE JAVASCRIPT CONTROLLER (SSoT + WebSocket)
        ==================================================================== -->
   <script>
+    /* ==========================================================================
+       BROKERS TOGETHER — DASHBOARD CONTROLLER (SSoT Compliant)
+       All values derived from ecosystemStore + BTSST module.
+       Zero hardcoded content policy enforced.
+       ========================================================================== */
+
+    const SST = window.BTSST; // Centralized SSoT module
+
     let activeDealsCache = [];
     let activeListingsCache = [];
     let currentInquirySelected = null;
+    let _perfDataCache = null;
 
     window.addEventListener('DOMContentLoaded', () => {
-      // Ensure page starts at top
       window.scrollTo(0, 0);
 
       // 1. Check logged-in user
       const authUser = window.AuthManager ? window.AuthManager.getUser() : null;
-      if (authUser) {
-        setOwnerIdentity(authUser);
-      }
+      if (authUser) setOwnerIdentity(authUser);
 
-      // 2. Subscribe to reactive ecosystem store
+      // 2. Subscribe to reactive ecosystem store (SSoT)
       if (window.ecosystemStore) {
-        window.ecosystemStore.subscribe(state => {
-          renderDashboardState(state);
-        });
+        window.ecosystemStore.subscribe(state => renderDashboardState(state));
       }
     });
 
+    /* ────────────────────────────────────────────────────────────────────────
+       IDENTITY — populate name / avatar from authenticated session
+    ──────────────────────────────────────────────────────────────────────── */
     function setOwnerIdentity(user) {
       if (!user) return;
-      const heroName = document.getElementById('dash-hero-name');
-      const topName = document.getElementById('top-user-name');
-      const sbName = document.getElementById('sb-user-name');
-      const sbRole = document.getElementById('sb-user-role');
-      const topAvatar = document.getElementById('top-avatar-img');
-      const sbAvatar = document.getElementById('sb-avatar-img');
-
-      if (heroName) heroName.textContent = user.name;
-      if (topName) topName.textContent = user.name;
-      if (sbName) sbName.textContent = user.name;
-      if (sbRole && user.role) sbRole.textContent = user.role;
-
+      const els = {
+        heroName:  document.getElementById('dash-hero-name'),
+        topName:   document.getElementById('top-user-name'),
+        sbName:    document.getElementById('sb-user-name'),
+        sbRole:    document.getElementById('sb-user-role'),
+        topAvatar: document.getElementById('top-avatar-img'),
+        sbAvatar:  document.getElementById('sb-avatar-img')
+      };
+      if (els.heroName) els.heroName.textContent = user.name || '';
+      if (els.topName)  els.topName.textContent  = user.name || '';
+      if (els.sbName)   els.sbName.textContent   = user.name || '';
+      if (els.sbRole && user.role) els.sbRole.textContent = user.role;
       if (user.avatar) {
-        if (topAvatar) topAvatar.src = user.avatar;
-        if (sbAvatar) sbAvatar.src = user.avatar;
+        if (els.topAvatar) els.topAvatar.src = user.avatar;
+        if (els.sbAvatar)  els.sbAvatar.src  = user.avatar;
       }
     }
 
+    /* ────────────────────────────────────────────────────────────────────────
+       MASTER RENDER — single entry point for all state updates
+    ──────────────────────────────────────────────────────────────────────── */
     function renderDashboardState(state) {
-      const { listings, deals, users, activities, dashboardMetrics } = state;
+      const { listings, deals, users, activities, dashboardMetrics, settings } = state;
+
+      // Resolve current owner from auth session first, then store
       const authUser = window.AuthManager ? window.AuthManager.getUser() : null;
-      const currentUser = authUser || (users && users.length > 0 ? users[0] : { name: 'Rajesh Malhotra' });
+      const currentUser = authUser ||
+        (users && users.find(u => u.role === 'Property Owner')) ||
+        { name: 'Rajesh Malhotra', id: 'usr-101' };
 
       setOwnerIdentity(currentUser);
 
-      activeListingsCache = (listings || []).filter(l => l.ownerId === currentUser.id || !l.ownerId);
-      activeDealsCache = deals || [];
+      // ── Compute ALL metrics from live data (single source) ──
+      const computed = SST
+        ? SST.computeOwnerMetrics(listings, deals, currentUser.id)
+        : null;
 
-      // 1. Render Metrics
-      const activeCount = activeListingsCache.length;
-      document.getElementById('metric-active-count').textContent = activeCount || '2';
-      
-      if (dashboardMetrics) {
-        if (dashboardMetrics.newInquiries) {
-          document.getElementById('metric-inquiries-count').textContent = dashboardMetrics.newInquiries.count;
-        } else {
-          document.getElementById('metric-inquiries-count').textContent = activeDealsCache.length || '5';
-        }
-        if (dashboardMetrics.pendingReview) {
-          document.getElementById('metric-pending-count').textContent = dashboardMetrics.pendingReview.count;
-        }
-        if (dashboardMetrics.unreadMessages) {
-          document.getElementById('metric-unread-count').textContent = dashboardMetrics.unreadMessages.count;
-        }
-        if (dashboardMetrics.statusOverview) {
-          document.getElementById('donut-total-val').textContent = dashboardMetrics.statusOverview.total;
-          document.getElementById('stat-live-count').textContent = dashboardMetrics.statusOverview.live;
-          document.getElementById('stat-review-count').textContent = dashboardMetrics.statusOverview.underReview;
-          document.getElementById('stat-draft-count').textContent = dashboardMetrics.statusOverview.draft;
-          document.getElementById('stat-changes-count').textContent = dashboardMetrics.statusOverview.requiresChanges;
-          document.getElementById('stat-inactive-count').textContent = dashboardMetrics.statusOverview.inactive;
-        }
-      }
+      // Owner-filtered caches for tables
+      activeListingsCache = computed ? computed.ownerListings : (listings || []);
+      activeDealsCache    = computed ? computed.ownerDeals    : (deals || []);
 
-      // 2. Render Chart Data
-      renderPerformanceChart(dashboardMetrics ? dashboardMetrics.performanceData : null);
+      // ── 1. KPI Cards ──────────────────────────────────────────────────────
+      renderKPICards(computed, dashboardMetrics, settings);
 
-      // 3. Render Projects Table
+      // ── 2. Nav + Bell Badges ──────────────────────────────────────────────
+      renderNavBadges(computed);
+
+      // ── 3. Performance Chart ──────────────────────────────────────────────
+      _perfDataCache = dashboardMetrics ? dashboardMetrics.performanceData : null;
+      renderPerformanceChart(_perfDataCache);
+
+      // ── 4. Projects Table ─────────────────────────────────────────────────
       renderProjectsTable(activeListingsCache);
 
-      // 4. Render Inquiries Table
+      // ── 5. Inquiries Table ────────────────────────────────────────────────
       renderInquiriesTable(activeDealsCache);
 
-      // 5. Render Activities Stream
+      // ── 6. Activity Stream ────────────────────────────────────────────────
       renderActivityStream(activities || []);
+
+      // ── 7. Status Donut ───────────────────────────────────────────────────
+      renderStatusDonut(computed ? computed.statusOverview
+        : (dashboardMetrics ? dashboardMetrics.statusOverview : null));
+
+      // ── 8. Chart Date Label ───────────────────────────────────────────────
+      const dateLabel = document.getElementById('chart-date-label');
+      if (dateLabel && dashboardMetrics && dashboardMetrics.performanceData) {
+        dateLabel.textContent = SST
+          ? SST.formatDateRange(dashboardMetrics.performanceData.currentRange)
+          : dashboardMetrics.performanceData.currentRange;
+      }
     }
 
-    /* --------------------------------------------------------------------------
-       RENDER PERFORMANCE CHART (SVG BARS & LINE OVERLAY)
-       -------------------------------------------------------------------------- */
+    /* ────────────────────────────────────────────────────────────────────────
+       KPI CARDS — all values derived once from computeOwnerMetrics()
+    ──────────────────────────────────────────────────────────────────────── */
+    function renderKPICards(computed, dbMetrics, settings) {
+      const fmt = SST ? SST.formatNumber : (n => n);
+
+      // Active Projects (Live listings only)
+      const activeCount   = computed ? computed.activeProjects : (dbMetrics ? dbMetrics.activeProjects.count : '—');
+      const activeDelta   = dbMetrics && dbMetrics.activeProjects ? dbMetrics.activeProjects.delta : null;
+      const activeDirUp   = dbMetrics && dbMetrics.activeProjects ? dbMetrics.activeProjects.deltaDirection === 'up' : true;
+
+      setKPI('metric-active-count',   activeCount);
+      setKPIDelta('metric-active-delta', activeDelta, activeDirUp);
+
+      // Under Review
+      const reviewCount   = computed ? computed.underReview : (dbMetrics ? dbMetrics.underReview.count : '—');
+      setKPI('metric-pending-count', reviewCount);
+
+      // New Inquiries (new/unread deals)
+      const inqCount      = computed ? computed.newInquiries : (dbMetrics ? dbMetrics.newInquiries.count : '—');
+      const inqDelta      = dbMetrics && dbMetrics.newInquiries ? dbMetrics.newInquiries.delta : null;
+      const inqDirUp      = dbMetrics && dbMetrics.newInquiries ? dbMetrics.newInquiries.deltaDirection === 'up' : true;
+
+      setKPI('metric-inquiries-count', inqCount);
+      setKPIDelta('metric-inq-delta', inqDelta, inqDirUp);
+
+      // Unread Messages
+      const msgCount      = computed ? computed.unreadMessages : (dbMetrics ? dbMetrics.unreadMessages.count : '—');
+      const msgDelta      = dbMetrics && dbMetrics.unreadMessages ? dbMetrics.unreadMessages.delta : null;
+      const msgDirUp      = dbMetrics && dbMetrics.unreadMessages ? dbMetrics.unreadMessages.deltaDirection === 'up' : true;
+
+      setKPI('metric-unread-count', msgCount);
+      setKPIDelta('metric-msg-delta', msgDelta, msgDirUp);
+    }
+
+    function setKPI(elId, value) {
+      const el = document.getElementById(elId);
+      if (el) el.textContent = (value != null && value !== '') ? value : '—';
+    }
+
+    function setKPIDelta(elId, delta, isUp) {
+      const el = document.getElementById(elId);
+      if (!el || !delta) return;
+      el.textContent = (isUp ? '▲ ' : '▼ ') + delta;
+      el.className = `metric-badge ${isUp ? 'green' : 'red'}`;
+      el.style.display = '';
+    }
+
+    /* ────────────────────────────────────────────────────────────────────────
+       NAV + BELL BADGES — derived from computed metrics
+    ──────────────────────────────────────────────────────────────────────── */
+    function renderNavBadges(computed) {
+      if (!computed) return;
+
+      const inqBadge = document.getElementById('nav-badge-inquiries');
+      if (inqBadge && computed.totalInquiries > 0) {
+        inqBadge.textContent = computed.totalInquiries;
+        inqBadge.style.display = '';
+      }
+
+      const msgBadge = document.getElementById('nav-badge-messages');
+      if (msgBadge && computed.unreadMessages > 0) {
+        msgBadge.textContent = computed.unreadMessages;
+        msgBadge.style.display = '';
+      }
+
+      const bellBadge = document.getElementById('bell-badge-count');
+      if (bellBadge) {
+        // Bell shows new inquiries (unactioned items)
+        const bellCount = computed.newInquiries;
+        if (bellCount > 0) {
+          bellBadge.textContent = bellCount;
+          bellBadge.style.display = '';
+        } else {
+          bellBadge.style.display = 'none';
+        }
+      }
+    }
+
+    /* ────────────────────────────────────────────────────────────────────────
+       STATUS DONUT — computed from statusOverview data
+    ──────────────────────────────────────────────────────────────────────── */
+    function renderStatusDonut(overview) {
+      if (!overview) return;
+
+      // Update legend counts
+      setKPI('donut-total-val',     overview.total);
+      setKPI('stat-live-count',     overview.live);
+      setKPI('stat-review-count',   overview.underReview);
+      setKPI('stat-draft-count',    overview.draft);
+      setKPI('stat-changes-count',  overview.requiresChanges);
+      setKPI('stat-inactive-count', overview.inactive);
+
+      // Recompute donut SVG segments dynamically
+      const total = overview.total || 1;
+      const circumference = 100; // percentage units (r=15.915, circ≈100)
+
+      const segments = [
+        { count: overview.live,             color: '#10B981', offset: 0 },
+        { count: overview.underReview,      color: '#B89555', offset: null },
+        { count: overview.requiresChanges,  color: '#F97316', offset: null },
+        { count: overview.draft,            color: '#94A3B8', offset: null },
+        { count: overview.inactive,         color: '#CBD5E1', offset: null }
+      ];
+
+      // Calculate each segment's dash offset
+      let cumulativeOffset = 25; // SVG starts at 12 o'clock = offset 25
+      const renderedSegments = segments.map(seg => {
+        const pct = (seg.count / total) * circumference;
+        const offset = cumulativeOffset;
+        cumulativeOffset += pct;
+        return { ...seg, pct, offset };
+      });
+
+      // Update SVG circles
+      const donutSvg = document.querySelector('.donut-visual-wrap svg');
+      if (!donutSvg) return;
+
+      // Remove existing dynamic segments (keep background circle)
+      donutSvg.querySelectorAll('.donut-segment').forEach(el => el.remove());
+
+      // Create SVG circle for each non-zero segment
+      renderedSegments.forEach(seg => {
+        if (seg.pct <= 0) return;
+        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        circle.setAttribute('cx', '21');
+        circle.setAttribute('cy', '21');
+        circle.setAttribute('r', '15.915');
+        circle.setAttribute('fill', 'transparent');
+        circle.setAttribute('stroke', seg.color);
+        circle.setAttribute('stroke-width', '5');
+        circle.setAttribute('stroke-dasharray', `${seg.pct} ${circumference - seg.pct}`);
+        circle.setAttribute('stroke-dashoffset', circumference - seg.offset + circumference);
+        circle.classList.add('donut-segment');
+        donutSvg.appendChild(circle);
+      });
+    }
+
+    /* ────────────────────────────────────────────────────────────────────────
+       PERFORMANCE CHART — SVG bars + line overlays
+    ──────────────────────────────────────────────────────────────────────── */
     function renderPerformanceChart(perfData) {
-      const views = perfData ? perfData.views : [260, 420, 520, 580, 680, 320, 440];
+      const views     = perfData ? perfData.views     : [260, 420, 520, 580, 680, 320, 440];
       const inquiries = perfData ? perfData.inquiries : [4, 7, 9, 12, 16, 8, 6];
-      const deals = perfData ? perfData.deals : [1, 2, 2, 4, 5, 2, 1];
+      const deals     = perfData ? perfData.deals     : [1, 2, 2, 4, 5, 2, 1];
 
-      const xCoords = [80, 175, 270, 365, 460, 555, 650];
-      const maxView = 800;
-      const chartHeight = 155; // 20 to 175
+      const xCoords    = [80, 175, 270, 365, 460, 555, 650];
+      const maxView    = 800;
+      const chartH     = 155;
 
-      // Render Rounded Gold Bars for Views
       const barsGroup = document.getElementById('chart-bars-group');
       if (barsGroup) {
         barsGroup.innerHTML = views.map((val, idx) => {
-          const barHeight = (val / maxView) * chartHeight;
-          const y = 175 - barHeight;
+          const h = (val / maxView) * chartH;
+          const y = 175 - h;
           const x = xCoords[idx] - 18;
-          return `
-            <rect x="${x}" y="${y}" width="36" height="${barHeight}" rx="4" fill="#C5A262" opacity="0.85">
-              <title>${val} Listing Views</title>
-            </rect>
-          `;
+          const displayVal = SST ? SST.formatNumber(val) : val;
+          return `<rect x="${x}" y="${y}" width="36" height="${h}" rx="4" fill="#C5A262" opacity="0.85"><title>${displayVal} Listing Views</title></rect>`;
         }).join('');
       }
 
-      // Render Deals In Progress Line
       const dealsLine = document.getElementById('chart-deals-line');
       if (dealsLine) {
-        const dPoints = deals.map((d, i) => {
-          const y = 175 - ((d / 20) * chartHeight);
-          return `${xCoords[i]},${y}`;
-        }).join(' ');
-        dealsLine.setAttribute('d', `M ${dPoints.replace(/ /g, ' L ')}`);
+        const pts = deals.map((d, i) => `${xCoords[i]},${175 - ((d / 20) * chartH)}`).join(' ');
+        dealsLine.setAttribute('d', `M ${pts.replace(/ /g, ' L ')}`);
       }
 
-      // Render Inquiries Black Polyline & Circular Nodes
-      const inqLine = document.getElementById('chart-inquiries-line');
+      const inqLine  = document.getElementById('chart-inquiries-line');
       const inqNodes = document.getElementById('chart-inquiries-nodes');
       if (inqLine && inqNodes) {
-        const inqPoints = inquiries.map((v, i) => {
-          const y = 175 - ((v / 20) * chartHeight);
-          return { x: xCoords[i], y, val: v };
-        });
-
-        const pathD = inqPoints.map((p, idx) => `${idx === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ');
-        inqLine.setAttribute('d', pathD);
-
-        inqNodes.innerHTML = inqPoints.map(p => `
-          <circle cx="${p.x}" cy="${p.y}" r="4.5" fill="#111827" stroke="#FFFFFF" stroke-width="2">
-            <title>${p.val} Inquiries</title>
-          </circle>
-        `).join('');
+        const pts = inquiries.map((v, i) => ({ x: xCoords[i], y: 175 - ((v / 20) * chartH), val: v }));
+        inqLine.setAttribute('d', pts.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' '));
+        inqNodes.innerHTML = pts.map(p =>
+          `<circle cx="${p.x}" cy="${p.y}" r="4.5" fill="#111827" stroke="#FFFFFF" stroke-width="2"><title>${p.val} Broker Inquiries</title></circle>`
+        ).join('');
       }
     }
 
-    /* --------------------------------------------------------------------------
-       RENDER RECENT PROJECTS TABLE
-       -------------------------------------------------------------------------- */
+    /* ────────────────────────────────────────────────────────────────────────
+       PROJECTS TABLE — SSoT formatters applied
+    ──────────────────────────────────────────────────────────────────────── */
     function renderProjectsTable(listings) {
       const tbody = document.getElementById('dash-projects-tbody');
       if (!tbody) return;
 
       if (!listings || listings.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 24px; color: #9CA3AF;">No listings created yet.</td></tr>';
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:32px;color:#9CA3AF;">No projects yet. <a href="new-project.html" style="color:var(--dash-gold);">List New Project →</a></td></tr>`;
         return;
       }
 
       tbody.innerHTML = listings.map(l => {
-        const isLive = l.status === 'Live';
-        const isVip = l.status === 'Off-Market VIP' || l.isOffMarket;
-        const statusClass = isVip ? 'vip' : (isLive ? 'live' : 'review');
-        const statusLabel = l.status || (l.isOffMarket ? 'Off-Market VIP' : 'Live');
-        const viewsCount = (l.views || 1420).toLocaleString();
-        const inquiriesCount = l.inquiriesCount || 8;
-        const updatedDate = l.updated || 'Mar 12, 2024';
+        const sd         = SST ? SST.getStatusDisplay(l.status, l.isOffMarket) : null;
+        const statusLabel = sd ? sd.label : (l.status || 'Live');
+        const statusStyle = sd ? `style="color:${sd.color};background:${sd.bg};"` : '';
+        const isLive      = l.status === 'Live';
+        const viewsCount  = l.views != null ? (SST ? SST.formatNumber(l.views) : l.views.toLocaleString('en-IN')) : '—';
+        const inqCount    = l.inquiriesCount != null ? l.inquiriesCount : '—';
+        const updDate     = SST ? SST.formatDate(l.updated) : (l.updated || '—');
+        const actionLabel = isLive ? 'Deactivate' : 'Edit';
 
         return `
           <tr>
             <td>
               <div class="project-cell">
-                <img src="${l.image}" alt="" class="project-cell-thumb" onerror="this.src='https://img.magnific.com/free-photo/modern-hotel-complex-low-angle-shot_181624-503.jpg'">
-                <div>
-                  <div class="project-cell-title">${l.title}</div>
-                </div>
+                <img src="${l.image || ''}" alt="" class="project-cell-thumb"
+                  onerror="this.src='https://img.magnific.com/free-photo/modern-hotel-complex-low-angle-shot_181624-503.jpg'">
+                <div><div class="project-cell-title">${l.title}</div></div>
               </div>
             </td>
-            <td>${l.location}</td>
-            <td><span class="status-pill ${statusClass}">${statusLabel}</span></td>
+            <td>${l.location || '—'}</td>
+            <td><span class="status-pill" ${statusStyle}>${statusLabel}</span></td>
             <td><strong>${viewsCount}</strong></td>
-            <td><strong class="metric-val-gold">${inquiriesCount}</strong></td>
-            <td style="color: #6B7280; font-size: 0.78rem;">${updatedDate}</td>
-            <td style="text-align: right;">
+            <td><strong class="metric-val-gold">${inqCount}</strong></td>
+            <td style="color:#6B7280;font-size:0.78rem;">${updDate}</td>
+            <td style="text-align:right;">
               <div class="action-btn-group">
                 <button onclick="previewProject('${l.id}')" class="btn-table-action">View</button>
-                <button onclick="toggleListingStatus('${l.id}', '${statusLabel}')" class="btn-table-action">${isLive ? 'Deactivate' : 'Edit'}</button>
+                <button onclick="toggleListingStatus('${l.id}','${l.status}')" class="btn-table-action">${actionLabel}</button>
                 <button onclick="openProjectMenu('${l.id}')" class="btn-dots-menu" title="More Options">⋮</button>
               </div>
             </td>
-          </tr>
-        `;
+          </tr>`;
       }).join('');
     }
 
-    /* --------------------------------------------------------------------------
-       RENDER RECENT INQUIRIES TABLE
-       -------------------------------------------------------------------------- */
+    /* ────────────────────────────────────────────────────────────────────────
+       INQUIRIES TABLE — canonical CTAs from SSoT
+    ──────────────────────────────────────────────────────────────────────── */
     function renderInquiriesTable(deals) {
       const tbody = document.getElementById('dash-inquiries-tbody');
       if (!tbody) return;
 
       if (!deals || deals.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 24px; color: #9CA3AF;">No broker inquiries received yet.</td></tr>';
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:32px;color:#9CA3AF;">No broker inquiries received yet.</td></tr>`;
         return;
       }
 
+      const VIEW_INQ = SST ? SST.CTA.VIEW_INQUIRY : 'View Inquiry';
+      const REPLY    = SST ? SST.CTA.REPLY         : 'Reply';
+
       tbody.innerHTML = deals.map(d => {
-        const isNew = d.status === 'New' || d.status === 'Negotiation';
+        const isNew    = d.status === 'New';
         const tagClass = isNew ? 'inquiry-tag-new' : 'inquiry-tag-replied';
         const tagLabel = isNew ? 'New' : 'Replied';
-        const avatar = d.avatar || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80';
-        const agency = d.agency || 'Vertex Realty';
-        const timeAgo = d.time || '2h ago';
+        const avatar   = d.avatar || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80';
+        const timeAgo  = d.time || '—';
+        const ctaLabel = isNew ? VIEW_INQ : REPLY;
+        const ctaClass = isNew ? 'btn-view-inquiry' : 'btn-reply-inquiry';
 
         return `
           <tr>
@@ -2390,80 +2553,61 @@
                 <img src="${avatar}" alt="" class="inquiry-avatar">
                 <div>
                   <div class="inquiry-broker-name">${d.buyerName}</div>
-                  <div class="inquiry-agency">${agency}</div>
+                  <div class="inquiry-agency">${d.agency || '—'}</div>
                 </div>
               </div>
             </td>
-            <td style="color: #4B5563; font-weight: 500;">${d.listingTitle}</td>
-            <td style="color: #4B5563; font-style: italic; max-width: 240px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+            <td style="color:#4B5563;font-weight:500;">${d.listingTitle}</td>
+            <td style="color:#4B5563;font-style:italic;max-width:240px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
               "${d.messagePreview || 'Inquiry regarding purchase terms.'}"
             </td>
-            <td style="color: #9CA3AF; font-size: 0.78rem;">${timeAgo}</td>
+            <td style="color:#9CA3AF;font-size:0.78rem;">${timeAgo}</td>
             <td><span class="${tagClass}">${tagLabel}</span></td>
-            <td style="text-align: right;">
+            <td style="text-align:right;">
               <div class="action-btn-group">
-                ${isNew ? 
-                  `<button onclick="openInquiryModal('${d.id}')" class="btn-view-inquiry">View Inquiry</button>` :
-                  `<button onclick="openInquiryModal('${d.id}')" class="btn-reply-inquiry">Reply</button>`
-                }
+                <button onclick="openInquiryModal('${d.id}')" class="${ctaClass}">${ctaLabel}</button>
               </div>
             </td>
-          </tr>
-        `;
+          </tr>`;
       }).join('');
     }
 
-    /* --------------------------------------------------------------------------
-       RENDER RECENT ACTIVITY STREAM
-       -------------------------------------------------------------------------- */
+    /* ────────────────────────────────────────────────────────────────────────
+       ACTIVITY STREAM — from store activities (no hardcoded fallback names)
+    ──────────────────────────────────────────────────────────────────────── */
     function renderActivityStream(activities) {
       const container = document.getElementById('dash-activity-stream');
       if (!container) return;
 
-      const items = (activities && activities.length > 0) ? activities : [
-        { title: "New inquiry from Alexander Vance", project: "The Imperial Sky Penthouse", time: "2h ago", icon: "inquiry" },
-        { title: "Your project has been approved and is now live", project: "Cyber Pinnacle IT Park - Tower A", time: "5h ago", icon: "approved" },
-        { title: "New message from Priya Sharma", project: "Regarding The Imperial Sky Penthouse", time: "1d ago", icon: "message" },
-        { title: "Project visibility updated", project: "You updated contact visibility settings", time: "2d ago", icon: "visibility" }
-      ];
+      if (!activities || activities.length === 0) {
+        container.innerHTML = '<div style="padding:20px;text-align:center;color:#9CA3AF;font-size:0.82rem;">No recent activity.</div>';
+        return;
+      }
 
-      container.innerHTML = items.map(a => {
-        let iconBg = "#FEF3C7";
-        let iconColor = "#D97706";
-        let iconSvg = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>`;
+      const iconMap = {
+        inquiry:    { bg: '#FEF3C7', color: '#D97706', svg: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>` },
+        approved:   { bg: '#D1FAE5', color: '#059669', svg: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>` },
+        message:    { bg: '#FEF3C7', color: '#B45309', svg: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>` },
+        visibility: { bg: '#EFF6FF', color: '#3B82F6', svg: `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>` }
+      };
 
-        if (a.icon === 'approved') {
-          iconBg = "#D1FAE5";
-          iconColor = "#059669";
-          iconSvg = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
-        } else if (a.icon === 'message') {
-          iconBg = "#FEF3C7";
-          iconColor = "#B45309";
-          iconSvg = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>`;
-        } else if (a.icon === 'visibility') {
-          iconBg = "#EFF6FF";
-          iconColor = "#3B82F6";
-          iconSvg = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>`;
-        }
-
+      container.innerHTML = activities.map(a => {
+        const ic = iconMap[a.icon] || iconMap.inquiry;
         return `
           <a href="inquiries.html" class="activity-row">
-            <div class="activity-icon-badge" style="background: ${iconBg}; color: ${iconColor};">
-              ${iconSvg}
-            </div>
+            <div class="activity-icon-badge" style="background:${ic.bg};color:${ic.color};">${ic.svg}</div>
             <div class="activity-content">
               <div class="activity-title">${a.title}</div>
               <div class="activity-sub">${a.project}</div>
             </div>
             <span class="activity-time">${a.time}</span>
-          </a>
-        `;
+          </a>`;
       }).join('');
     }
 
-    /* --------------------------------------------------------------------------
-       SEARCH FILTERING
-       -------------------------------------------------------------------------- */
+    /* ────────────────────────────────────────────────────────────────────────
+       SEARCH FILTER
+    ──────────────────────────────────────────────────────────────────────── */
     function handleDashboardSearch(query) {
       const q = (query || '').toLowerCase().trim();
       if (!q) {
@@ -2471,95 +2615,73 @@
         renderInquiriesTable(activeDealsCache);
         return;
       }
-
-      const filteredListings = activeListingsCache.filter(l => 
-        (l.title && l.title.toLowerCase().includes(q)) ||
+      renderProjectsTable(activeListingsCache.filter(l =>
+        (l.title    && l.title.toLowerCase().includes(q)) ||
         (l.location && l.location.toLowerCase().includes(q))
-      );
-
-      const filteredDeals = activeDealsCache.filter(d => 
-        (d.buyerName && d.buyerName.toLowerCase().includes(q)) ||
+      ));
+      renderInquiriesTable(activeDealsCache.filter(d =>
+        (d.buyerName    && d.buyerName.toLowerCase().includes(q)) ||
         (d.listingTitle && d.listingTitle.toLowerCase().includes(q)) ||
-        (d.agency && d.agency.toLowerCase().includes(q))
-      );
-
-      renderProjectsTable(filteredListings);
-      renderInquiriesTable(filteredDeals);
+        (d.agency       && d.agency.toLowerCase().includes(q))
+      ));
     }
 
-    /* --------------------------------------------------------------------------
-       MODAL ACTIONS & INTERACTIONS
-       -------------------------------------------------------------------------- */
+    /* ────────────────────────────────────────────────────────────────────────
+       MODALS & INTERACTIONS
+    ──────────────────────────────────────────────────────────────────────── */
     function toggleProfileDropdown() {
-      const menu = document.getElementById('profile-dropdown-menu');
-      if (menu) menu.classList.toggle('active');
+      document.getElementById('profile-dropdown-menu')?.classList.toggle('active');
     }
-
-    window.addEventListener('click', (e) => {
+    window.addEventListener('click', e => {
       const pill = document.querySelector('.topbar-user-pill');
       const menu = document.getElementById('profile-dropdown-menu');
-      if (menu && pill && !pill.contains(e.target)) {
-        menu.classList.remove('active');
-      }
+      if (menu && pill && !pill.contains(e.target)) menu.classList.remove('active');
     });
 
     function openInquiryModal(dealId) {
       const deal = activeDealsCache.find(d => d.id === dealId);
       if (!deal) return;
       currentInquirySelected = deal;
-
-      document.getElementById('inq-modal-title').textContent = `Inquiry: ${deal.buyerName}`;
-      document.getElementById('inq-modal-avatar').src = deal.avatar || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80';
-      document.getElementById('inq-modal-buyer').textContent = deal.buyerName;
-      document.getElementById('inq-modal-agency').textContent = deal.agency || 'Broker Partner';
+      document.getElementById('inq-modal-title').textContent   = `Inquiry: ${deal.buyerName}`;
+      document.getElementById('inq-modal-avatar').src          = deal.avatar || '';
+      document.getElementById('inq-modal-buyer').textContent   = deal.buyerName;
+      document.getElementById('inq-modal-agency').textContent  = deal.agency || 'Broker Partner';
       document.getElementById('inq-modal-project').textContent = deal.listingTitle;
-      document.getElementById('inq-modal-message').textContent = deal.messagePreview || 'Would love to discuss commercial leasing and terms.';
+      document.getElementById('inq-modal-message').textContent = deal.messagePreview || 'Would love to discuss terms.';
       document.getElementById('inq-reply-text').value = '';
-
       document.getElementById('inquiry-modal').classList.add('active');
     }
-
     function closeInquiryModal() {
       document.getElementById('inquiry-modal').classList.remove('active');
       currentInquirySelected = null;
     }
-
     async function submitInquiryReply() {
       if (!currentInquirySelected) return;
       const text = document.getElementById('inq-reply-text').value.trim();
-      if (!text) {
-        alert('Please enter a response message.');
-        return;
-      }
-
+      if (!text) { alert('Please enter a response message.'); return; }
       if (window.ecosystemStore && window.ecosystemStore.replyToDeal) {
         await window.ecosystemStore.replyToDeal(currentInquirySelected.id, text);
       } else {
         currentInquirySelected.status = 'Replied';
       }
-
       closeInquiryModal();
       renderInquiriesTable(activeDealsCache);
     }
 
     function previewProject(id) {
-      const listing = activeListingsCache.find(l => l.id === id);
-      if (!listing) return;
-
-      document.getElementById('prev-title').textContent = listing.title;
-      document.getElementById('prev-img').src = listing.image;
-      document.getElementById('prev-price').textContent = listing.price;
-      document.getElementById('prev-location').textContent = `${listing.location} · ${listing.specs || ''}`;
-      document.getElementById('prev-desc').textContent = listing.description || '';
-      document.getElementById('prev-status').textContent = listing.status || 'Live';
-
-      document.getElementById('prev-edit-btn').onclick = () => {
-        window.location.href = `new-project.html?editId=${listing.id}`;
-      };
-
+      const l = activeListingsCache.find(l => l.id === id);
+      if (!l) return;
+      const priceStr = l.priceDisplay ||
+        (SST ? SST.formatCurrency(l.price, { compact: true }) : String(l.price));
+      document.getElementById('prev-title').textContent    = l.title;
+      document.getElementById('prev-img').src              = l.image || '';
+      document.getElementById('prev-price').textContent    = priceStr;
+      document.getElementById('prev-location').textContent = `${l.location} · ${l.specs || ''}`;
+      document.getElementById('prev-desc').textContent     = l.description || '';
+      document.getElementById('prev-status').textContent   = SST ? SST.getStatusDisplay(l.status, l.isOffMarket).label : (l.status || 'Live');
+      document.getElementById('prev-edit-btn').onclick     = () => window.location.href = `new-project.html?editId=${l.id}`;
       document.getElementById('project-preview-modal').classList.add('active');
     }
-
     function closeProjectModal() {
       document.getElementById('project-preview-modal').classList.remove('active');
     }
@@ -2570,51 +2692,40 @@
         await window.ecosystemStore.updateListingStatus(id, newStatus);
       } else {
         const item = activeListingsCache.find(l => l.id === id);
-        if (item) item.status = newStatus;
-        renderProjectsTable(activeListingsCache);
+        if (item) { item.status = newStatus; renderProjectsTable(activeListingsCache); }
       }
     }
+    function openProjectMenu(id) { previewProject(id); }
 
-    function openProjectMenu(id) {
-      previewProject(id);
-    }
-
-    function openPrivacyModal() {
-      document.getElementById('privacy-modal').classList.add('active');
-    }
-
-    function closePrivacyModal() {
-      document.getElementById('privacy-modal').classList.remove('active');
-    }
+    function openPrivacyModal()  { document.getElementById('privacy-modal').classList.add('active'); }
+    function closePrivacyModal() { document.getElementById('privacy-modal').classList.remove('active'); }
 
     function toggleDateFilterModal() {
-      const current = document.getElementById('chart-date-label').textContent;
-      const next = current.includes('Mar 10') ? 'Feb 25, 2024 - Mar 02, 2024' : 'Mar 10, 2024 - Mar 16, 2024';
-      document.getElementById('chart-date-label').textContent = next;
+      // Toggle between two date ranges from the SSoT performance data
+      const label = document.getElementById('chart-date-label');
+      if (!label || !_perfDataCache) return;
+      const alt = '25 Feb 2024 – 02 Mar 2024';
+      label.textContent = (label.textContent === _perfDataCache.currentRange) ? alt : _perfDataCache.currentRange;
     }
 
     function toggleMobileSidebar() {
-      const sidebar = document.getElementById('dashboard-sidebar');
-      const overlay = document.getElementById('sidebar-overlay');
-      if (sidebar) sidebar.classList.toggle('open');
-      if (overlay) overlay.classList.toggle('active');
+      document.getElementById('dashboard-sidebar')?.classList.toggle('open');
+      document.getElementById('sidebar-overlay')?.classList.toggle('active');
     }
 
-    function openNotificationsModal() {
-      window.location.href = 'inquiries.html';
-    }
+    function openNotificationsModal() { window.location.href = 'inquiries.html'; }
 
     function openSupportModal() {
-      alert('Brokers Together Concierge Support: 24/7 Priority Hotline active.');
+      // Use SSoT support contact from globalSettings
+      const store   = window.ecosystemStore;
+      const settings = store ? store.state.settings : null;
+      const phone   = settings ? settings.supportPhone : '+91 1800 266 5678';
+      const email   = settings ? settings.supportEmail : 'concierge@brokerstogether.com';
+      alert(`Brokers Together Concierge Support\n📞 ${phone}\n✉ ${email}\n\n24/7 Priority Support Active.`);
     }
+    function openBookCallModal()   { window.location.href = 'index.html#counsellors'; }
+    function openHelpCenterModal() { window.location.href = 'index.html#how-it-works'; }
 
-    function openBookCallModal() {
-      window.location.href = 'index.html#counsellors';
-    }
-
-    function openHelpCenterModal() {
-      window.location.href = 'index.html#how-it-works';
-    }
   </script>
 
 </body>

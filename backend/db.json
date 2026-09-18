@@ -7,9 +7,14 @@
     "offWhiteBgColor": "#F7F5F0",
     "accentColor": "#D4AF37",
     "logoSvgPath": "/Logo_Brokers together.svg",
-    "currency": "USD",
+    "locale": "en-IN",
+    "currency": "INR",
+    "currencySymbol": "₹",
+    "phoneCountry": "+91",
+    "dateFormat": "DD MMM YYYY",
     "supportEmail": "concierge@brokerstogether.com",
-    "supportPhone": "+1 (800) 555-BROKER",
+    "supportPhone": "+91 1800 266 5678",
+    "supportPhoneDisplay": "1800 266 5678",
     "webDomain": "propertyassist.info",
     "heroTitle": "Connect Direct with Verified Real Estate Brokers",
     "heroSubtitle": "List your high-value property, reach 800+ verified brokers, and close deals faster with total privacy control.",
@@ -26,7 +31,10 @@
       "counsellorPortalTitle": "Broker & Advisory Workstation",
       "browseListingsButton": "Explore Projects",
       "connectCounsellorButton": "Find Verified Brokers",
-      "submitListingButton": "List Your Project"
+      "submitListingButton": "List New Project",
+      "viewInquiryButton": "View Inquiry",
+      "replyButton": "Reply",
+      "manageSettingsButton": "Manage Settings"
     },
     "configurableClaims": {
       "verifiedBrokersCount": "800+",
@@ -38,6 +46,17 @@
       "domainVerificationStatus": "Pending Confirmation (propertyassist.info)",
       "iosAppStatus": "Under Development / Confirmation Required"
     }
+  },
+  "canonicalStatuses": {
+    "DRAFT": "Draft",
+    "UNDER_REVIEW": "Under Review",
+    "LIVE": "Live",
+    "REQUIRES_CHANGES": "Requires Changes",
+    "INACTIVE": "Inactive"
+  },
+  "canonicalRoles": {
+    "PROPERTY_OWNER": "Property Owner",
+    "DEVELOPER": "Developer"
   },
   "assetRegistry": {
     "hero": {
@@ -138,7 +157,7 @@
       "rating": 4.95,
       "reviewsCount": 112,
       "specialization": "High-End Penthouses & Commercial Portfolios",
-      "dealsClosedVolume": "$180M+",
+      "dealsClosedVolume": "₹1,500 Cr+",
       "location": "Mumbai & Delhi NCR",
       "status": "Available",
       "avatar": "https://img.magnific.com/free-photo/positive-indian-financial-advisor-holding-open-folder_1262-17502.jpg",
@@ -151,7 +170,7 @@
       "rating": 4.92,
       "reviewsCount": 78,
       "specialization": "Cross-Border Wealth & Off-Market Villas",
-      "dealsClosedVolume": "$125M+",
+      "dealsClosedVolume": "₹1,040 Cr+",
       "location": "Dubai & London",
       "status": "In Session",
       "avatar": "https://img.magnific.com/free-photo/joyful-indian-businesswoman-feels-empowered-after-achieving-strategic-win_482257-117239.jpg",
@@ -164,7 +183,7 @@
       "rating": 4.89,
       "reviewsCount": 64,
       "specialization": "IT Parks, Warehousing & Retail Hubs",
-      "dealsClosedVolume": "$210M+",
+      "dealsClosedVolume": "₹1,750 Cr+",
       "location": "Bengaluru & Hyderabad",
       "status": "Available",
       "avatar": "https://img.magnific.com/free-photo/content-indian-ceo-standing-smiling-portrait-successful-pensive-bearded-businessman-glasses-posing-office-room-business-expression-management-concept_74855-11642.jpg",
@@ -176,26 +195,28 @@
       "id": "lst-301",
       "title": "The Imperial Sky Penthouse",
       "category": "Residential",
-      "price": "$12,500,000",
+      "price": 950000000,
+      "priceDisplay": "₹95 Cr",
       "location": "Worli, Mumbai",
       "specs": "5 Beds • 6.5 Baths • 6,800 sq ft • Private Sky Deck",
       "image": "https://img.magnific.com/free-photo/modern-hotel-complex-low-angle-shot_181624-503.jpg",
       "ownerId": "usr-101",
       "brokerId": "cns-201",
       "isOffMarket": true,
-      "status": "Off-Market VIP",
+      "status": "Live",
       "views": 1420,
       "inquiriesCount": 8,
-      "updated": "Mar 12, 2024",
+      "updated": "12 Mar 2024",
       "description": "Exquisite triplex penthouse featuring panoramic Arabian Sea views, floor-to-ceiling glass facades, private infinity plunge pool, and dedicated concierge elevator."
     },
     {
       "id": "lst-302",
-      "title": "Cyber Pinnacle IT Park - Tower A",
+      "title": "Cyber Pinnacle IT Park – Tower A",
       "category": "Commercial",
-      "price": "$38,000,000",
+      "price": 3200000000,
+      "priceDisplay": "₹320 Cr",
       "location": "Outer Ring Road, Bengaluru",
-      "specs": "14 Floors • 185,000 sq ft Office • Grade A Certified",
+      "specs": "14 Floors • 1,71,870 sq ft Office • Grade A Certified",
       "image": "https://img.magnific.com/free-photo/tall-apartment-buildings-with-modern-design_1268-15585.jpg",
       "ownerId": "usr-101",
       "brokerId": "cns-203",
@@ -203,14 +224,51 @@
       "status": "Live",
       "views": 2190,
       "inquiriesCount": 14,
-      "updated": "Mar 08, 2024",
+      "updated": "08 Mar 2024",
       "description": "Institutional-grade commercial office building fully leased to Fortune 500 technology tenants with 8.2% gross rental yield."
+    },
+    {
+      "id": "lst-304",
+      "title": "Malhotra Heritage Bungalow",
+      "category": "Residential",
+      "price": 420000000,
+      "priceDisplay": "₹42 Cr",
+      "location": "Bandra West, Mumbai",
+      "specs": "6 Beds • 7 Baths • 8,200 sq ft • Private Garden",
+      "image": "https://img.magnific.com/free-photo/skyscrapers-dubai-marina_231208-7597.jpg",
+      "ownerId": "usr-101",
+      "brokerId": "cns-201",
+      "isOffMarket": false,
+      "status": "Under Review",
+      "views": 0,
+      "inquiriesCount": 0,
+      "updated": "17 Sep 2026",
+      "description": "Heritage colonial bungalow in the heart of Bandra West featuring original teak woodwork, landscaped garden, and modernised interiors. Submitted for broker network listing."
+    },
+    {
+      "id": "lst-305",
+      "title": "Prestige Riverside Commercial Suite",
+      "category": "Commercial",
+      "price": 180000000,
+      "priceDisplay": "₹18 Cr",
+      "location": "Indiranagar, Bengaluru",
+      "specs": "4 Floors • 22,000 sq ft • Corner Unit • Riverside View",
+      "image": "https://img.magnific.com/free-photo/business-meeting-office_1268-21531.jpg",
+      "ownerId": "usr-101",
+      "brokerId": "cns-203",
+      "isOffMarket": false,
+      "status": "Requires Changes",
+      "views": 310,
+      "inquiriesCount": 2,
+      "updated": "14 Mar 2024",
+      "description": "Premium corner commercial suite with panoramic riverside views. Listing requires updated floor plan documentation and RERA certificate upload before going live."
     },
     {
       "id": "lst-303",
       "title": "Elysian Palm Waterfront Mansion",
       "category": "Luxury Villa",
-      "price": "$24,500,000",
+      "price": 2040000000,
+      "priceDisplay": "₹204 Cr",
       "location": "Palm Jumeirah, Dubai",
       "specs": "6 Beds • Private Beach • Yacht Docking • 11,000 sq ft",
       "image": "https://img.magnific.com/free-photo/skyscrapers-dubai-marina_231208-7597.jpg",
@@ -220,7 +278,7 @@
       "status": "Live",
       "views": 980,
       "inquiriesCount": 5,
-      "updated": "Mar 01, 2024",
+      "updated": "01 Mar 2024",
       "description": "Ultra-exclusive contemporary beachfront estate with customized Italian marble finishings, private cinema, and smart security integration."
     }
   ],
@@ -236,14 +294,15 @@
       "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
       "messagePreview": "Interested in scheduling a site visit this week.",
       "time": "2h ago",
-      "offeredAmount": "$12,000,000",
+      "offeredAmount": 900000000,
+      "offeredAmountDisplay": "₹90 Cr",
       "status": "New",
       "lastUpdated": "2026-03-16T14:30:00Z"
     },
     {
       "id": "dl-402",
       "listingId": "lst-302",
-      "listingTitle": "Cyber Pinnacle IT Park - Tower A",
+      "listingTitle": "Cyber Pinnacle IT Park – Tower A",
       "buyerName": "Priya Sharma",
       "agency": "Capital Partners",
       "counsellorId": "cns-203",
@@ -251,9 +310,26 @@
       "avatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80",
       "messagePreview": "Can you share more details on leasing terms?",
       "time": "1d ago",
-      "offeredAmount": "$36,500,000",
+      "offeredAmount": 3050000000,
+      "offeredAmountDisplay": "₹305 Cr",
       "status": "Replied",
       "lastUpdated": "2026-03-15T11:00:00Z"
+    },
+    {
+      "id": "dl-403",
+      "listingId": "lst-301",
+      "listingTitle": "The Imperial Sky Penthouse",
+      "buyerName": "Rohan Kapoor",
+      "agency": "Elite Properties India",
+      "counsellorId": "cns-201",
+      "counsellorName": "Vikramaditya Singhania",
+      "avatar": "https://img.magnific.com/free-photo/content-indian-ceo-standing-smiling-portrait-successful-pensive-bearded-businessman-glasses-posing-office-room-business-expression-management-concept_74855-11642.jpg",
+      "messagePreview": "Our client is ready to move quickly. Can we arrange a private viewing?",
+      "time": "3d ago",
+      "offeredAmount": 920000000,
+      "offeredAmountDisplay": "₹92 Cr",
+      "status": "New",
+      "lastUpdated": "2026-03-13T09:15:00Z"
     }
   ],
   "dashboardMetrics": {
@@ -263,9 +339,9 @@
       "deltaDirection": "up",
       "subtitle": "Visible to Broker Network"
     },
-    "pendingReview": {
+    "underReview": {
       "count": 1,
-      "subtitle": "Awaiting approval"
+      "subtitle": "Under Review"
     },
     "newInquiries": {
       "count": 5,
@@ -288,7 +364,7 @@
       "inactive": 0
     },
     "performanceData": {
-      "currentRange": "Mar 10, 2024 - Mar 16, 2024",
+      "currentRange": "10 Mar 2024 – 16 Mar 2024",
       "days": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
       "views": [260, 420, 520, 580, 680, 320, 440],
       "inquiries": [4, 7, 9, 12, 16, 8, 6],
@@ -302,23 +378,26 @@
       "title": "New inquiry from Alexander Vance",
       "project": "The Imperial Sky Penthouse",
       "time": "2h ago",
-      "icon": "inquiry"
+      "icon": "inquiry",
+      "dealId": "dl-401"
     },
     {
       "id": "act-2",
       "type": "approval",
       "title": "Your project has been approved and is now live",
-      "project": "Cyber Pinnacle IT Park - Tower A",
+      "project": "Cyber Pinnacle IT Park – Tower A",
       "time": "5h ago",
-      "icon": "approved"
+      "icon": "approved",
+      "listingId": "lst-302"
     },
     {
       "id": "act-3",
       "type": "message",
       "title": "New message from Priya Sharma",
-      "project": "Regarding The Imperial Sky Penthouse",
+      "project": "Regarding Cyber Pinnacle IT Park – Tower A",
       "time": "1d ago",
-      "icon": "message"
+      "icon": "message",
+      "dealId": "dl-402"
     },
     {
       "id": "act-4",
@@ -326,7 +405,8 @@
       "title": "Project visibility updated",
       "project": "You updated contact visibility settings",
       "time": "2d ago",
-      "icon": "visibility"
+      "icon": "visibility",
+      "listingId": null
     }
   ],
   "testimonials": [
@@ -341,82 +421,16 @@
       "id": "tst-2",
       "name": "Ananya Roy",
       "role": "Luxury Villa Owner & Investor",
-      "text": "The multi-step project wizard made listing our $15M beachfront estate effortless. The direct broker messaging UI kept inquiries organized and transparent.",
+      "text": "The multi-step project wizard made listing our ₹125 Cr beachfront estate effortless. The direct broker messaging UI kept inquiries organised and transparent.",
       "avatar": "https://img.magnific.com/free-photo/closeup-content-attractive-indian-business-lady_1262-2094.jpg"
     }
   ],
   "auditLogs": [
     {
-      "id": "log-1789706008740",
-      "timestamp": "2026-09-18T04:33:28.740Z",
+      "id": "log-1789710538478",
+      "timestamp": "2026-09-18T05:48:58.478Z",
       "action": "AUTH_SUCCESS",
       "detail": "Successful sign-in: Rajesh Malhotra (Property Owner)"
-    },
-    {
-      "id": "log-1789653045222",
-      "timestamp": "2026-09-17T13:50:45.222Z",
-      "action": "AUTH_SUCCESS",
-      "detail": "Successful sign-in: Test Developer (Property Owner)"
-    },
-    {
-      "id": "log-1789653009675",
-      "timestamp": "2026-09-17T13:50:09.676Z",
-      "action": "AUTH_SUCCESS",
-      "detail": "Successful sign-in: Test Developer (Property Owner)"
-    },
-    {
-      "id": "log-1789652978377",
-      "timestamp": "2026-09-17T13:49:38.377Z",
-      "action": "PASSWORD_UPDATED",
-      "detail": "Password updated for user: devtest@luxuryestates.com"
-    },
-    {
-      "id": "log-1789652909391",
-      "timestamp": "2026-09-17T13:48:29.391Z",
-      "action": "PASSWORD_RESET_REQUESTED",
-      "detail": "Reset token generated for user: devtest@luxuryestates.com"
-    },
-    {
-      "id": "log-1789652872308",
-      "timestamp": "2026-09-17T13:47:52.308Z",
-      "action": "AUTH_SUCCESS",
-      "detail": "Successful sign-in: Test Developer (Property Owner)"
-    },
-    {
-      "id": "log-1789652855148",
-      "timestamp": "2026-09-17T13:47:35.149Z",
-      "action": "AUTH_FAILURE",
-      "detail": "Failed login attempt (forced 'wrong'): devtest@luxuryestates.com"
-    },
-    {
-      "id": "log-1789652783417",
-      "timestamp": "2026-09-17T13:46:23.417Z",
-      "action": "USER_REGISTERED",
-      "detail": "User created account: Test Developer (Property Owner)"
-    },
-    {
-      "id": "log-1789652262363",
-      "timestamp": "2026-09-17T13:37:42.363Z",
-      "action": "AUTH_FAILURE",
-      "detail": "Failed login attempt (forced 'wrong'): rajesh@malhotraestates.com"
-    },
-    {
-      "id": "log-1789652235035",
-      "timestamp": "2026-09-17T13:37:15.036Z",
-      "action": "AUTH_SUCCESS",
-      "detail": "Successful sign-in: Rajesh Malhotra (Property Owner)"
-    },
-    {
-      "id": "log-1789652225648",
-      "timestamp": "2026-09-17T13:37:05.648Z",
-      "action": "AUTH_SUCCESS",
-      "detail": "Successful sign-in: Rajesh Malhotra (Property Owner)"
-    },
-    {
-      "id": "log-1789651187562",
-      "timestamp": "2026-09-17T13:19:47.562Z",
-      "action": "USER_REGISTERED",
-      "detail": "User registered: Ramesh"
     },
     {
       "id": "log-001",

@@ -4,31 +4,47 @@
  * Enforces Zero Hardcoding & SSoT rules across User App, Admin Panel & Counsellor App.
  */
 
-const API_BASE_URL = window.ENV_API_URL || 'http://localhost:5050';
-const WS_BASE_URL = window.ENV_WS_URL || 'ws://localhost:5050';
+// Dynamic Host Resolution: If visiting from LAN IP, hit backend at that same IP on port 5050
+const CURRENT_HOST = (typeof window !== 'undefined' && window.location && window.location.hostname) ? window.location.hostname : 'localhost';
+const API_BASE_URL = window.ENV_API_URL || `${(typeof window !== 'undefined' && window.location.protocol === 'https:') ? 'https:' : 'http:'}//${CURRENT_HOST}:5050`;
+const WS_BASE_URL  = window.ENV_WS_URL  || `${(typeof window !== 'undefined' && window.location.protocol === 'https:') ? 'wss:' : 'ws:'}//${CURRENT_HOST}:5050`;
 
 class EcosystemStore {
   constructor() {
     this.listeners = new Set();
     this.state = {
       settings: {
-        appName: "Brokers Together",
-        tagline: "The Premier Broker Network & Owner Real Estate Platform",
-        primaryColor: "#B89555",
-        webDomain: "propertyassist.info",
+        appName: 'Brokers Together',
+        tagline: 'The Premier Broker Network & Owner Real Estate Platform',
+        primaryColor: '#B89555',
+        locale: 'en-IN',
+        currency: 'INR',
+        currencySymbol: '₹',
+        phoneCountry: '+91',
+        webDomain: 'propertyassist.info',
         configurableClaims: {
-          verifiedBrokersCount: "800+",
-          appDownloadsCount: "1,600+",
-          activeRequirementsCount: "400+",
-          satisfactionRate: "96%",
-          averageRating: "4.5 / 5.0",
-          approvalTimeframe: "Under 24 Hours"
+          verifiedBrokersCount: '800+',
+          appDownloadsCount: '1,600+',
+          activeRequirementsCount: '400+',
+          satisfactionRate: '96%',
+          averageRating: '4.5 / 5.0',
+          approvalTimeframe: 'Under 24 Hours'
+        },
+        dynamicLabels: {
+          submitListingButton: 'List New Project',
+          viewInquiryButton: 'View Inquiry',
+          replyButton: 'Reply',
+          manageSettingsButton: 'Manage Settings'
         }
       },
       users: [],
       counsellors: [],
       listings: [],
       deals: [],
+      dashboardMetrics: null,
+      activities: [],
+      canonicalStatuses: null,
+      canonicalRoles: null,
       auditLogs: [],
       isConnected: false,
       lastSync: null
@@ -62,11 +78,15 @@ class EcosystemStore {
         const data = await res.json();
         this.state = {
           ...this.state,
-          settings: data.globalSettings || {},
+          settings: data.globalSettings || this.state.settings,
           users: data.users || [],
           counsellors: data.counsellors || [],
           listings: data.listings || [],
           deals: data.deals || [],
+          dashboardMetrics: data.dashboardMetrics || null,
+          activities: data.activities || [],
+          canonicalStatuses: data.canonicalStatuses || null,
+          canonicalRoles: data.canonicalRoles || null,
           auditLogs: data.auditLogs || [],
           lastSync: new Date().toISOString()
         };
@@ -113,12 +133,16 @@ class EcosystemStore {
     console.log(`📡 Real-time Sync Event: ${event}`, data);
 
     if (event === 'INIT_SYNC') {
-      this.state.settings = data.globalSettings || this.state.settings;
-      this.state.users = data.users || this.state.users;
-      this.state.counsellors = data.counsellors || this.state.counsellors;
-      this.state.listings = data.listings || this.state.listings;
-      this.state.deals = data.deals || this.state.deals;
-      this.state.auditLogs = data.auditLogs || this.state.auditLogs;
+      this.state.settings         = data.globalSettings || this.state.settings;
+      this.state.users             = data.users || this.state.users;
+      this.state.counsellors       = data.counsellors || this.state.counsellors;
+      this.state.listings          = data.listings || this.state.listings;
+      this.state.deals             = data.deals || this.state.deals;
+      this.state.dashboardMetrics  = data.dashboardMetrics || this.state.dashboardMetrics;
+      this.state.activities        = data.activities || this.state.activities;
+      this.state.canonicalStatuses = data.canonicalStatuses || this.state.canonicalStatuses;
+      this.state.canonicalRoles    = data.canonicalRoles || this.state.canonicalRoles;
+      this.state.auditLogs         = data.auditLogs || this.state.auditLogs;
     } else if (event === 'SETTINGS_UPDATED') {
       this.state.settings = data;
     } else if (event === 'USER_ADDED') {
@@ -146,7 +170,8 @@ class EcosystemStore {
     this.notify();
   }
 
-  // Action methods
+  // ─── Action Methods ───────────────────────────────────────────────────────
+
   async updateRemoteSettings(newSettings) {
     const res = await fetch(`${API_BASE_URL}/api/settings`, {
       method: 'PUT',

@@ -27,16 +27,18 @@ cleanRoutes.forEach(r => {
 });
 
 userApp.use(express.static(path.join(rootDir, 'user-app')));
+userApp.get('/logo.svg', (req, res) => res.sendFile(path.join(rootDir, 'Logo_Brokers together.svg')));
 userApp.get('/Logo_Brokers%20together.svg', (req, res) => res.sendFile(path.join(rootDir, 'Logo_Brokers together.svg')));
-userApp.listen(5051, () => {
-  console.log('🌐 User Portal (Property Owners & Companies) running at http://localhost:5051');
+userApp.listen(5051, '0.0.0.0', () => {
+  console.log('🌐 User Portal (Property Owners & Companies) running at http://0.0.0.0:5051');
 });
 
 // 2. Admin Panel (Port 5052)
 const adminApp = express();
 adminApp.use('/shared', express.static(path.join(rootDir, 'shared')));
 adminApp.use(express.static(path.join(rootDir, 'admin-panel')));
+adminApp.get('/logo.svg', (req, res) => res.sendFile(path.join(rootDir, 'Logo_Brokers together.svg')));
 adminApp.get('/Logo_Brokers%20together.svg', (req, res) => res.sendFile(path.join(rootDir, 'Logo_Brokers together.svg')));
-adminApp.listen(5052, () => {
-  console.log('⚙️ Admin Panel running at http://localhost:5052');
+adminApp.listen(5052, '0.0.0.0', () => {
+  console.log('⚙️ Admin Panel running at http://0.0.0.0:5052');
 });
