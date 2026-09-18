@@ -2172,6 +2172,9 @@
     let currentInquirySelected = null;
 
     window.addEventListener('DOMContentLoaded', () => {
+      // Ensure page starts at top
+      window.scrollTo(0, 0);
+
       // 1. Check logged-in user
       const authUser = window.AuthManager ? window.AuthManager.getUser() : null;
       if (authUser) {
