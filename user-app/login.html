@@ -1021,7 +1021,7 @@
       try {
         const result = await window.AuthManager.login(identifier, password);
 
-        if (result.ok && result.data.success) {
+        if (result && result.ok && result.data && result.data.success) {
           btnLabel.textContent = 'ACCESS GRANTED';
           submitBtn.style.background = '#2E7D32';
 
@@ -1032,11 +1032,11 @@
             window.location.href = target;
           }, 350);
         } else {
-          showAuthFailure(result.data?.error || 'Incorrect email/mobile number or password.');
+          showAuthFailure(result?.data?.error || 'Incorrect email/mobile number or password.');
         }
       } catch (err) {
         console.error('Login error:', err);
-        showAuthFailure('Unable to connect to authentication service. Please check your network.');
+        showAuthFailure((err && err.message) ? err.message : 'Incorrect email/mobile number or password.');
       }
     }
 
