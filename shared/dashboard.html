@@ -364,53 +364,61 @@
     .topbar-right {
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 22px; /* Suggested spacing between notification bell and user avatar */
     }
 
     .bell-btn {
       position: relative;
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: #4B5563;
-      padding: 6px;
-      display: flex;
+      width: 42px;
+      height: 42px;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
+      border: none;
+      background: transparent;
       border-radius: 50%;
-      transition: background 0.2s ease;
+      cursor: pointer;
+      color: #111827; /* Dark navy / charcoal icon color */
+      padding: 0;
+      transition: background 0.2s ease, color 0.2s ease;
+      flex-shrink: 0;
     }
 
     .bell-btn:hover {
-      background: #F3F4F6;
+      background: #F3F4F6; /* Soft warm grey / off-white */
+      color: #0F172A;
     }
 
     .bell-badge {
       position: absolute;
       top: 3px;
-      right: 4px;
+      right: 3px;
       background: #EF4444;
       color: #FFFFFF;
-      font-size: 0.62rem;
-      font-weight: 800;
-      width: 15px;
+      font-size: 10px;
+      font-weight: 700;
+      min-width: 15px;
       height: 15px;
-      border-radius: 50%;
+      border-radius: 10px;
+      padding: 0 4px;
       display: flex;
       align-items: center;
       justify-content: center;
       border: 1.5px solid #FFFFFF;
+      line-height: 1;
+      pointer-events: none;
+      box-sizing: border-box;
     }
 
     .topbar-user-pill {
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 10px;
       cursor: pointer;
-      padding: 4px 6px 4px 4px;
+      padding: 3px 6px 3px 3px;
       border-radius: 24px;
       transition: background 0.2s ease;
       position: relative;
+      user-select: none;
     }
 
     .topbar-user-pill:hover {
@@ -418,22 +426,28 @@
     }
 
     .topbar-avatar {
-      width: 34px;
-      height: 34px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       object-fit: cover;
+      margin-right: 11px; /* avatar -> name spacing: 10-12px */
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      flex-shrink: 0;
     }
 
     .topbar-user-name {
-      font-size: 0.86rem;
+      font-size: 0.88rem;
       font-weight: 700;
       color: #1F2937;
+      margin-right: 9px; /* name -> chevron spacing: 8-10px */
+      white-space: nowrap;
     }
 
     .topbar-chevron {
       color: #6B7280;
       display: flex;
       align-items: center;
+      justify-content: center;
     }
 
     /* Topbar Profile Dropdown */
@@ -537,13 +551,11 @@
 
     .dash-hero-right {
       display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      justify-content: center;
-      padding-right: 36px;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 24px 44px 24px 0; /* Right padding: 36-48px; generous breathing space, center-right */
       position: relative;
       z-index: 3;
-      gap: 10px;
     }
 
     /* + List New Project Gold Button */
@@ -551,9 +563,9 @@
       background: linear-gradient(135deg, #C5A262 0%, #A37E3E 100%);
       color: #FFFFFF;
       border: none;
-      padding: 11px 26px;
+      padding: 12px 28px;
       border-radius: 24px;
-      font-size: 0.86rem;
+      font-size: 0.88rem;
       font-weight: 700;
       cursor: pointer;
       display: inline-flex;
@@ -587,19 +599,6 @@
       -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.4) 20%, rgba(0,0,0,0.85) 60%, black 100%);
       pointer-events: none;
       z-index: 1;
-    }
-
-    .hero-motto-watermark {
-      font-family: 'Cinzel', serif;
-      font-size: 0.64rem;
-      font-weight: 800;
-      letter-spacing: 0.18em;
-      color: rgba(17, 24, 39, 0.75);
-      text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
-      line-height: 1.5;
-      text-transform: uppercase;
-      text-align: right;
-      pointer-events: none;
     }
 
     /* --------------------------------------------------------------------------
@@ -1489,12 +1488,16 @@
         width: 100%;
         justify-content: center;
       }
-      .hero-motto-watermark {
-        text-align: left;
-      }
       .topbar-user-name,
       .topbar-chevron {
         display: none;
+      }
+      .topbar-right {
+        gap: 12px;
+      }
+      .bell-btn {
+        width: 40px;
+        height: 40px;
       }
       .search-box {
         display: none;
@@ -1691,9 +1694,6 @@
               <span style="font-size: 1.1rem; line-height: 1;">+</span>
               <span>List New Project</span>
             </a>
-            <div class="hero-motto-watermark">
-              PREMIUM PROPERTIES.<br>STRONGER PARTNERSHIPS.
-            </div>
           </div>
 
           <!-- Skyline Panoramic Photo Mask -->
