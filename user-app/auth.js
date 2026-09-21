@@ -23,7 +23,7 @@
       role: 'Property Owner',
       membership: 'Platinum Owner',
       status: 'Active',
-      avatar: 'https://img.magnific.com/free-photo/view-serious-business-partners-having-meeting-cafe_1262-16866.jpg',
+      avatar: '/images/avatar-business-partner.jpg',
       createdAt: '2026-01-15T09:30:00Z'
     },
     {
@@ -35,7 +35,7 @@
       role: 'Developer',
       membership: 'Verified Developer',
       status: 'Active',
-      avatar: 'https://img.magnific.com/free-photo/content-indian-ceo-standing-smiling-portrait-successful-pensive-bearded-businessman-glasses-posing-office-room-business-expression-management-concept_74855-11642.jpg',
+      avatar: '/images/avatar-indian-ceo.jpg',
       createdAt: '2026-02-10T10:00:00Z'
     },
     {
@@ -47,7 +47,7 @@
       role: 'Broker',
       membership: 'Verified Member',
       status: 'Active',
-      avatar: 'https://img.magnific.com/free-photo/positive-indian-financial-advisor-holding-open-folder_1262-17502.jpg',
+      avatar: '/images/avatar-financial-advisor.jpg',
       createdAt: '2026-09-17T13:19:47.555Z'
     },
     {
@@ -59,7 +59,7 @@
       role: 'Property Owner',
       membership: 'Verified Owner',
       status: 'Active',
-      avatar: 'https://img.magnific.com/free-photo/positive-indian-financial-advisor-holding-open-folder_1262-17502.jpg',
+      avatar: '/images/avatar-financial-advisor.jpg',
       createdAt: '2026-09-17T13:46:23.413Z'
     }
   ];

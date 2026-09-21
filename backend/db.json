@@ -60,39 +60,39 @@
   },
   "assetRegistry": {
     "hero": {
-      "desktopUrl": "https://img.magnific.com/free-photo/modern-hotel-complex-low-angle-shot_181624-503.jpg",
-      "mobileUrl": "https://img.magnific.com/free-photo/modern-hotel-complex-low-angle-shot_181624-503.jpg",
+      "desktopUrl": "/images/project-riverside-heights.jpg",
+      "mobileUrl": "/images/project-riverside-heights.jpg",
       "altText": "Daylight photography of luxury modern residential architectural complex",
       "aiGenerated": false
     },
     "brokerNetwork": {
-      "desktopUrl": "https://img.magnific.com/free-photo/real-estate-agent-talking-with-couple-holding-documents-homeowning-contract-new-apartment_482257-22209.jpg",
-      "mobileUrl": "https://img.magnific.com/free-photo/real-estate-agent-talking-with-couple-holding-documents-homeowning-contract-new-apartment_482257-22209.jpg",
+      "desktopUrl": "/images/feature-broker-meeting-client.jpg",
+      "mobileUrl": "/images/feature-broker-meeting-client.jpg",
       "altText": "Real estate broker consulting clients with property contract in modern office",
       "aiGenerated": false
     },
     "howItWorks": {
-      "desktopUrl": "https://img.magnific.com/free-photo/team-architects-working-town-project-conference-room-architect-business-suit_482257-26513.jpg",
-      "mobileUrl": "https://img.magnific.com/free-photo/team-architects-working-town-project-conference-room-architect-business-suit_482257-26513.jpg",
+      "desktopUrl": "/images/feature-architects-team.jpg",
+      "mobileUrl": "/images/feature-architects-team.jpg",
       "altText": "Real estate consultants reviewing property blueprints on digital tablet",
       "aiGenerated": false
     },
     "dealsEnquiries": {
-      "desktopUrl": "https://img.magnific.com/free-photo/business-meeting-office_1268-21531.jpg",
-      "mobileUrl": "https://img.magnific.com/free-photo/business-meeting-office_1268-21531.jpg",
+      "desktopUrl": "/images/feature-business-meeting.jpg",
+      "mobileUrl": "/images/feature-business-meeting.jpg",
       "altText": "Indian real estate professionals reviewing buying offer documents",
       "aiGenerated": false
     },
     "testimonials": [
       {
         "id": "t1",
-        "url": "https://img.magnific.com/free-photo/content-indian-ceo-standing-smiling-portrait-successful-pensive-bearded-businessman-glasses-posing-office-room-business-expression-management-concept_74855-11642.jpg",
+        "url": "/images/avatar-indian-ceo.jpg",
         "altText": "Portrait of Karan Singhania, Managing Director of Landmark Developers",
         "aiGenerated": false
       },
       {
         "id": "t2",
-        "url": "https://img.magnific.com/free-photo/closeup-content-attractive-indian-business-lady_1262-2094.jpg",
+        "url": "/images/avatar-business-lady.jpg",
         "altText": "Portrait of Ananya Roy, Luxury Real Estate Investor",
         "aiGenerated": false
       }
@@ -108,7 +108,7 @@
       "membership": "Platinum Owner",
       "status": "Active",
       "phone": "+91 98765 43210",
-      "avatar": "https://img.magnific.com/free-photo/view-serious-business-partners-having-meeting-cafe_1262-16866.jpg",
+      "avatar": "/images/avatar-business-partner.jpg",
       "createdAt": "2026-01-15T09:30:00Z"
     },
     {
@@ -120,7 +120,7 @@
       "membership": "Verified Developer",
       "status": "Active",
       "phone": "+91 98111 22334",
-      "avatar": "https://img.magnific.com/free-photo/content-indian-ceo-standing-smiling-portrait-successful-pensive-bearded-businessman-glasses-posing-office-room-business-expression-management-concept_74855-11642.jpg",
+      "avatar": "/images/avatar-indian-ceo.jpg",
       "createdAt": "2026-02-10T10:00:00Z"
     },
     {
@@ -132,7 +132,7 @@
       "role": "Broker",
       "membership": "Verified Member",
       "status": "Active",
-      "avatar": "https://img.magnific.com/free-photo/positive-indian-financial-advisor-holding-open-folder_1262-17502.jpg",
+      "avatar": "/images/avatar-financial-advisor.jpg",
       "createdAt": "2026-09-17T13:19:47.555Z"
     },
     {
@@ -145,7 +145,7 @@
       "membership": "Verified Owner",
       "status": "Active",
       "profileComplete": true,
-      "avatar": "https://img.magnific.com/free-photo/positive-indian-financial-advisor-holding-open-folder_1262-17502.jpg",
+      "avatar": "/images/avatar-financial-advisor.jpg",
       "createdAt": "2026-09-17T13:46:23.413Z"
     }
   ],
@@ -160,7 +160,7 @@
       "dealsClosedVolume": "₹1,500 Cr+",
       "location": "Mumbai & Delhi NCR",
       "status": "Available",
-      "avatar": "https://img.magnific.com/free-photo/positive-indian-financial-advisor-holding-open-folder_1262-17502.jpg",
+      "avatar": "/images/avatar-financial-advisor.jpg",
       "verified": true
     },
     {
@@ -173,7 +173,7 @@
       "dealsClosedVolume": "₹1,040 Cr+",
       "location": "Dubai & London",
       "status": "In Session",
-      "avatar": "https://img.magnific.com/free-photo/joyful-indian-businesswoman-feels-empowered-after-achieving-strategic-win_482257-117239.jpg",
+      "avatar": "/images/avatar-businesswoman-win.jpg",
       "verified": true
     },
     {
@@ -186,7 +186,7 @@
       "dealsClosedVolume": "₹1,750 Cr+",
       "location": "Bengaluru & Hyderabad",
       "status": "Available",
-      "avatar": "https://img.magnific.com/free-photo/content-indian-ceo-standing-smiling-portrait-successful-pensive-bearded-businessman-glasses-posing-office-room-business-expression-management-concept_74855-11642.jpg",
+      "avatar": "/images/avatar-indian-ceo.jpg",
       "verified": true
     }
   ],
@@ -199,7 +199,7 @@
       "priceDisplay": "₹95 Cr",
       "location": "Worli, Mumbai",
       "specs": "5 Beds • 6.5 Baths • 6,800 sq ft • Private Sky Deck",
-      "image": "https://img.magnific.com/free-photo/modern-hotel-complex-low-angle-shot_181624-503.jpg",
+      "image": "/images/project-riverside-heights.jpg",
       "ownerId": "usr-101",
       "brokerId": "cns-201",
       "isOffMarket": true,
@@ -217,7 +217,7 @@
       "priceDisplay": "₹320 Cr",
       "location": "Outer Ring Road, Bengaluru",
       "specs": "14 Floors • 1,71,870 sq ft Office • Grade A Certified",
-      "image": "https://img.magnific.com/free-photo/tall-apartment-buildings-with-modern-design_1268-15585.jpg",
+      "image": "/images/project-skyline-residences.jpg",
       "ownerId": "usr-101",
       "brokerId": "cns-203",
       "isOffMarket": false,
@@ -235,7 +235,7 @@
       "priceDisplay": "₹42 Cr",
       "location": "Bandra West, Mumbai",
       "specs": "6 Beds • 7 Baths • 8,200 sq ft • Private Garden",
-      "image": "https://img.magnific.com/free-photo/skyscrapers-dubai-marina_231208-7597.jpg",
+      "image": "/images/project-skyscrapers-marina.jpg",
       "ownerId": "usr-101",
       "brokerId": "cns-201",
       "isOffMarket": false,
@@ -253,7 +253,7 @@
       "priceDisplay": "₹18 Cr",
       "location": "Indiranagar, Bengaluru",
       "specs": "4 Floors • 22,000 sq ft • Corner Unit • Riverside View",
-      "image": "https://img.magnific.com/free-photo/business-meeting-office_1268-21531.jpg",
+      "image": "/images/feature-business-meeting.jpg",
       "ownerId": "usr-101",
       "brokerId": "cns-203",
       "isOffMarket": false,
@@ -271,7 +271,7 @@
       "priceDisplay": "₹204 Cr",
       "location": "Palm Jumeirah, Dubai",
       "specs": "6 Beds • Private Beach • Yacht Docking • 11,000 sq ft",
-      "image": "https://img.magnific.com/free-photo/skyscrapers-dubai-marina_231208-7597.jpg",
+      "image": "/images/project-skyscrapers-marina.jpg",
       "ownerId": "usr-102",
       "brokerId": "cns-202",
       "isOffMarket": true,
@@ -290,7 +290,7 @@
       "price": "dfd",
       "specs": "dfd • fdf sq m",
       "description": "ff",
-      "image": "https://img.magnific.com/free-photo/modern-hotel-complex-low-angle-shot_181624-503.jpg",
+      "image": "/images/project-riverside-heights.jpg",
       "isOffMarket": true,
       "ownerId": "usr-101",
       "ownerName": "Rajesh Malhotra"
@@ -337,7 +337,7 @@
       "agency": "Elite Properties India",
       "counsellorId": "cns-201",
       "counsellorName": "Vikramaditya Singhania",
-      "avatar": "https://img.magnific.com/free-photo/content-indian-ceo-standing-smiling-portrait-successful-pensive-bearded-businessman-glasses-posing-office-room-business-expression-management-concept_74855-11642.jpg",
+      "avatar": "/images/avatar-indian-ceo.jpg",
       "messagePreview": "Our client is ready to move quickly. Can we arrange a private viewing?",
       "time": "3d ago",
       "offeredAmount": 920000000,
@@ -461,14 +461,14 @@
       "name": "Karan Singhania",
       "role": "Managing Director, Landmark Developers",
       "text": "Listing our off-market commercial assets through Brokers Together gave us immediate access to 800+ vetted brokers without public exposure. Closed our transaction in 18 days.",
-      "avatar": "https://img.magnific.com/free-photo/content-indian-ceo-standing-smiling-portrait-successful-pensive-bearded-businessman-glasses-posing-office-room-business-expression-management-concept_74855-11642.jpg"
+      "avatar": "/images/avatar-indian-ceo.jpg"
     },
     {
       "id": "tst-2",
       "name": "Ananya Roy",
       "role": "Luxury Villa Owner & Investor",
       "text": "The multi-step project wizard made listing our ₹125 Cr beachfront estate effortless. The direct broker messaging UI kept inquiries organised and transparent.",
-      "avatar": "https://img.magnific.com/free-photo/closeup-content-attractive-indian-business-lady_1262-2094.jpg"
+      "avatar": "/images/avatar-business-lady.jpg"
     }
   ],
   "auditLogs": [
