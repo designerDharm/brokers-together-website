@@ -518,13 +518,13 @@ p.lead-text {
 /* Supporting copy */
 .hero-spec-lead {
   font-family: var(--font-primary);
-  font-size: 15.5px;
+  font-size: 15px;
   line-height: 1.5;
   color: #59616B; /* Muted dark grey body text */
   font-weight: 400;
   letter-spacing: var(--letter-spacing-body);
   max-width: 580px;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 /* CTA Area */
@@ -532,16 +532,16 @@ p.lead-text {
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .btn-spec-primary {
-  height: 56px;
-  padding: 0 32px;
+  height: 52px;
+  padding: 0 30px;
   background-color: #B89555;
   color: #FFFFFF;
   font-family: var(--font-primary);
-  font-size: 16px;
+  font-size: 15.5px;
   font-weight: 700;
   border-radius: 8px;
   text-decoration: none;
@@ -569,12 +569,12 @@ p.lead-text {
 }
 
 .btn-spec-secondary {
-  height: 56px;
-  padding: 0 28px;
+  height: 52px;
+  padding: 0 26px;
   background-color: #F9F6F0;
   color: #000000;
   font-family: var(--font-primary);
-  font-size: 16px;
+  font-size: 15.5px;
   font-weight: 600;
   border-radius: 8px;
   border: 1px solid #B89555;
@@ -647,13 +647,13 @@ p.lead-text {
    DOCUMENT FEATURE: TRUST SIGNALS (Clean Horizontal Pill Bar)
    ==================================================== */
 .hero-trust-pills-bar {
-  margin-top: 24px;
-  padding-top: 18px;
+  margin-top: 18px;
+  padding-top: 16px;
   border-top: 1px solid rgba(184, 149, 85, 0.2);
   display: flex;
   align-items: center;
-  gap: 12px;
-  max-width: 620px;
+  gap: 8px;
+  max-width: 600px;
   width: 100%;
 }
 
@@ -664,7 +664,7 @@ p.lead-text {
   align-items: center;
   text-align: center;
   gap: 6px;
-  padding: 8px 4px;
+  padding: 6px 2px;
   border-radius: 8px;
   background: transparent;
   transition: all 180ms ease;
