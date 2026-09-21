@@ -179,19 +179,34 @@
 
   <script>
     let ownerListings = [];
+    let initialProjectHandled = false;
 
     window.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const targetProjId = urlParams.get('project');
+
       window.ecosystemStore.subscribe(state => {
         ownerListings = (state.listings || []).filter(l => l.ownerId === 'usr-101' || !l.ownerId);
         populateProjectDropdown();
+        if (!initialProjectHandled && targetProjId) {
+          const select = document.getElementById('an-project-filter');
+          if (select.querySelector(`option[value="${targetProjId}"]`)) {
+            select.value = targetProjId;
+          }
+          initialProjectHandled = true;
+        }
         updateAnalytics();
       });
     });
 
     function populateProjectDropdown() {
       const select = document.getElementById('an-project-filter');
+      const currentVal = select.value;
       select.innerHTML = '<option value="all">All Real Estate Projects</option>' + 
         ownerListings.map(l => `<option value="${l.id}">${l.title}</option>`).join('');
+      if (currentVal && select.querySelector(`option[value="${currentVal}"]`)) {
+        select.value = currentVal;
+      }
     }
 
     function updateAnalytics() {

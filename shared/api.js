@@ -157,6 +157,8 @@ class EcosystemStore {
     } else if (event === 'LISTING_UPDATED') {
       const idx = this.state.listings.findIndex(l => l.id === data.id);
       if (idx !== -1) this.state.listings[idx] = data;
+    } else if (event === 'LISTING_DELETED') {
+      this.state.listings = this.state.listings.filter(l => l.id !== data.id);
     } else if (event === 'DEAL_ADDED') {
       this.state.deals = [data, ...this.state.deals];
     } else if (event === 'DEAL_UPDATED') {
@@ -226,11 +228,27 @@ class EcosystemStore {
     return res.json();
   }
 
+  async updateListing(id, listingData) {
+    const res = await fetch(`${API_BASE_URL}/api/listings/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(listingData)
+    });
+    return res.json();
+  }
+
   async updateListingStatus(id, status) {
     const res = await fetch(`${API_BASE_URL}/api/listings/${id}/status`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ status })
+    });
+    return res.json();
+  }
+
+  async deleteListing(id) {
+    const res = await fetch(`${API_BASE_URL}/api/listings/${id}`, {
+      method: 'DELETE'
     });
     return res.json();
   }

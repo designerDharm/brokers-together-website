@@ -432,6 +432,17 @@ app.patch('/api/listings/:id/status', (req, res) => {
   res.json(db.listings[idx]);
 });
 
+app.delete('/api/listings/:id', (req, res) => {
+  const db = readDB();
+  const idx = db.listings.findIndex(l => l.id === req.params.id);
+  if (idx === -1) return res.status(404).json({ error: 'Listing not found' });
+  const deletedListing = db.listings.splice(idx, 1)[0];
+  writeDB(db);
+  logAction('LISTING_DELETED', `Listing permanently deleted: ${deletedListing.title} (${deletedListing.id})`);
+  broadcast('LISTING_DELETED', { id: req.params.id, title: deletedListing.title });
+  res.json({ success: true, message: 'Listing deleted successfully', listing: deletedListing });
+});
+
 // 6. Deals & Consultations
 app.get('/api/deals', (req, res) => {
   const db = readDB();

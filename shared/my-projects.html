@@ -75,6 +75,16 @@
       text-align: center;
       margin-top: 40px;
     }
+    .danger-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 3000;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
   </style>
 </head>
 <body>
@@ -90,8 +100,8 @@
         <img src="/logo.svg" alt="Brokers Together" style="height: 38px;">
       </a>
 
-      <div style="display: flex; gap: 12px;">
-        <a href="new-project.html" class="btn-gold" style="font-size: 0.85rem; padding: 10px 20px;">+ List New Project</a>
+      <div style="display: flex; gap: 12px; align-items: center;">
+        <span style="font-size: 0.82rem; font-weight: 700; color: var(--color-gold-dark);">PORTFOLIO OVERVIEW</span>
       </div>
     </div>
   </header>
@@ -113,8 +123,8 @@
       <button onclick="switchTab('All')" class="tab-btn active" id="tab-All">All Projects (<span id="cnt-all">0</span>)</button>
       <button onclick="switchTab('Live')" class="tab-btn" id="tab-Live">Live (<span id="cnt-live">0</span>)</button>
       <button onclick="switchTab('Pending Review')" class="tab-btn" id="tab-Pending Review">Pending Review (<span id="cnt-pending">0</span>)</button>
-      <button onclick="switchTab('Draft')" class="tab-btn" id="tab-Draft">Drafts (0)</button>
-      <button onclick="switchTab('Inactive')" class="tab-btn" id="tab-Inactive">Inactive (0)</button>
+      <button onclick="switchTab('Draft')" class="tab-btn" id="tab-Draft">Drafts (<span id="cnt-draft">0</span>)</button>
+      <button onclick="switchTab('Inactive')" class="tab-btn" id="tab-Inactive">Inactive (<span id="cnt-inactive">0</span>)</button>
     </div>
 
     <!-- FILTERS & SORTING BAR -->
@@ -160,9 +170,91 @@
 
   </main>
 
+  <!-- MODAL: EDIT PROJECT -->
+  <div id="edit-project-modal" class="danger-modal">
+    <div style="background: var(--color-white); max-width: 600px; width: 100%; padding: 32px; border-radius: var(--radius-lg); position: relative; box-shadow: var(--shadow-elevation);">
+      <button onclick="closeEditModal()" style="position: absolute; top: 20px; right: 20px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--color-gray-500); line-height: 1;">&times;</button>
+      <h3 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 8px; color: var(--color-black);">Edit Project Details</h3>
+      <p style="font-size: 0.85rem; color: var(--color-gray-500); margin-bottom: 20px;">Update project specifications in real-time across the ecosystem.</p>
+      
+      <form id="edit-project-form" onsubmit="handleEditSubmit(event)">
+        <input type="hidden" id="edit-proj-id">
+        <div class="form-group" style="margin-bottom: 16px;">
+          <label style="font-size: 0.85rem; font-weight: 700; color: var(--color-black); display: block; margin-bottom: 6px;">Project Title</label>
+          <input type="text" id="edit-proj-title" class="form-control" required style="width: 100%;">
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+          <div class="form-group">
+            <label style="font-size: 0.85rem; font-weight: 700; color: var(--color-black); display: block; margin-bottom: 6px;">Category</label>
+            <select id="edit-proj-category" class="form-control" style="width: 100%;">
+              <option value="Residential">Residential</option>
+              <option value="Commercial">Commercial</option>
+              <option value="Land">Land</option>
+              <option value="Industrial">Industrial</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label style="font-size: 0.85rem; font-weight: 700; color: var(--color-black); display: block; margin-bottom: 6px;">Asking Price</label>
+            <input type="text" id="edit-proj-price" class="form-control" required style="width: 100%;" placeholder="e.g. $12,500,000">
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom: 16px;">
+          <label style="font-size: 0.85rem; font-weight: 700; color: var(--color-black); display: block; margin-bottom: 6px;">Description / Highlights</label>
+          <textarea id="edit-proj-desc" class="form-control" rows="3" style="width: 100%;" placeholder="Provide key highlights..."></textarea>
+        </div>
+        <div class="form-group" style="margin-bottom: 24px;">
+          <label style="font-size: 0.85rem; font-weight: 700; color: var(--color-black); display: block; margin-bottom: 6px;">Cover Photo Image URL</label>
+          <input type="url" id="edit-proj-image" class="form-control" required style="width: 100%;">
+        </div>
+        <div style="display: flex; gap: 12px; justify-content: flex-end;">
+          <button type="button" onclick="closeEditModal()" class="btn-outline-gold" style="padding: 10px 20px;">Cancel</button>
+          <button type="submit" class="btn-black" style="padding: 10px 24px;">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: DEACTIVATE / ACTIVATE CONFIRMATION -->
+  <div id="deactivate-project-modal" class="danger-modal">
+    <div style="background: var(--color-white); max-width: 480px; width: 100%; padding: 32px; border-radius: var(--radius-lg); text-align: center; box-shadow: var(--shadow-elevation);">
+      <div id="deact-modal-icon" style="font-size: 2.5rem; margin-bottom: 12px;">⏸</div>
+      <h3 id="deact-modal-title" style="font-size: 1.4rem; font-weight: 800; margin-bottom: 8px;">Deactivate Project Listing?</h3>
+      <p id="deact-modal-desc" style="color: var(--color-gray-500); font-size: 0.9rem; margin-bottom: 24px;">Deactivating will temporarily hide this project from the broker network feed. You can reactivate it at any time.</p>
+      
+      <div style="display: flex; gap: 12px;">
+        <button onclick="closeDeactivateModal()" class="btn-outline-gold" style="flex: 1;">Cancel</button>
+        <button id="deact-confirm-btn" onclick="confirmDeactivateAction()" class="btn-black" style="flex: 1;">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: PERMANENT DELETE CONFIRMATION -->
+  <div id="delete-project-modal" class="danger-modal">
+    <div style="background: var(--color-white); max-width: 480px; width: 100%; padding: 32px; border-radius: var(--radius-lg); text-align: center; border: 2px solid #EF4444; box-shadow: var(--shadow-elevation);">
+      <div style="font-size: 2.5rem; margin-bottom: 12px; color: #EF4444;">⚠️</div>
+      <h3 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 8px; color: #991B1B;">Permanently Delete Project?</h3>
+      <p style="color: var(--color-gray-500); font-size: 0.9rem; margin-bottom: 16px;">
+        This action <strong>CANNOT be undone</strong>. The project listing and its metrics will be permanently erased from the centralized database.
+      </p>
+
+      <div style="background: #FEF2F2; padding: 12px; border-radius: 6px; font-size: 0.85rem; color: #991B1B; margin-bottom: 16px; text-align: left;">
+        To confirm deletion, type <strong style="user-select: all;">DELETE</strong> below:
+      </div>
+
+      <input type="text" id="delete-confirm-input" oninput="handleDeleteInput(this.value)" class="form-control" placeholder="Type DELETE to confirm" style="margin-bottom: 20px; text-align: center; font-weight: 800; border-color: #F87171;">
+
+      <div style="display: flex; gap: 12px;">
+        <button onclick="closeDeleteModal()" class="btn-outline-gold" style="flex: 1;">Cancel</button>
+        <button onclick="confirmPermanentDeleteAction()" class="btn-black" style="flex: 1; background: #EF4444; border-color: #EF4444;" id="btn-confirm-delete" disabled>Permanently Delete</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     let activeTab = 'All';
     let allListings = [];
+    let targetActionProjectId = null;
+    let targetProjectData = null;
 
     window.addEventListener('DOMContentLoaded', () => {
       window.ecosystemStore.subscribe(state => {
@@ -174,14 +266,17 @@
 
     function updateTabCounts() {
       document.getElementById('cnt-all').textContent = allListings.length;
-      document.getElementById('cnt-live').textContent = allListings.filter(l => l.status === 'Live' || !l.status).length;
+      document.getElementById('cnt-live').textContent = allListings.filter(l => l.status === 'Live' || (!l.status && l.status !== 'Inactive')).length;
       document.getElementById('cnt-pending').textContent = allListings.filter(l => l.status === 'Submitted for Review').length;
+      document.getElementById('cnt-draft').textContent = allListings.filter(l => l.status === 'Draft').length;
+      document.getElementById('cnt-inactive').textContent = allListings.filter(l => l.status === 'Inactive').length;
     }
 
     function switchTab(tabName) {
       activeTab = tabName;
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      document.getElementById(`tab-${tabName}`).classList.add('active');
+      const activeBtn = document.getElementById(`tab-${tabName}`);
+      if (activeBtn) activeBtn.classList.add('active');
       applyFiltersAndSort();
     }
 
@@ -191,9 +286,15 @@
 
       let filtered = allListings.filter(l => {
         // Tab Filter
-        if (activeTab === 'Live' && l.status !== 'Live' && l.status) return false;
-        if (activeTab === 'Pending Review' && l.status !== 'Submitted for Review') return false;
-        if (activeTab === 'Draft' || activeTab === 'Inactive') return false;
+        if (activeTab === 'Live') {
+          if (l.status !== 'Live' && l.status) return false;
+        } else if (activeTab === 'Pending Review') {
+          if (l.status !== 'Submitted for Review') return false;
+        } else if (activeTab === 'Draft') {
+          if (l.status !== 'Draft') return false;
+        } else if (activeTab === 'Inactive') {
+          if (l.status !== 'Inactive') return false;
+        }
 
         // Category Filter
         if (typeFilter !== 'all' && l.category !== typeFilter) return false;
@@ -225,15 +326,27 @@
 
       emptyState.style.display = 'none';
 
-      container.innerHTML = items.map(p => `
+      container.innerHTML = items.map(p => {
+        const sd = window.BTSST ? window.BTSST.getStatusDisplay(p.status, p.isOffMarket) : null;
+        const statusLabel = sd ? sd.label : (p.status || 'Live');
+        const statusStyle = sd ? `background:${sd.bg};color:${sd.color};` : 'background:#D1FAE5;color:#059669;';
+        const offMarketBadge = p.isOffMarket
+          ? `<span class="badge-tag" style="position: static; font-size: 0.65rem; display: inline-flex; align-items: center; margin-left: 6px; background: #EDE9FE; color: #7C3AED; white-space: nowrap;">Off-Market VIP</span>`
+          : `<span class="badge-tag" style="position: static; font-size: 0.65rem; display: inline-flex; align-items: center; margin-left: 6px; background: #F1F5F9; color: #475569; white-space: nowrap;">Public</span>`;
+
+        const isCurrentlyInactive = p.status === 'Inactive';
+        const toggleBtnText = isCurrentlyInactive ? 'Activate' : 'Deactivate';
+        const toggleBtnClass = isCurrentlyInactive ? 'btn-outline-gold' : 'btn-black';
+
+        return `
         <div class="project-row">
           <img src="${p.image}" alt="${p.title}" class="project-row-img">
           
           <div style="flex: 1;">
-            <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 4px;">
+            <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 4px; flex-wrap: wrap;">
               <strong style="font-size: 1.15rem; color: var(--color-black);">${p.title}</strong>
-              <span class="badge-tag" style="position: static; font-size: 0.65rem;">${p.isOffMarket ? 'Off-Market VIP' : 'Public'}</span>
-              <span class="badge-tag" style="position: static; font-size: 0.65rem; background: ${p.status === 'Submitted for Review' ? '#F59E0B' : '#10B981'}; color: #FFF;">${p.status || 'Live'}</span>
+              ${offMarketBadge}
+              <span class="badge-tag" style="position: static; font-size: 0.65rem; display: inline-flex; align-items: center; margin-left: 4px; ${statusStyle} white-space: nowrap; font-weight: 700; padding: 3px 9px; border-radius: 12px;">${statusLabel}</span>
             </div>
             
             <div style="font-size: 0.85rem; color: var(--color-gray-500); margin-bottom: 8px;">
@@ -242,7 +355,7 @@
 
             <div style="display: flex; gap: 20px; font-size: 0.8rem; color: var(--color-gray-500); align-items: center;">
               <span style="display: inline-flex; align-items: center; gap: 5px;">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                 <span><strong>${p.views || 1420}</strong> Views</span>
               </span>
               <span style="display: inline-flex; align-items: center; gap: 5px;">
@@ -258,26 +371,133 @@
 
           <!-- Actions -->
           <div style="display: flex; gap: 8px; align-items: center;">
-            <button onclick="alert('Viewing ${p.title}')" class="btn-outline-gold" style="font-size: 0.8rem; padding: 6px 12px;">View</button>
-            <button onclick="alert('Editing ${p.title}')" class="btn-outline-gold" style="font-size: 0.8rem; padding: 6px 12px;">Edit</button>
-            <button onclick="alert('Analytics for ${p.title}')" class="btn-outline-gold" style="font-size: 0.8rem; padding: 6px 12px;">Analytics</button>
-            <button onclick="deactivateProject('${p.id}')" class="btn-black" style="font-size: 0.8rem; padding: 6px 12px;">Deactivate</button>
-            <button onclick="deleteProject('${p.id}')" style="background: none; border: none; color: #EF4444; cursor: pointer; padding: 6px 8px; display: inline-flex; align-items: center; justify-content: center; border-radius: 4px; transition: background 0.15s ease;" title="Delete Project" aria-label="Delete Project">
+            <button onclick="viewProject('${p.id}')" class="btn-outline-gold" style="font-size: 0.8rem; padding: 6px 12px;">View</button>
+            <button onclick="openEditModal('${p.id}')" class="btn-outline-gold" style="font-size: 0.8rem; padding: 6px 12px;">Edit</button>
+            <button onclick="viewAnalytics('${p.id}')" class="btn-outline-gold" style="font-size: 0.8rem; padding: 6px 12px;">Analytics</button>
+            <button onclick="openDeactivateModal('${p.id}')" class="${toggleBtnClass}" style="font-size: 0.8rem; padding: 6px 12px;">${toggleBtnText}</button>
+            <button onclick="openDeleteModal('${p.id}')" style="background: none; border: none; color: #EF4444; cursor: pointer; padding: 6px 8px; display: inline-flex; align-items: center; justify-content: center; border-radius: 4px; transition: background 0.15s ease;" title="Delete Project" aria-label="Delete Project">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
             </button>
           </div>
         </div>
-      `).join('');
+      `;
+      }).join('');
     }
 
-    function deactivateProject(id) {
-      alert(`Project ${id} deactivated.`);
+    // 1. VIEW ACTION
+    function viewProject(id) {
+      window.location.href = `project-detail.html?id=${id}`;
     }
 
-    function deleteProject(id) {
-      if (confirm('Are you sure you want to delete this project listing?')) {
-        alert(`Project ${id} deleted.`);
+    // 2. EDIT ACTION
+    function openEditModal(id) {
+      const proj = allListings.find(l => l.id === id);
+      if (!proj) return;
+      targetProjectData = proj;
+      document.getElementById('edit-proj-id').value = proj.id;
+      document.getElementById('edit-proj-title').value = proj.title || '';
+      document.getElementById('edit-proj-category').value = proj.category || 'Residential';
+      document.getElementById('edit-proj-price').value = proj.priceDisplay || proj.price || '';
+      document.getElementById('edit-proj-desc').value = proj.description || '';
+      document.getElementById('edit-proj-image').value = proj.image || '';
+      document.getElementById('edit-project-modal').style.display = 'flex';
+    }
+
+    function closeEditModal() {
+      document.getElementById('edit-project-modal').style.display = 'none';
+      targetProjectData = null;
+    }
+
+    async function handleEditSubmit(e) {
+      e.preventDefault();
+      if (!targetProjectData) return;
+      const id = document.getElementById('edit-proj-id').value;
+      const updatedData = {
+        ...targetProjectData,
+        title: document.getElementById('edit-proj-title').value,
+        category: document.getElementById('edit-proj-category').value,
+        price: document.getElementById('edit-proj-price').value,
+        priceDisplay: document.getElementById('edit-proj-price').value,
+        description: document.getElementById('edit-proj-desc').value,
+        image: document.getElementById('edit-proj-image').value
+      };
+
+      await window.ecosystemStore.updateListing(id, updatedData);
+      closeEditModal();
+    }
+
+    // 3. ANALYTICS ACTION
+    function viewAnalytics(id) {
+      window.location.href = `analytics.html?project=${id}`;
+    }
+
+    // 4. DEACTIVATE / ACTIVATE ACTION
+    function openDeactivateModal(id) {
+      const proj = allListings.find(l => l.id === id);
+      if (!proj) return;
+      targetActionProjectId = id;
+      targetProjectData = proj;
+
+      const isInactive = proj.status === 'Inactive';
+      const modal = document.getElementById('deactivate-project-modal');
+      const icon = document.getElementById('deact-modal-icon');
+      const title = document.getElementById('deact-modal-title');
+      const desc = document.getElementById('deact-modal-desc');
+      const confirmBtn = document.getElementById('deact-confirm-btn');
+
+      if (isInactive) {
+        icon.textContent = '▶️';
+        title.textContent = `Reactivate "${proj.title}"?`;
+        desc.textContent = 'This will immediately restore your listing to the live broker network feed.';
+        confirmBtn.textContent = 'Confirm Reactivation';
+        confirmBtn.className = 'btn-gold';
+      } else {
+        icon.textContent = '⏸';
+        title.textContent = `Deactivate "${proj.title}"?`;
+        desc.textContent = 'Deactivating will temporarily hide this project from the broker network feed. You can reactivate it at any time.';
+        confirmBtn.textContent = 'Confirm Deactivation';
+        confirmBtn.className = 'btn-black';
       }
+
+      modal.style.display = 'flex';
+    }
+
+    function closeDeactivateModal() {
+      document.getElementById('deactivate-project-modal').style.display = 'none';
+      targetActionProjectId = null;
+      targetProjectData = null;
+    }
+
+    async function confirmDeactivateAction() {
+      if (!targetActionProjectId || !targetProjectData) return;
+      const newStatus = targetProjectData.status === 'Inactive' ? 'Live' : 'Inactive';
+      await window.ecosystemStore.updateListingStatus(targetActionProjectId, newStatus);
+      closeDeactivateModal();
+    }
+
+    // 5. DELETE ACTION
+    function openDeleteModal(id) {
+      const proj = allListings.find(l => l.id === id);
+      if (!proj) return;
+      targetActionProjectId = id;
+      document.getElementById('delete-confirm-input').value = '';
+      document.getElementById('btn-confirm-delete').disabled = true;
+      document.getElementById('delete-project-modal').style.display = 'flex';
+    }
+
+    function closeDeleteModal() {
+      document.getElementById('delete-project-modal').style.display = 'none';
+      targetActionProjectId = null;
+    }
+
+    function handleDeleteInput(val) {
+      document.getElementById('btn-confirm-delete').disabled = (val.trim() !== 'DELETE');
+    }
+
+    async function confirmPermanentDeleteAction() {
+      if (!targetActionProjectId) return;
+      await window.ecosystemStore.deleteListing(targetActionProjectId);
+      closeDeleteModal();
     }
   </script>
 </body>
