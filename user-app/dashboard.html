@@ -1138,22 +1138,26 @@
 
     /* Project Status Overview (Donut Chart) */
     .donut-card-inner {
-      padding: 18px 20px;
+      padding: 16px 16px;
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 14px;
     }
 
     .donut-visual-wrap {
       position: relative;
-      width: 105px;
-      height: 105px;
+      width: 96px;
+      height: 96px;
       flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .donut-visual-wrap svg {
-      width: 105px;
-      height: 105px;
+      width: 96px;
+      height: 96px;
+      transform: rotate(-90deg);
     }
 
     .donut-center-text {
@@ -1162,27 +1166,34 @@
       left: 50%;
       transform: translate(-50%, -50%);
       text-align: center;
+      pointer-events: none;
+      width: 62px;
     }
 
     .donut-center-number {
       font-size: 1.35rem;
       font-weight: 800;
       color: #111827;
-      line-height: 1;
+      line-height: 1.1;
+      margin-bottom: 2px;
     }
 
     .donut-center-label {
-      font-size: 0.62rem;
+      font-size: 0.54rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
       color: #6B7280;
-      margin-top: 2px;
-      white-space: nowrap;
+      line-height: 1.1;
+      white-space: normal;
+      word-break: break-word;
     }
 
     .status-breakdown-list {
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 6px;
       min-width: 0;
     }
 
@@ -1190,26 +1201,40 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
+      gap: 6px;
     }
 
     .status-label-group {
       display: flex;
       align-items: center;
-      gap: 8px;
-      color: #4B5563;
+      gap: 6px;
+      color: #374151;
       font-weight: 500;
+      min-width: 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .status-label-group span:last-child {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .status-dot {
-      width: 8px;
-      height: 8px;
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
+      flex-shrink: 0;
     }
 
     .status-count {
       font-weight: 700;
       color: #111827;
+      font-size: 0.78rem;
+      margin-left: auto;
+      flex-shrink: 0;
     }
 
     /* Privacy & Visibility Card */
@@ -1973,7 +1998,10 @@
             <div class="dash-box">
               <div class="dash-box-header">
                 <div class="dash-box-title-wrap">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B89555" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B89555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
+                    <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
+                  </svg>
                   <h3 class="dash-box-title">Project Status Overview</h3>
                 </div>
                 <a href="my-projects.html" class="dash-box-link">View All ›</a>
@@ -1982,15 +2010,15 @@
               <div class="donut-card-inner">
                 <!-- Circular SVG Donut Chart -->
                 <div class="donut-visual-wrap">
-                  <svg width="120" height="120" viewBox="0 0 42 42">
+                  <svg width="96" height="96" viewBox="0 0 42 42">
                     <!-- Background circle -->
-                    <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#F3F4F6" stroke-width="5"></circle>
+                    <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#F3F4F6" stroke-width="4.5"></circle>
                     <!-- Green segment (Live = 2 of 4 -> 50%) -->
-                    <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#10B981" stroke-width="5" stroke-dasharray="50 50" stroke-dashoffset="25"></circle>
+                    <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#10B981" stroke-width="4.5" stroke-dasharray="50 50" stroke-dashoffset="25"></circle>
                     <!-- Gold segment (Under Review = 1 of 4 -> 25%) -->
-                    <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#B89555" stroke-width="5" stroke-dasharray="25 75" stroke-dashoffset="75"></circle>
+                    <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#B89555" stroke-width="4.5" stroke-dasharray="25 75" stroke-dashoffset="75"></circle>
                     <!-- Coral segment (Requires Changes = 1 of 4 -> 25%) -->
-                    <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#F97316" stroke-width="5" stroke-dasharray="25 75" stroke-dashoffset="50"></circle>
+                    <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#F97316" stroke-width="4.5" stroke-dasharray="25 75" stroke-dashoffset="50"></circle>
                   </svg>
                   <div class="donut-center-text">
                     <div class="donut-center-number" id="donut-total-val">4</div>
@@ -2473,7 +2501,7 @@
         circle.setAttribute('r', '15.915');
         circle.setAttribute('fill', 'transparent');
         circle.setAttribute('stroke', seg.color);
-        circle.setAttribute('stroke-width', '5');
+        circle.setAttribute('stroke-width', '4.5');
         circle.setAttribute('stroke-dasharray', `${seg.pct} ${circumference - seg.pct}`);
         circle.setAttribute('stroke-dashoffset', circumference - seg.offset + circumference);
         circle.classList.add('donut-segment');
