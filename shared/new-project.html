@@ -175,9 +175,9 @@
     }
 
     .category-option-card.active {
-      background: #0A0D14;
-      border-color: #0A0D14;
-      box-shadow: 0 8px 24px rgba(10, 13, 20, 0.25);
+      background: #FAF8F5; /* Warm subtle brand gold tint */
+      border: 2px solid #B89555; /* Thicker brand accent stroke */
+      box-shadow: 0 4px 16px rgba(184, 149, 85, 0.18);
     }
 
     .cat-icon-wrap {
@@ -194,8 +194,9 @@
     }
 
     .category-option-card.active .cat-icon-wrap {
-      background: rgba(184, 149, 85, 0.22);
+      background: #B89555;
       color: #FFFFFF;
+      box-shadow: 0 2px 8px rgba(184, 149, 85, 0.35);
     }
 
     .cat-info {
@@ -205,14 +206,15 @@
 
     .cat-title {
       font-size: 0.95rem;
-      font-weight: 700;
-      color: #111827;
+      font-weight: 600;
+      color: #374151;
       margin-bottom: 2px;
-      transition: color 0.2s ease;
+      transition: all 0.2s ease;
     }
 
     .category-option-card.active .cat-title {
-      color: #FFFFFF;
+      color: #0A0D14;
+      font-weight: 800; /* Extra bold text */
     }
 
     .cat-desc {
@@ -222,7 +224,8 @@
     }
 
     .category-option-card.active .cat-desc {
-      color: #9CA3AF;
+      color: #4B5563;
+      font-weight: 500;
     }
 
     .cat-radio-check {
@@ -271,9 +274,11 @@
     }
 
     .unit-segment-btn.active {
-      background: #0A0D14;
-      color: #FFFFFF;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      background: #FFFFFF;
+      color: #0A0D14;
+      font-weight: 800;
+      border: 1.5px solid #B89555;
+      box-shadow: 0 2px 8px rgba(184, 149, 85, 0.2);
     }
 
     /* Quick Tag Pills */
@@ -306,9 +311,10 @@
     }
 
     .quick-tag-btn.selected {
-      background: #0A0D14;
-      border-color: #0A0D14;
-      color: #FFFFFF;
+      background: #FAF8F5;
+      border: 1.5px solid #B89555;
+      color: #0A0D14;
+      font-weight: 700;
     }
   </style>
 </head>
