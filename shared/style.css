@@ -647,53 +647,51 @@ p.lead-text {
    DOCUMENT FEATURE: TRUST SIGNALS (Clean & Professional Icon + Title)
    ==================================================== */
 .hero-trust-clean-wrap {
-  margin-top: 24px;
-  padding: 14px 20px;
-  background: rgba(255, 255, 255, 0.7);
-  border: 1px solid rgba(184, 149, 85, 0.25);
-  border-radius: 12px;
+  margin-top: 26px;
+  padding: 0;
+  background: transparent;
+  border: none;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 14px 18px;
+  gap: 16px 22px;
   max-width: 620px;
-  box-shadow: 0 4px 16px rgba(184, 149, 85, 0.05);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  box-shadow: none;
 }
 
 .trust-clean-item {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   transition: transform 160ms ease;
 }
 
 .trust-clean-item:hover {
-  transform: translateY(-1px);
+  transform: translateY(-2px);
 }
 
 .trust-clean-icon {
-  width: 28px;
-  height: 28px;
-  border-radius: 6px;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
   background: rgba(184, 149, 85, 0.12);
   color: #B89555;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: background-color 160ms ease, color 160ms ease;
+  transition: background-color 160ms ease, color 160ms ease, box-shadow 160ms ease;
 }
 
 .trust-clean-item:hover .trust-clean-icon {
   background: #B89555;
   color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(184, 149, 85, 0.3);
 }
 
 .trust-clean-title {
   font-family: var(--font-primary, sans-serif);
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: 600;
   color: #1E293B;
   letter-spacing: 0.01em;
@@ -704,15 +702,15 @@ p.lead-text {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background-color: rgba(184, 149, 85, 0.4);
+  background-color: rgba(184, 149, 85, 0.45);
 }
 
 @media (max-width: 640px) {
   .hero-trust-clean-wrap {
     flex-direction: column;
     align-items: flex-start;
-    gap: 10px;
-    padding: 12px 16px;
+    gap: 12px;
+    padding: 0;
   }
 
   .trust-clean-sep {
