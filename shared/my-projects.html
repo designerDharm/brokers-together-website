@@ -79,11 +79,36 @@
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.85);
-      z-index: 3000;
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      z-index: 9999;
       justify-content: center;
       align-items: center;
-      padding: 20px;
+      padding: 24px;
+      overflow-y: auto;
+    }
+    .danger-modal.active,
+    .danger-modal[style*="display: flex"] {
+      display: flex !important;
+    }
+    .danger-modal-box {
+      background: #FFFFFF;
+      width: 100%;
+      border-radius: 16px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      position: relative;
+      animation: modalPopIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      margin: auto;
+    }
+    @keyframes modalPopIn {
+      from { opacity: 0; transform: scale(0.96) translateY(8px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .tab-btn.active {
+      background: var(--color-gold-dark, #9A7B3E);
+      color: #FFFFFF !important;
+      box-shadow: 0 2px 8px rgba(184, 149, 85, 0.25);
     }
   </style>
 </head>
@@ -96,8 +121,8 @@
         ← Back to Dashboard
       </a>
 
-      <a href="index.html">
-        <img src="/logo.svg" alt="Brokers Together" style="height: 38px;">
+      <a href="index.html" style="display: flex; align-items: center; text-decoration: none;">
+        <img src="logo.svg" onerror="this.src='/logo.svg'" alt="Brokers Together" style="height: 38px;">
       </a>
 
       <div style="display: flex; gap: 12px; align-items: center;">
@@ -118,11 +143,12 @@
       <a href="new-project.html" class="btn-gold">+ LIST NEW PROJECT</a>
     </div>
 
-    <!-- TABS: All, Live, Pending Review, Draft, Inactive -->
+    <!-- TABS: Canonical SSoT Statuses -->
     <div class="tab-bar">
       <button onclick="switchTab('All')" class="tab-btn active" id="tab-All">All Projects (<span id="cnt-all">0</span>)</button>
       <button onclick="switchTab('Live')" class="tab-btn" id="tab-Live">Live (<span id="cnt-live">0</span>)</button>
-      <button onclick="switchTab('Pending Review')" class="tab-btn" id="tab-Pending Review">Pending Review (<span id="cnt-pending">0</span>)</button>
+      <button onclick="switchTab('Under Review')" class="tab-btn" id="tab-Under-Review">Under Review (<span id="cnt-review">0</span>)</button>
+      <button onclick="switchTab('Requires Changes')" class="tab-btn" id="tab-Requires-Changes">Requires Changes (<span id="cnt-changes">0</span>)</button>
       <button onclick="switchTab('Draft')" class="tab-btn" id="tab-Draft">Drafts (<span id="cnt-draft">0</span>)</button>
       <button onclick="switchTab('Inactive')" class="tab-btn" id="tab-Inactive">Inactive (<span id="cnt-inactive">0</span>)</button>
     </div>
@@ -171,21 +197,21 @@
   </main>
 
   <!-- MODAL: EDIT PROJECT -->
-  <div id="edit-project-modal" class="danger-modal">
-    <div style="background: var(--color-white); max-width: 600px; width: 100%; padding: 32px; border-radius: var(--radius-lg); position: relative; box-shadow: var(--shadow-elevation);">
-      <button onclick="closeEditModal()" style="position: absolute; top: 20px; right: 20px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--color-gray-500); line-height: 1;">&times;</button>
-      <h3 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 8px; color: var(--color-black);">Edit Project Details</h3>
+  <div id="edit-project-modal" class="danger-modal" onclick="if(event.target===this)closeEditModal()">
+    <div class="danger-modal-box" style="max-width: 580px; padding: 32px;">
+      <button onclick="closeEditModal()" style="position: absolute; top: 18px; right: 20px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--color-gray-500); line-height: 1;" aria-label="Close edit modal">&times;</button>
+      <h3 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 6px; color: var(--color-black);">Edit Project Details</h3>
       <p style="font-size: 0.85rem; color: var(--color-gray-500); margin-bottom: 20px;">Update project specifications in real-time across the ecosystem.</p>
       
       <form id="edit-project-form" onsubmit="handleEditSubmit(event)">
         <input type="hidden" id="edit-proj-id">
         <div class="form-group" style="margin-bottom: 16px;">
-          <label style="font-size: 0.85rem; font-weight: 700; color: var(--color-black); display: block; margin-bottom: 6px;">Project Title</label>
+          <label style="font-size: 0.82rem; font-weight: 700; color: var(--color-black); display: block; margin-bottom: 6px;">Project Title</label>
           <input type="text" id="edit-proj-title" class="form-control" required style="width: 100%;">
         </div>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
           <div class="form-group">
-            <label style="font-size: 0.85rem; font-weight: 700; color: var(--color-black); display: block; margin-bottom: 6px;">Category</label>
+            <label style="font-size: 0.82rem; font-weight: 700; color: var(--color-black); display: block; margin-bottom: 6px;">Category</label>
             <select id="edit-proj-category" class="form-control" style="width: 100%;">
               <option value="Residential">Residential</option>
               <option value="Commercial">Commercial</option>
@@ -194,16 +220,16 @@
             </select>
           </div>
           <div class="form-group">
-            <label style="font-size: 0.85rem; font-weight: 700; color: var(--color-black); display: block; margin-bottom: 6px;">Asking Price</label>
-            <input type="text" id="edit-proj-price" class="form-control" required style="width: 100%;" placeholder="e.g. $12,500,000">
+            <label style="font-size: 0.82rem; font-weight: 700; color: var(--color-black); display: block; margin-bottom: 6px;">Asking Price</label>
+            <input type="text" id="edit-proj-price" class="form-control" required style="width: 100%;" placeholder="e.g. ₹95 Cr">
           </div>
         </div>
         <div class="form-group" style="margin-bottom: 16px;">
-          <label style="font-size: 0.85rem; font-weight: 700; color: var(--color-black); display: block; margin-bottom: 6px;">Description / Highlights</label>
+          <label style="font-size: 0.82rem; font-weight: 700; color: var(--color-black); display: block; margin-bottom: 6px;">Description / Highlights</label>
           <textarea id="edit-proj-desc" class="form-control" rows="3" style="width: 100%;" placeholder="Provide key highlights..."></textarea>
         </div>
         <div class="form-group" style="margin-bottom: 24px;">
-          <label style="font-size: 0.85rem; font-weight: 700; color: var(--color-black); display: block; margin-bottom: 6px;">Cover Photo Image URL</label>
+          <label style="font-size: 0.82rem; font-weight: 700; color: var(--color-black); display: block; margin-bottom: 6px;">Cover Photo Image URL</label>
           <input type="url" id="edit-proj-image" class="form-control" required style="width: 100%;">
         </div>
         <div style="display: flex; gap: 12px; justify-content: flex-end;">
@@ -215,37 +241,37 @@
   </div>
 
   <!-- MODAL: DEACTIVATE / ACTIVATE CONFIRMATION -->
-  <div id="deactivate-project-modal" class="danger-modal">
-    <div style="background: var(--color-white); max-width: 480px; width: 100%; padding: 32px; border-radius: var(--radius-lg); text-align: center; box-shadow: var(--shadow-elevation);">
-      <div id="deact-modal-icon" style="font-size: 2.5rem; margin-bottom: 12px;">⏸</div>
-      <h3 id="deact-modal-title" style="font-size: 1.4rem; font-weight: 800; margin-bottom: 8px;">Deactivate Project Listing?</h3>
-      <p id="deact-modal-desc" style="color: var(--color-gray-500); font-size: 0.9rem; margin-bottom: 24px;">Deactivating will temporarily hide this project from the broker network feed. You can reactivate it at any time.</p>
+  <div id="deactivate-project-modal" class="danger-modal" onclick="if(event.target===this)closeDeactivateModal()">
+    <div class="danger-modal-box" style="max-width: 440px; padding: 32px; text-align: center;">
+      <div id="deact-modal-icon" style="font-size: 2.2rem; margin-bottom: 12px; line-height: 1;">⏸</div>
+      <h3 id="deact-modal-title" style="font-size: 1.35rem; font-weight: 800; margin-bottom: 8px; color: #0F172A;">Deactivate Project Listing?</h3>
+      <p id="deact-modal-desc" style="color: var(--color-gray-500); font-size: 0.9rem; margin-bottom: 24px; line-height: 1.5;">Deactivating will temporarily hide this project from the broker network feed. You can reactivate it at any time.</p>
       
       <div style="display: flex; gap: 12px;">
-        <button onclick="closeDeactivateModal()" class="btn-outline-gold" style="flex: 1;">Cancel</button>
-        <button id="deact-confirm-btn" onclick="confirmDeactivateAction()" class="btn-black" style="flex: 1;">Confirm</button>
+        <button onclick="closeDeactivateModal()" class="btn-outline-gold" style="flex: 1; padding: 10px 16px;">Cancel</button>
+        <button id="deact-confirm-btn" onclick="confirmDeactivateAction()" class="btn-black" style="flex: 1; padding: 10px 16px;">Confirm</button>
       </div>
     </div>
   </div>
 
   <!-- MODAL: PERMANENT DELETE CONFIRMATION -->
-  <div id="delete-project-modal" class="danger-modal">
-    <div style="background: var(--color-white); max-width: 480px; width: 100%; padding: 32px; border-radius: var(--radius-lg); text-align: center; border: 2px solid #EF4444; box-shadow: var(--shadow-elevation);">
-      <div style="font-size: 2.5rem; margin-bottom: 12px; color: #EF4444;">⚠️</div>
-      <h3 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 8px; color: #991B1B;">Permanently Delete Project?</h3>
-      <p style="color: var(--color-gray-500); font-size: 0.9rem; margin-bottom: 16px;">
+  <div id="delete-project-modal" class="danger-modal" onclick="if(event.target===this)closeDeleteModal()">
+    <div class="danger-modal-box" style="max-width: 460px; padding: 32px; text-align: center; border: 2px solid #FCA5A5;">
+      <div style="font-size: 2.4rem; margin-bottom: 12px; color: #EF4444; line-height: 1;">⚠️</div>
+      <h3 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 8px; color: #991B1B;">Permanently Delete Project?</h3>
+      <p style="color: #64748B; font-size: 0.9rem; margin-bottom: 16px; line-height: 1.5;">
         This action <strong>CANNOT be undone</strong>. The project listing and its metrics will be permanently erased from the centralized database.
       </p>
 
-      <div style="background: #FEF2F2; padding: 12px; border-radius: 6px; font-size: 0.85rem; color: #991B1B; margin-bottom: 16px; text-align: left;">
-        To confirm deletion, type <strong style="user-select: all;">DELETE</strong> below:
+      <div style="background: #FEF2F2; padding: 12px; border-radius: 8px; font-size: 0.85rem; color: #991B1B; margin-bottom: 16px; text-align: center; border: 1px solid #FEE2E2;">
+        To confirm deletion, type <strong style="user-select: all; letter-spacing: 0.05em;">DELETE</strong> below:
       </div>
 
-      <input type="text" id="delete-confirm-input" oninput="handleDeleteInput(this.value)" class="form-control" placeholder="Type DELETE to confirm" style="margin-bottom: 20px; text-align: center; font-weight: 800; border-color: #F87171;">
+      <input type="text" id="delete-confirm-input" oninput="handleDeleteInput(this.value)" class="form-control" placeholder="Type DELETE to confirm" style="margin-bottom: 20px; text-align: center; font-weight: 800; letter-spacing: 0.05em; border-color: #FCA5A5; height: 42px;">
 
       <div style="display: flex; gap: 12px;">
-        <button onclick="closeDeleteModal()" class="btn-outline-gold" style="flex: 1;">Cancel</button>
-        <button onclick="confirmPermanentDeleteAction()" class="btn-black" style="flex: 1; background: #EF4444; border-color: #EF4444;" id="btn-confirm-delete" disabled>Permanently Delete</button>
+        <button onclick="closeDeleteModal()" class="btn-outline-gold" style="flex: 1; padding: 10px 16px;">Cancel</button>
+        <button onclick="confirmPermanentDeleteAction()" class="btn-black" style="flex: 1; padding: 10px 16px; background: #EF4444; border-color: #EF4444; color: #FFFFFF;" id="btn-confirm-delete" disabled>Permanently Delete</button>
       </div>
     </div>
   </div>
@@ -267,7 +293,8 @@
     function updateTabCounts() {
       document.getElementById('cnt-all').textContent = allListings.length;
       document.getElementById('cnt-live').textContent = allListings.filter(l => l.status === 'Live' || (!l.status && l.status !== 'Inactive')).length;
-      document.getElementById('cnt-pending').textContent = allListings.filter(l => l.status === 'Submitted for Review').length;
+      document.getElementById('cnt-review').textContent = allListings.filter(l => l.status === 'Under Review' || l.status === 'Submitted for Review').length;
+      document.getElementById('cnt-changes').textContent = allListings.filter(l => l.status === 'Requires Changes').length;
       document.getElementById('cnt-draft').textContent = allListings.filter(l => l.status === 'Draft').length;
       document.getElementById('cnt-inactive').textContent = allListings.filter(l => l.status === 'Inactive').length;
     }
@@ -275,7 +302,8 @@
     function switchTab(tabName) {
       activeTab = tabName;
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      const activeBtn = document.getElementById(`tab-${tabName}`);
+      const tabId = 'tab-' + tabName.replace(/\s+/g, '-');
+      const activeBtn = document.getElementById(tabId);
       if (activeBtn) activeBtn.classList.add('active');
       applyFiltersAndSort();
     }
@@ -288,8 +316,10 @@
         // Tab Filter
         if (activeTab === 'Live') {
           if (l.status !== 'Live' && l.status) return false;
-        } else if (activeTab === 'Pending Review') {
-          if (l.status !== 'Submitted for Review') return false;
+        } else if (activeTab === 'Under Review') {
+          if (l.status !== 'Under Review' && l.status !== 'Submitted for Review') return false;
+        } else if (activeTab === 'Requires Changes') {
+          if (l.status !== 'Requires Changes') return false;
         } else if (activeTab === 'Draft') {
           if (l.status !== 'Draft') return false;
         } else if (activeTab === 'Inactive') {
@@ -327,12 +357,16 @@
       emptyState.style.display = 'none';
 
       container.innerHTML = items.map(p => {
-        const sd = window.BTSST ? window.BTSST.getStatusDisplay(p.status, p.isOffMarket) : null;
-        const statusLabel = sd ? sd.label : (p.status || 'Live');
+        const canonicalStatus = p.status || 'Live';
+        const sd = window.BTSST && window.BTSST.STATUS_DISPLAY
+          ? window.BTSST.STATUS_DISPLAY[canonicalStatus]
+          : null;
+        const statusLabel = canonicalStatus;
         const statusStyle = sd ? `background:${sd.bg};color:${sd.color};` : 'background:#D1FAE5;color:#059669;';
+        
         const offMarketBadge = p.isOffMarket
-          ? `<span class="badge-tag" style="position: static; font-size: 0.65rem; display: inline-flex; align-items: center; margin-left: 6px; background: #EDE9FE; color: #7C3AED; white-space: nowrap;">Off-Market VIP</span>`
-          : `<span class="badge-tag" style="position: static; font-size: 0.65rem; display: inline-flex; align-items: center; margin-left: 6px; background: #F1F5F9; color: #475569; white-space: nowrap;">Public</span>`;
+          ? `<span class="badge-tag" style="position: static; font-size: 0.65rem; display: inline-flex; align-items: center; background: #EDE9FE; color: #7C3AED; white-space: nowrap; font-weight: 700; padding: 3px 9px; border-radius: 12px;">Off-Market VIP</span>`
+          : '';
 
         const isCurrentlyInactive = p.status === 'Inactive';
         const toggleBtnText = isCurrentlyInactive ? 'Activate' : 'Deactivate';
@@ -346,7 +380,7 @@
             <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 4px; flex-wrap: wrap;">
               <strong style="font-size: 1.15rem; color: var(--color-black);">${p.title}</strong>
               ${offMarketBadge}
-              <span class="badge-tag" style="position: static; font-size: 0.65rem; display: inline-flex; align-items: center; margin-left: 4px; ${statusStyle} white-space: nowrap; font-weight: 700; padding: 3px 9px; border-radius: 12px;">${statusLabel}</span>
+              <span class="badge-tag" style="position: static; font-size: 0.65rem; display: inline-flex; align-items: center; ${statusStyle} white-space: nowrap; font-weight: 700; padding: 3px 9px; border-radius: 12px;">${statusLabel}</span>
             </div>
             
             <div style="font-size: 0.85rem; color: var(--color-gray-500); margin-bottom: 8px;">
