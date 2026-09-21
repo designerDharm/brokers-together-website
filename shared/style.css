@@ -722,7 +722,7 @@ p.lead-text {
    DOCUMENT FEATURE: MID-PAGE APP CTA BANNER (Page 4 & 6)
    ==================================================== */
 .mid-app-cta-banner {
-  margin: 48px auto 36px;
+  margin: 48px auto 10px;
   padding: 30px 36px;
   background: linear-gradient(135deg, #0B1019 0%, #111827 100%);
   border: 1px solid rgba(184, 149, 85, 0.35);
@@ -732,7 +732,7 @@ p.lead-text {
   align-items: center;
   text-align: center;
   gap: 16px;
-  max-width: 680px;
+  max-width: 720px;
   width: 100%;
   box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
   position: relative;
@@ -771,27 +771,40 @@ p.lead-text {
   transform: translateY(-1px);
 }
 
-.btn-spec-outline-cta {
+.btn-spec-outline-cta,
+.btn-spec-app-cta {
   height: 50px;
-  padding: 0 26px;
-  background: transparent;
+  padding: 0 24px;
+  background: rgba(255, 255, 255, 0.04);
   color: #FFFFFF;
   font-family: var(--font-primary);
   font-size: 14.5px;
   font-weight: 700;
   border-radius: 8px;
-  border: 1px solid #B89555;
+  border: 1px solid rgba(184, 149, 85, 0.6);
   text-decoration: none;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   cursor: pointer;
   transition: all 180ms ease;
 }
 
-.btn-spec-outline-cta:hover {
-  background: rgba(184, 149, 85, 0.15);
+.btn-spec-outline-cta:hover,
+.btn-spec-app-cta:hover {
+  background: rgba(184, 149, 85, 0.18);
   border-color: #E2C98A;
+  color: #E2C98A;
+  transform: translateY(-1px);
+}
+
+.btn-spec-app-cta svg {
+  color: #B89555;
+  transition: color 180ms ease;
+  flex-shrink: 0;
+}
+
+.btn-spec-app-cta:hover svg {
   color: #E2C98A;
 }
 
