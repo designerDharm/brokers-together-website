@@ -66,6 +66,8 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 body {
@@ -75,6 +77,14 @@ body {
   font-size: var(--body-size);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+}
+
+img, svg, video {
+  max-width: 100%;
+  height: auto;
 }
 
 /* Global Typographic Hierarchy & Uniform Rhythm */
@@ -5443,3 +5453,472 @@ p.lead-text {
     min-height: 44px;
   }
 }
+
+/* ====================================================
+   COMPREHENSIVE MOBILE RESPONSIVE GUARDS (MAX-WIDTH: 768px & 480px)
+   Prevents overlapping, text cutoff, clipping & horizontal overflow
+   ==================================================== */
+@media (max-width: 768px) {
+  /* Prevent horizontal scroll globally */
+  html, body {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+    width: 100% !important;
+  }
+
+  /* All containers adapt with proper comfortable gutters */
+  .hero-container,
+  .visibility-container,
+  .journey-container,
+  .proptech-container,
+  .broker-network-container,
+  .benefits-container,
+  .testimonials-container,
+  .faq-container,
+  .final-cta-container,
+  .container {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  /* Section 01: Hero Section Fixes */
+  .hero {
+    padding: 30px 0 50px !important;
+    overflow: hidden !important;
+  }
+
+  .hero-spec-title {
+    font-size: clamp(30px, 7.8vw, 42px) !important;
+    line-height: 1.15 !important;
+    word-break: break-word !important;
+  }
+
+  .hero-spec-lead {
+    font-size: 15px !important;
+    line-height: 1.55 !important;
+    max-width: 100% !important;
+  }
+
+  .hero-gold-sublead {
+    font-size: 13px !important;
+    line-height: 1.45 !important;
+  }
+
+  .hero-spec-cta-group {
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 12px !important;
+  }
+
+  .btn-spec-primary,
+  .btn-spec-secondary {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    justify-content: center !important;
+    padding: 0 16px !important;
+    text-align: center !important;
+  }
+
+  /* Trust Signals Pill Bar: Clean fluid wrap */
+  .hero-trust-pills-bar {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    justify-content: flex-start !important;
+  }
+
+  .trust-pill-item {
+    flex: 1 1 calc(50% - 10px) !important;
+    min-width: 130px !important;
+    box-sizing: border-box !important;
+    padding: 8px 6px !important;
+    background: rgba(184, 149, 85, 0.05) !important;
+    border-radius: 8px !important;
+  }
+
+  .trust-pill-label {
+    white-space: normal !important;
+    font-size: 11px !important;
+    text-align: center !important;
+  }
+
+  /* Hero Visual: Mockups centering without overflow */
+  .hero-visual {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 380px !important;
+    padding: 30px 0 20px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    position: relative !important;
+  }
+
+  .visual-rings {
+    width: 290px !important;
+    height: 290px !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
+  }
+
+  .phone-mockup {
+    position: relative !important;
+    width: min(270px, 78vw) !important;
+    height: auto !important;
+    margin: 0 auto !important;
+    left: auto !important;
+    top: auto !important;
+    display: block !important;
+  }
+
+  .inquiry-card {
+    position: relative !important;
+    width: min(290px, 86vw) !important;
+    max-width: 100% !important;
+    height: auto !important;
+    margin: -40px auto 0 !important;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
+    z-index: 10 !important;
+  }
+
+  /* Section 02: Orbit & Why Us Section */
+  .visibility-heading {
+    font-size: clamp(30px, 7.8vw, 42px) !important;
+    line-height: 1.15 !important;
+  }
+
+  .visual-showcase {
+    height: 340px !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+  }
+
+  .gold-orbit-svg {
+    width: 290px !important;
+    height: 290px !important;
+  }
+
+  .orbit-card {
+    width: min(300px, 84vw) !important;
+    max-width: 100% !important;
+  }
+
+  .metrics-panel {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Section 04: Mid-page App CTA Banner */
+  .mid-app-cta-banner {
+    padding: 24px 18px !important;
+    margin: 36px auto 10px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .mid-app-cta-title {
+    font-size: clamp(20px, 5.5vw, 26px) !important;
+  }
+
+  .mid-app-cta-group {
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 10px !important;
+  }
+
+  .btn-spec-gold-cta,
+  .btn-spec-app-cta {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    justify-content: center !important;
+  }
+
+  /* Section 05: Prop-Tech Timeline (Stage Rows) */
+  .proptech-timeline-section {
+    padding: 60px 16px !important;
+    overflow: hidden !important;
+  }
+
+  .proptech-title {
+    font-size: clamp(28px, 7vw, 38px) !important;
+    line-height: 1.15 !important;
+  }
+
+  .timeline-central-spine {
+    display: none !important; /* Hide vertical gold line on narrow mobile to free full width */
+  }
+
+  .proptech-stage-row {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 18px !important;
+    width: 100% !important;
+  }
+
+  .proptech-center-col {
+    display: flex !important;
+    justify-content: flex-start !important;
+    width: 100% !important;
+  }
+
+  .timeline-node {
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 13px !important;
+    margin-bottom: 4px !important;
+  }
+
+  .proptech-text-col {
+    padding: 0 !important;
+    width: 100% !important;
+  }
+
+  .stage-serif-title {
+    font-size: clamp(22px, 6vw, 30px) !important;
+    line-height: 1.2 !important;
+  }
+
+  .stage-body-text {
+    font-size: 14.5px !important;
+    line-height: 1.55 !important;
+  }
+
+  .proptech-visual-col {
+    width: 100% !important;
+    margin-top: 12px !important;
+    box-sizing: border-box !important;
+  }
+
+  .proptech-ui-panel {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .chat-panel-outer-wrapper {
+    padding-top: 0 !important;
+  }
+
+  .inquiry-notification-card {
+    position: relative !important;
+    top: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    margin-bottom: 12px !important;
+    animation: none !important;
+  }
+
+  /* Section 06: Broker Network Ecosystem */
+  .broker-network-visual {
+    width: 100% !important;
+    grid-template-columns: 1fr !important;
+    height: auto !important;
+  }
+
+  .broker-photo {
+    width: 100% !important;
+    height: 240px !important;
+  }
+
+  .broker-editorial-panel {
+    padding: 24px 18px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Section A: Zero Subscription Card */
+  .terms-hero-media {
+    height: auto !important;
+    min-height: auto !important;
+    padding: 30px 16px !important;
+  }
+
+  .terms-hero-card {
+    position: relative !important;
+    top: 0 !important;
+    left: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    padding: 24px 18px !important;
+    border-radius: 16px !important;
+    box-sizing: border-box !important;
+  }
+
+  .terms-card-headline {
+    font-size: clamp(26px, 6.8vw, 36px) !important;
+    line-height: 1.15 !important;
+  }
+
+  .terms-card-body {
+    font-size: 14.5px !important;
+    line-height: 1.5 !important;
+  }
+
+  .terms-card-cta {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    text-align: center !important;
+    justify-content: center !important;
+  }
+
+  /* Section B: Benefits 6-Card Grid */
+  .benefits-headline {
+    font-size: clamp(28px, 7vw, 38px) !important;
+    line-height: 1.15 !important;
+  }
+
+  .benefits-cards-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+    width: 100% !important;
+  }
+
+  .benefit-card {
+    padding: 24px 18px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Section 08: Testimonials Snap Carousel */
+  .testimonials-heading {
+    font-size: clamp(28px, 7vw, 38px) !important;
+    line-height: 1.15 !important;
+  }
+
+  .testimonial-card.card-large,
+  .testimonial-card.card-small {
+    width: min(340px, 86vw) !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 18px !important;
+    flex-direction: column !important;
+  }
+
+  .testimonial-card .card-portrait-wrapper {
+    width: 100% !important;
+    height: 180px !important;
+    min-height: 180px !important;
+  }
+
+  .quote-text {
+    font-size: 15px !important;
+    line-height: 1.5 !important;
+  }
+
+  .metric-trust-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 16px !important;
+  }
+
+  .metric-value {
+    font-size: 32px !important;
+  }
+
+  /* Section 09: FAQ Accordion */
+  .faq-heading {
+    font-size: clamp(28px, 7vw, 38px) !important;
+    line-height: 1.15 !important;
+  }
+
+  .faq-right-panel {
+    padding: 16px 12px !important;
+    box-sizing: border-box !important;
+  }
+
+  .faq-header-left {
+    gap: 10px !important;
+  }
+
+  .faq-number-chip {
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 13px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .faq-question-text {
+    font-size: 15px !important;
+    line-height: 1.35 !important;
+  }
+
+  .faq-accordion-body {
+    padding-left: 46px !important;
+  }
+
+  .faq-accordion-body p {
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+  }
+
+  /* Section 10: Final CTA Section */
+  .section-final-cta {
+    padding: 70px 0 60px !important;
+    overflow: hidden !important;
+  }
+
+  .final-cta-headline {
+    font-size: clamp(32px, 8vw, 44px) !important;
+    line-height: 1.15 !important;
+    text-align: center !important;
+  }
+
+  .final-cta-description {
+    font-size: 15px !important;
+    line-height: 1.5 !important;
+    text-align: center !important;
+  }
+
+  .final-cta-buttons-wrapper {
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 12px !important;
+    margin-bottom: 40px !important;
+  }
+
+  .cta-btn-primary,
+  .cta-btn-secondary {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    justify-content: center !important;
+    text-align: center !important;
+    height: 54px !important;
+    padding: 0 20px !important;
+  }
+
+  /* Footer */
+  .main-site-footer {
+    padding: 50px 16px 30px !important;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+  }
+}
+
+/* Extra Tight Viewports (< 380px e.g. iPhone SE / Galaxy Z Flip) */
+@media (max-width: 380px) {
+  .hero-trust-pills-bar .trust-pill-item {
+    flex: 1 1 100% !important;
+    width: 100% !important;
+  }
+
+  .metric-trust-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .metrics-panel {
+    grid-template-columns: 1fr !important;
+  }
+}
+
