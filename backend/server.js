@@ -6,7 +6,7 @@ const http = require('http');
 const { WebSocketServer, WebSocket } = require('ws');
 
 const DB_PATH = path.join(__dirname, 'db.json');
-const LOGO_PATH = path.join(__dirname, '..', 'Logo_Brokers together.svg');
+const LOGO_PATH = path.join(__dirname, '..', 'shared', 'images', 'brand-logo.svg');
 
 const app = express();
 const PORT = process.env.PORT || 5050;

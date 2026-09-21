@@ -7,6 +7,10 @@
       "dest": "/shared/$1"
     },
     {
+      "src": "^/images/(.*)",
+      "dest": "/shared/images/$1"
+    },
+    {
       "src": "^/admin/(.*)",
       "dest": "/admin-panel/$1"
     },
@@ -16,7 +20,7 @@
     },
     {
       "src": "^/logo.svg",
-      "dest": "/Logo_Brokers together.svg"
+      "dest": "/shared/images/brand-logo.svg"
     },
     {
       "src": "^/(.*)",

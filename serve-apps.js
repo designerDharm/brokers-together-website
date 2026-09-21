@@ -7,6 +7,7 @@ const rootDir = __dirname;
 // 1. User Web App (Port 5051)
 const userApp = express();
 userApp.use('/shared', express.static(path.join(rootDir, 'shared')));
+userApp.use('/images', express.static(path.join(rootDir, 'shared', 'images')));
 // Clean URL aliases
 const cleanRoutes = [
   'login',
@@ -27,8 +28,8 @@ cleanRoutes.forEach(r => {
 });
 
 userApp.use(express.static(path.join(rootDir, 'user-app')));
-userApp.get('/logo.svg', (req, res) => res.sendFile(path.join(rootDir, 'Logo_Brokers together.svg')));
-userApp.get('/Logo_Brokers%20together.svg', (req, res) => res.sendFile(path.join(rootDir, 'Logo_Brokers together.svg')));
+userApp.get('/logo.svg', (req, res) => res.sendFile(path.join(rootDir, 'shared', 'images', 'brand-logo.svg')));
+userApp.get('/Logo_Brokers%20together.svg', (req, res) => res.sendFile(path.join(rootDir, 'shared', 'images', 'brand-logo.svg')));
 userApp.listen(5051, '0.0.0.0', () => {
   console.log('🌐 User Portal (Property Owners & Companies) running at http://0.0.0.0:5051');
 });
@@ -36,9 +37,10 @@ userApp.listen(5051, '0.0.0.0', () => {
 // 2. Admin Panel (Port 5052)
 const adminApp = express();
 adminApp.use('/shared', express.static(path.join(rootDir, 'shared')));
+adminApp.use('/images', express.static(path.join(rootDir, 'shared', 'images')));
 adminApp.use(express.static(path.join(rootDir, 'admin-panel')));
-adminApp.get('/logo.svg', (req, res) => res.sendFile(path.join(rootDir, 'Logo_Brokers together.svg')));
-adminApp.get('/Logo_Brokers%20together.svg', (req, res) => res.sendFile(path.join(rootDir, 'Logo_Brokers together.svg')));
+adminApp.get('/logo.svg', (req, res) => res.sendFile(path.join(rootDir, 'shared', 'images', 'brand-logo.svg')));
+adminApp.get('/Logo_Brokers%20together.svg', (req, res) => res.sendFile(path.join(rootDir, 'shared', 'images', 'brand-logo.svg')));
 adminApp.listen(5052, '0.0.0.0', () => {
   console.log('⚙️ Admin Panel running at http://0.0.0.0:5052');
 });
