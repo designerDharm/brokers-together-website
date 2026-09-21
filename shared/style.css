@@ -834,18 +834,6 @@ p.lead-text {
   box-shadow: 0 10px 30px rgba(184, 149, 85, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
   width: 100%;
   max-width: 560px;
-  position: relative;
-  overflow: hidden;
-}
-
-.faq-support-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background: linear-gradient(90deg, #B89555, #D4AF37, #B89555);
 }
 
 .faq-support-header {
