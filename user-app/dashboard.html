@@ -1199,8 +1199,8 @@
 
     .donut-visual-wrap {
       position: relative;
-      width: 96px;
-      height: 96px;
+      width: 110px;
+      height: 110px;
       flex-shrink: 0;
       display: flex;
       align-items: center;
@@ -1208,8 +1208,8 @@
     }
 
     .donut-visual-wrap svg {
-      width: 96px;
-      height: 96px;
+      width: 110px;
+      height: 110px;
       transform: rotate(-90deg);
     }
 
@@ -1220,26 +1220,30 @@
       transform: translate(-50%, -50%);
       text-align: center;
       pointer-events: none;
-      width: 62px;
+      width: 68px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
 
     .donut-center-number {
-      font-size: 1.35rem;
+      font-size: 1.45rem;
       font-weight: 800;
-      color: #111827;
-      line-height: 1.1;
+      color: #0F172A;
+      line-height: 1;
       margin-bottom: 2px;
+      letter-spacing: -0.02em;
     }
 
     .donut-center-label {
-      font-size: 0.54rem;
-      font-weight: 600;
-      letter-spacing: 0.02em;
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
-      color: #6B7280;
-      line-height: 1.1;
-      white-space: normal;
-      word-break: break-word;
+      color: #64748B;
+      line-height: 1.15;
+      text-align: center;
     }
 
     .status-breakdown-list {
@@ -2066,15 +2070,15 @@
               <div class="donut-card-inner">
                 <!-- Circular SVG Donut Chart -->
                 <div class="donut-visual-wrap">
-                  <svg width="96" height="96" viewBox="0 0 42 42">
-                    <!-- Background circle -->
-                    <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#F3F4F6" stroke-width="4.5"></circle>
-                    <!-- Green segment (Live = 2 of 4 -> 50%) -->
-                    <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#10B981" stroke-width="4.5" stroke-dasharray="50 50" stroke-dashoffset="25"></circle>
-                    <!-- Gold segment (Under Review = 1 of 4 -> 25%) -->
-                    <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#B89555" stroke-width="4.5" stroke-dasharray="25 75" stroke-dashoffset="75"></circle>
-                    <!-- Coral segment (Requires Changes = 1 of 4 -> 25%) -->
-                    <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#F97316" stroke-width="4.5" stroke-dasharray="25 75" stroke-dashoffset="50"></circle>
+                  <svg width="110" height="110" viewBox="0 0 42 42">
+                    <!-- Background circle track -->
+                    <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#F1F5F9" stroke-width="4.5" class="donut-bg-track"></circle>
+                    <!-- Green segment (Live) -->
+                    <circle class="donut-segment" cx="21" cy="21" r="15.915" fill="transparent" stroke="#10B981" stroke-width="4.5" stroke-dasharray="50 50" stroke-dashoffset="25"></circle>
+                    <!-- Gold segment (Under Review) -->
+                    <circle class="donut-segment" cx="21" cy="21" r="15.915" fill="transparent" stroke="#B89555" stroke-width="4.5" stroke-dasharray="25 75" stroke-dashoffset="75"></circle>
+                    <!-- Coral segment (Requires Changes) -->
+                    <circle class="donut-segment" cx="21" cy="21" r="15.915" fill="transparent" stroke="#F97316" stroke-width="4.5" stroke-dasharray="25 75" stroke-dashoffset="50"></circle>
                   </svg>
                   <div class="donut-center-text">
                     <div class="donut-center-number" id="donut-total-val">4</div>
@@ -2512,41 +2516,45 @@
     function renderStatusDonut(overview) {
       if (!overview) return;
 
-      // Update legend counts
-      setKPI('donut-total-val',     overview.total);
-      setKPI('stat-live-count',     overview.live);
-      setKPI('stat-review-count',   overview.underReview);
-      setKPI('stat-draft-count',    overview.draft);
-      setKPI('stat-changes-count',  overview.requiresChanges);
-      setKPI('stat-inactive-count', overview.inactive);
+      const totalCount = overview.total || 0;
 
-      // Recompute donut SVG segments dynamically
-      const total = overview.total || 1;
-      const circumference = 100; // percentage units (r=15.915, circ≈100)
+      // Update legend counts
+      setKPI('donut-total-val',     totalCount);
+      setKPI('stat-live-count',     overview.live || 0);
+      setKPI('stat-review-count',   overview.underReview || 0);
+      setKPI('stat-draft-count',    overview.draft || 0);
+      setKPI('stat-changes-count',  overview.requiresChanges || 0);
+      setKPI('stat-inactive-count', overview.inactive || 0);
+
+      const donutSvg = document.querySelector('.donut-visual-wrap svg');
+      if (!donutSvg) return;
+
+      // Remove any existing dynamic segments
+      donutSvg.querySelectorAll('.donut-segment').forEach(el => el.remove());
+
+      const circumference = 100; // 2 * PI * 15.915 ≈ 100%
+
+      // If no projects exist (total === 0), keep clean neutral track without colored segments
+      if (totalCount <= 0) {
+        return;
+      }
 
       const segments = [
-        { count: overview.live,             color: '#10B981', offset: 0 },
-        { count: overview.underReview,      color: '#B89555', offset: null },
-        { count: overview.requiresChanges,  color: '#F97316', offset: null },
-        { count: overview.draft,            color: '#94A3B8', offset: null },
-        { count: overview.inactive,         color: '#CBD5E1', offset: null }
+        { count: overview.live || 0,             color: '#10B981' },
+        { count: overview.underReview || 0,      color: '#B89555' },
+        { count: overview.requiresChanges || 0,  color: '#F97316' },
+        { count: overview.draft || 0,            color: '#94A3B8' },
+        { count: overview.inactive || 0,         color: '#CBD5E1' }
       ];
 
       // Calculate each segment's dash offset
-      let cumulativeOffset = 25; // SVG starts at 12 o'clock = offset 25
+      let cumulativeOffset = 25; // SVG coordinate system starts at 3 o'clock; offset 25 aligns to 12 o'clock
       const renderedSegments = segments.map(seg => {
-        const pct = (seg.count / total) * circumference;
+        const pct = (seg.count / totalCount) * circumference;
         const offset = cumulativeOffset;
         cumulativeOffset += pct;
         return { ...seg, pct, offset };
       });
-
-      // Update SVG circles
-      const donutSvg = document.querySelector('.donut-visual-wrap svg');
-      if (!donutSvg) return;
-
-      // Remove existing dynamic segments (keep background circle)
-      donutSvg.querySelectorAll('.donut-segment').forEach(el => el.remove());
 
       // Create SVG circle for each non-zero segment
       renderedSegments.forEach(seg => {

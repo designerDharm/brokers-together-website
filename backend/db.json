@@ -473,6 +473,18 @@
   ],
   "auditLogs": [
     {
+      "id": "log-1789971716050",
+      "timestamp": "2026-09-21T06:21:56.050Z",
+      "action": "AUTH_SUCCESS",
+      "detail": "Successful sign-in: Test Developer (Property Owner)"
+    },
+    {
+      "id": "log-1789971703001",
+      "timestamp": "2026-09-21T06:21:43.001Z",
+      "action": "AUTH_FAILURE",
+      "detail": "Incorrect password for: devtest@luxuryestates.com"
+    },
+    {
       "id": "log-1789970890160",
       "timestamp": "2026-09-21T06:08:10.160Z",
       "action": "AUTH_SUCCESS",
