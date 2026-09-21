@@ -644,30 +644,28 @@ p.lead-text {
 }
 
 /* ====================================================
-   DOCUMENT FEATURE: TRUST SIGNALS (Clean & Professional Icon + Title)
+   DOCUMENT FEATURE: TRUST SIGNALS (Structured Clean 2-Column Grid)
    ==================================================== */
-.hero-trust-clean-wrap {
-  margin-top: 26px;
-  padding: 0;
-  background: transparent;
-  border: none;
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 16px 22px;
-  max-width: 620px;
-  box-shadow: none;
+.hero-trust-clean-grid {
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 32px;
+  row-gap: 16px;
+  max-width: 580px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(184, 149, 85, 0.18);
 }
 
 .trust-clean-item {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   transition: transform 160ms ease;
 }
 
 .trust-clean-item:hover {
-  transform: translateY(-2px);
+  transform: translateX(3px);
 }
 
 .trust-clean-icon {
@@ -676,17 +674,17 @@ p.lead-text {
   border-radius: 8px;
   background: rgba(184, 149, 85, 0.12);
   color: #B89555;
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: background-color 160ms ease, color 160ms ease, box-shadow 160ms ease;
+  transition: background-color 160ms ease, color 160ms ease, transform 160ms ease;
 }
 
 .trust-clean-item:hover .trust-clean-icon {
   background: #B89555;
   color: #FFFFFF;
-  box-shadow: 0 4px 12px rgba(184, 149, 85, 0.3);
+  transform: scale(1.05);
 }
 
 .trust-clean-title {
@@ -695,30 +693,18 @@ p.lead-text {
   font-weight: 600;
   color: #1E293B;
   letter-spacing: 0.01em;
-  white-space: nowrap;
+  line-height: 1.35;
 }
 
-.trust-clean-sep {
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background-color: rgba(184, 149, 85, 0.45);
+.trust-clean-item.trust-item-wide {
+  grid-column: 1 / -1;
 }
 
-@media (max-width: 640px) {
-  .hero-trust-clean-wrap {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-    padding: 0;
-  }
-
-  .trust-clean-sep {
-    display: none;
-  }
-
-  .trust-clean-title {
-    white-space: normal;
+@media (max-width: 600px) {
+  .hero-trust-clean-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin-top: 20px;
   }
 }
 
