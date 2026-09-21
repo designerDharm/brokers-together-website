@@ -798,14 +798,17 @@ p.lead-text {
   transform: translateY(-1px);
 }
 
-.btn-spec-app-cta svg {
-  color: #B89555;
-  transition: color 180ms ease;
+.btn-spec-app-cta svg,
+.btn-spec-app-cta .app-btn-icon {
+  width: 18px;
+  height: 18px;
+  display: block;
   flex-shrink: 0;
+  transition: transform 180ms ease;
 }
 
-.btn-spec-app-cta:hover svg {
-  color: #E2C98A;
+.btn-spec-app-cta:hover .app-btn-icon {
+  transform: scale(1.1);
 }
 
 .mid-app-cta-microcopy {
