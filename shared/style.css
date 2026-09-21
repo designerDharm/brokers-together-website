@@ -4959,5 +4959,192 @@ p.lead-text {
   }
 }
 
+/* ====================================================
+   MOBILE NAVIGATION DRAWER & GLOBAL MOBILE ENHANCEMENTS
+   ==================================================== */
+.hero-mobile-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  width: 44px;
+  height: 44px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+  z-index: 1001;
+}
 
+.hero-mobile-toggle span {
+  display: block;
+  width: 24px;
+  height: 2.5px;
+  background-color: var(--color-black);
+  border-radius: 2px;
+  transition: transform 0.25s ease, opacity 0.25s ease, background-color 0.25s ease;
+}
 
+.hero-mobile-toggle:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.hero-mobile-toggle.active span:nth-child(1) {
+  transform: translateY(7.5px) rotate(45deg);
+  background-color: var(--color-gold);
+}
+
+.hero-mobile-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hero-mobile-toggle.active span:nth-child(3) {
+  transform: translateY(-7.5px) rotate(-45deg);
+  background-color: var(--color-gold);
+}
+
+.hero-mobile-drawer {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: rgba(248, 247, 244, 0.98);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--color-gold-border);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.12);
+  padding: 24px;
+  flex-direction: column;
+  gap: 20px;
+  animation: mobileDrawerSlide 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 999;
+}
+
+@keyframes mobileDrawerSlide {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-mobile-drawer.open {
+  display: flex;
+}
+
+.hero-mobile-nav-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0;
+  margin: 0;
+}
+
+.hero-mobile-link {
+  font-family: var(--font-primary);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--color-black);
+  text-decoration: none;
+  display: block;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  transition: color 0.15s ease, padding-left 0.15s ease;
+}
+
+.hero-mobile-link:hover {
+  color: var(--color-gold);
+  padding-left: 6px;
+}
+
+.hero-mobile-drawer-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.hero-nav-login-mobile {
+  text-align: center;
+  padding: 12px;
+  font-weight: 700;
+  color: var(--color-black);
+  text-decoration: none;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 40px;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.hero-nav-login-mobile:hover {
+  border-color: var(--color-gold);
+  color: var(--color-gold);
+  background: var(--color-gold-tint);
+}
+
+.hero-nav-btn-gold-mobile {
+  background: var(--color-gold);
+  color: #FFFFFF;
+  text-align: center;
+  padding: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 40px;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 16px rgba(184, 149, 85, 0.3);
+}
+
+.hero-nav-btn-gold-mobile:hover {
+  background: var(--color-gold-hover);
+}
+
+/* Tablet & Mobile Breakpoints for Header Navigation */
+@media (max-width: 960px) {
+  .hero-navbar {
+    height: 80px;
+  }
+  .hero-navbar-inner {
+    padding: 0 20px;
+  }
+  .hero-nav-links {
+    display: none !important;
+  }
+  .hero-nav-actions {
+    display: none !important;
+  }
+  .hero-mobile-toggle {
+    display: flex !important;
+  }
+}
+
+/* Global Mobile Containers & Typography Fluidity */
+@media (max-width: 768px) {
+  .container {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+  .h1-title {
+    font-size: clamp(32px, 8.5vw, 44px) !important;
+    line-height: 1.12 !important;
+  }
+  .h2-title {
+    font-size: clamp(26px, 7vw, 36px) !important;
+    line-height: 1.15 !important;
+  }
+  .navbar-inner {
+    padding: 14px 16px !important;
+  }
+}
+
+/* Fluid Touch Target Optimizations */
+@media (max-width: 480px) {
+  button, input, select, textarea, .btn-gold, .btn-black, .btn-outline-gold {
+    min-height: 44px;
+  }
+}

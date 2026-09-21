@@ -124,6 +124,57 @@
       color: #FFFFFF !important;
       box-shadow: 0 2px 8px rgba(184, 149, 85, 0.25);
     }
+
+    /* Mobile Responsive Optimizations */
+    @media (max-width: 768px) {
+      .projects-layout {
+        margin: 20px auto 60px;
+        padding: 0 16px;
+      }
+      .projects-header-flex {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 16px;
+      }
+      .projects-header-flex .btn-gold {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+      }
+      .tab-bar {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 8px;
+        white-space: nowrap;
+        gap: 8px;
+        scrollbar-width: none;
+      }
+      .tab-bar::-webkit-scrollbar {
+        display: none;
+      }
+      .tab-btn {
+        flex-shrink: 0;
+        font-size: 0.88rem;
+        padding: 8px 14px;
+      }
+      .project-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+        padding: 16px;
+      }
+      .project-row-img {
+        width: 100%;
+        height: 180px;
+      }
+      .project-row-actions {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -148,7 +199,7 @@
   <main class="projects-layout">
     
     <!-- Hero Header -->
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px;">
+    <div class="projects-header-flex" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px;">
       <div>
         <span class="eyebrow-label">PROJECT MANAGEMENT</span>
         <h1 class="h2-title">My Real Estate Projects</h1>

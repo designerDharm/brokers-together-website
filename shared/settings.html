@@ -73,6 +73,36 @@
       display: none;
       animation: slideUp 0.3s ease;
     }
+
+    /* Mobile Responsive Optimizations */
+    @media (max-width: 768px) {
+      .settings-wrapper {
+        margin: 20px auto 60px;
+        padding: 0 16px;
+      }
+      .settings-card {
+        padding: 24px 18px;
+        border-radius: 18px;
+      }
+      .settings-tabs {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        white-space: nowrap;
+        scrollbar-width: none;
+        padding-bottom: 8px;
+      }
+      .settings-tabs::-webkit-scrollbar {
+        display: none;
+      }
+      .settings-tab-btn {
+        flex-shrink: 0;
+        padding: 8px 14px;
+        font-size: 0.88rem;
+      }
+      .settings-section > div {
+        grid-template-columns: 1fr !important;
+      }
+    }
   </style>
 </head>
 <body>

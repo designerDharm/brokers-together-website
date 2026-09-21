@@ -316,6 +316,48 @@
       color: #0A0D14;
       font-weight: 700;
     }
+
+    /* Mobile Responsive Optimizations for Wizard */
+    @media (max-width: 768px) {
+      .wizard-wrapper {
+        margin: 20px auto 60px;
+        padding: 0 16px;
+      }
+      .wizard-card {
+        padding: 24px 18px;
+        border-radius: 18px;
+      }
+      .progress-bar-container {
+        gap: 4px;
+        margin-bottom: 24px;
+      }
+      .progress-step-pill {
+        height: 5px;
+      }
+      .form-grid-3col {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+      }
+      .form-grid-2col {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+      }
+      .btn-nav-group {
+        flex-direction: column-reverse;
+        gap: 12px;
+      }
+      .btn-nav-group button {
+        width: 100%;
+        justify-content: center;
+      }
+      .unit-segmented-wrap {
+        overflow-x: auto;
+      }
+      .unit-segment-btn {
+        padding: 8px 10px;
+        font-size: 0.8rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -466,7 +508,7 @@
             <input type="text" id="p-address" class="form-control" placeholder="e.g. 42 Outer Ring Road Financial Corridor" required oninput="triggerAutosave()">
           </div>
 
-          <div style="display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 16px; margin-bottom: 12px;">
+          <div class="form-grid-3col" style="display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 16px; margin-bottom: 12px;">
             <div class="form-group">
               <label for="p-city">City</label>
               <input type="text" id="p-city" class="form-control" placeholder="e.g. Bengaluru" required oninput="triggerAutosave()">

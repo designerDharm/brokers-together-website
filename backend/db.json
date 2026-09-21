@@ -473,6 +473,12 @@
   ],
   "auditLogs": [
     {
+      "id": "log-1789979073943",
+      "timestamp": "2026-09-21T08:24:33.943Z",
+      "action": "AUTH_SUCCESS",
+      "detail": "Successful sign-in: Test Developer (Property Owner)"
+    },
+    {
       "id": "log-1789971716050",
       "timestamp": "2026-09-21T06:21:56.050Z",
       "action": "AUTH_SUCCESS",

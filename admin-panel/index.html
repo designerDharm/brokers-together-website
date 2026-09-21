@@ -6,6 +6,30 @@
   <title id="admin-page-title">Ecosystem Command Center - Admin Panel</title>
   <link rel="stylesheet" href="../shared/style.css">
   <script src="../shared/api.js" defer></script>
+  <style>
+    @media (max-width: 991px) {
+      .admin-kpi-bar {
+        grid-template-columns: repeat(2, 1fr) !important;
+      }
+      .admin-2col-grid {
+        grid-template-columns: 1fr !important;
+      }
+      .navbar-inner {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 14px;
+      }
+    }
+    @media (max-width: 600px) {
+      .admin-kpi-bar {
+        grid-template-columns: 1fr !important;
+        padding: 16px !important;
+      }
+      .container {
+        padding: 20px 14px !important;
+      }
+    }
+  </style>
 </head>
 <body style="background: var(--color-black); color: var(--color-white);">
 
@@ -20,7 +44,7 @@
         </div>
       </a>
       
-      <div style="display: flex; align-items: center; gap: 16px;">
+      <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
         <button onclick="triggerForceSync()" class="btn-outline-gold" style="font-size: 0.8rem; padding: 6px 14px;">⚡ Broadcast Force Sync</button>
         <a href="http://localhost:5051" target="_blank" class="btn-gold" style="font-size: 0.85rem; padding: 8px 16px;">Open User Web App ↗</a>
       </div>
@@ -31,7 +55,7 @@
   <main class="container" style="padding: 40px 24px 60px;">
 
     <!-- Top KPI Bar -->
-    <div style="display: grid; grid-template-columns: repeat(5, 1fr); background: var(--color-charcoal); border: 1px solid var(--color-gold-border); border-radius: var(--radius-md); padding: 24px; gap: 16px; margin-bottom: 36px; text-align: center;">
+    <div class="admin-kpi-bar" style="display: grid; grid-template-columns: repeat(5, 1fr); background: var(--color-charcoal); border: 1px solid var(--color-gold-border); border-radius: var(--radius-md); padding: 24px; gap: 16px; margin-bottom: 36px; text-align: center;">
       <div>
         <div style="font-size: 2rem; font-weight: 800; color: var(--color-gold);" id="kpi-users">0</div>
         <div style="font-size: 0.8rem; color: #A0AEC0;">Registered Owners</div>

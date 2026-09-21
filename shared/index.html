@@ -123,6 +123,30 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
         </a>
       </div>
+
+      <!-- Mobile Hamburger Button -->
+      <button class="hero-mobile-toggle" id="hero-mobile-toggle" aria-label="Toggle Navigation Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div class="hero-mobile-drawer" id="hero-mobile-drawer">
+      <ul class="hero-mobile-nav-links">
+        <li><a href="#for-owners" class="hero-mobile-link" onclick="closeHeroDrawer()">For Owners</a></li>
+        <li><a href="#for-brokers" class="hero-mobile-link" onclick="closeHeroDrawer()">For Brokers</a></li>
+        <li><a href="#explore" class="hero-mobile-link" onclick="closeHeroDrawer()">Explore</a></li>
+        <li><a href="#about" class="hero-mobile-link" onclick="closeHeroDrawer()">About</a></li>
+      </ul>
+      <div class="hero-mobile-drawer-actions">
+        <a href="login.html" class="hero-nav-login-mobile">Log In</a>
+        <a href="signup.html" class="hero-nav-btn-gold-mobile">
+          <span>List Your Project</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </a>
+      </div>
     </div>
   </header>
 
@@ -2142,6 +2166,31 @@
         headerBtn.setAttribute('aria-expanded', 'true');
         if (icon) icon.textContent = '–';
       }
+    }
+
+    // ====================================================
+    // MOBILE NAVIGATION DRAWER TOGGLE
+    // ====================================================
+    const heroMobileToggle = document.getElementById('hero-mobile-toggle');
+    const heroMobileDrawer = document.getElementById('hero-mobile-drawer');
+
+    if (heroMobileToggle && heroMobileDrawer) {
+      heroMobileToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        this.classList.toggle('active');
+        heroMobileDrawer.classList.toggle('open');
+      });
+
+      document.addEventListener('click', function(e) {
+        if (!heroMobileDrawer.contains(e.target) && !heroMobileToggle.contains(e.target)) {
+          closeHeroDrawer();
+        }
+      });
+    }
+
+    function closeHeroDrawer() {
+      if (heroMobileToggle) heroMobileToggle.classList.remove('active');
+      if (heroMobileDrawer) heroMobileDrawer.classList.remove('open');
     }
   </script>
 </body>
