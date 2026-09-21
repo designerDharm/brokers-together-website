@@ -108,6 +108,208 @@
       align-items: center;
       gap: 4px;
     }
+
+    /* Creative Form System */
+    .form-group label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #374151;
+      margin-bottom: 8px;
+    }
+
+    .form-control {
+      width: 100%;
+      background: #FAFAFA;
+      border: 1.5px solid #E5E7EB;
+      border-radius: 12px;
+      padding: 14px 18px;
+      font-family: var(--font-primary);
+      font-size: 0.95rem;
+      color: #111827;
+      transition: all 0.2s ease;
+      box-sizing: border-box;
+    }
+
+    .form-control:focus {
+      outline: none;
+      background: #FFFFFF;
+      border-color: #B89555;
+      box-shadow: 0 0 0 4px rgba(184, 149, 85, 0.15);
+    }
+
+    /* Category Interactive Card Grid */
+    .category-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 6px;
+    }
+
+    @media (max-width: 640px) {
+      .category-cards-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .category-option-card {
+      background: #FFFFFF;
+      border: 1.5px solid #E5E7EB;
+      border-radius: 14px;
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+    }
+
+    .category-option-card:hover {
+      border-color: #B89555;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .category-option-card.active {
+      background: #0A0D14;
+      border-color: #0A0D14;
+      box-shadow: 0 8px 24px rgba(10, 13, 20, 0.25);
+    }
+
+    .cat-icon-wrap {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: #F4F1EA;
+      color: #B89555;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+
+    .category-option-card.active .cat-icon-wrap {
+      background: rgba(184, 149, 85, 0.22);
+      color: #FFFFFF;
+    }
+
+    .cat-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .cat-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 2px;
+      transition: color 0.2s ease;
+    }
+
+    .category-option-card.active .cat-title {
+      color: #FFFFFF;
+    }
+
+    .cat-desc {
+      font-size: 0.78rem;
+      color: #6B7280;
+      transition: color 0.2s ease;
+    }
+
+    .category-option-card.active .cat-desc {
+      color: #9CA3AF;
+    }
+
+    .cat-radio-check {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid #D1D5DB;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .category-option-card.active .cat-radio-check {
+      border-color: #B89555;
+      background: #B89555;
+      color: #FFFFFF;
+    }
+
+    .category-option-card:not(.active) .cat-radio-check svg {
+      display: none;
+    }
+
+    /* Unit Segmented Control */
+    .unit-segmented-wrap {
+      display: flex;
+      background: #F3F4F6;
+      padding: 4px;
+      border-radius: 12px;
+      gap: 4px;
+    }
+
+    .unit-segment-btn {
+      flex: 1;
+      background: none;
+      border: none;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-family: var(--font-primary);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #6B7280;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .unit-segment-btn.active {
+      background: #0A0D14;
+      color: #FFFFFF;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    /* Quick Tag Pills */
+    .quick-tag-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .quick-tag-btn {
+      background: #F9FAFB;
+      border: 1px solid #E5E7EB;
+      color: #4B5563;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .quick-tag-btn:hover {
+      border-color: #B89555;
+      color: #B89555;
+      background: #FFFDF9;
+    }
+
+    .quick-tag-btn.selected {
+      background: #0A0D14;
+      border-color: #0A0D14;
+      color: #FFFFFF;
+    }
   </style>
 </head>
 <body>
@@ -157,19 +359,90 @@
           <h2 class="h2-title" style="font-size: 1.6rem; margin-bottom: 8px;">Basic Project Information</h2>
           <p class="lead-text" style="font-size: 0.95rem; margin-bottom: 24px;">Enter the primary title and category of your real estate project.</p>
 
-          <div class="form-group">
-            <label>Project Name / Building Title</label>
+          <div class="form-group" style="margin-bottom: 24px;">
+            <label for="p-name">Project Name / Building Title</label>
             <input type="text" id="p-name" class="form-control" placeholder="e.g. Grand Horizon Towers" required oninput="triggerAutosave()">
           </div>
 
           <div class="form-group">
-            <label>Project Type / Category</label>
-            <select id="p-type" class="form-control" onchange="triggerAutosave()">
+            <label>Select Project Category</label>
+            <!-- Hidden native select for form payload -->
+            <select id="p-type" style="display: none;" onchange="triggerAutosave()">
               <option value="Residential">Residential Luxury</option>
               <option value="Commercial">Commercial Office / IT Park</option>
               <option value="Land">Land / Development Parcel</option>
               <option value="Industrial">Industrial & Logistics Hub</option>
             </select>
+
+            <!-- Creative Interactive Category Cards -->
+            <div class="category-cards-grid">
+              <div class="category-option-card active" onclick="selectCategory('Residential', this)">
+                <div class="cat-icon-wrap">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                  </svg>
+                </div>
+                <div class="cat-info">
+                  <div class="cat-title">Residential Luxury</div>
+                  <div class="cat-desc">Villas, Penthouses, High-rise Condos</div>
+                </div>
+                <div class="cat-radio-check">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </div>
+              </div>
+
+              <div class="category-option-card" onclick="selectCategory('Commercial', this)">
+                <div class="cat-icon-wrap">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+                    <path d="M9 22v-4h6v4"></path>
+                    <path d="M8 6h.01M16 6h.01M8 10h.01M16 10h.01M8 14h.01M16 14h.01"></path>
+                  </svg>
+                </div>
+                <div class="cat-info">
+                  <div class="cat-title">Commercial Office / IT Park</div>
+                  <div class="cat-desc">Grade-A Towers, Tech Parks, Retail Hubs</div>
+                </div>
+                <div class="cat-radio-check">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </div>
+              </div>
+
+              <div class="category-option-card" onclick="selectCategory('Land', this)">
+                <div class="cat-icon-wrap">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
+                    <line x1="8" y1="2" x2="8" y2="18"></line>
+                    <line x1="16" y1="6" x2="16" y2="22"></line>
+                  </svg>
+                </div>
+                <div class="cat-info">
+                  <div class="cat-title">Land / Development Parcel</div>
+                  <div class="cat-desc">Greenfield, Plotted Layouts, Joint Ventures</div>
+                </div>
+                <div class="cat-radio-check">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </div>
+              </div>
+
+              <div class="category-option-card" onclick="selectCategory('Industrial', this)">
+                <div class="cat-icon-wrap">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                    <line x1="12" y1="11" x2="12" y2="17"></line>
+                    <line x1="9" y1="14" x2="15" y2="14"></line>
+                  </svg>
+                </div>
+                <div class="cat-info">
+                  <div class="cat-title">Industrial &amp; Logistics Hub</div>
+                  <div class="cat-desc">Warehousing, Manufacturing Parks, Cold Storage</div>
+                </div>
+                <div class="cat-radio-check">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div style="display: flex; justify-content: flex-end; margin-top: 32px;">
@@ -182,64 +455,92 @@
           <h2 class="h2-title" style="font-size: 1.6rem; margin-bottom: 8px;">Project Location</h2>
           <p class="lead-text" style="font-size: 0.95rem; margin-bottom: 24px;">Provide geographical details and map positioning.</p>
 
-          <div class="form-group">
-            <label>Street Address</label>
-            <input type="text" id="p-address" class="form-control" placeholder="e.g. 42 ORR Financial Corridor" required oninput="triggerAutosave()">
+          <div class="form-group" style="margin-bottom: 20px;">
+            <label for="p-address">Street Address / Landmark</label>
+            <input type="text" id="p-address" class="form-control" placeholder="e.g. 42 Outer Ring Road Financial Corridor" required oninput="triggerAutosave()">
           </div>
 
-          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;">
+          <div style="display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 16px; margin-bottom: 12px;">
             <div class="form-group">
-              <label>City</label>
+              <label for="p-city">City</label>
               <input type="text" id="p-city" class="form-control" placeholder="e.g. Bengaluru" required oninput="triggerAutosave()">
             </div>
             <div class="form-group">
-              <label>State</label>
+              <label for="p-state">State / Province</label>
               <input type="text" id="p-state" class="form-control" placeholder="e.g. Karnataka" required oninput="triggerAutosave()">
             </div>
             <div class="form-group">
-              <label>Pincode</label>
+              <label for="p-pincode">Pincode / Postal</label>
               <input type="text" id="p-pincode" class="form-control" placeholder="e.g. 560103" required oninput="triggerAutosave()">
             </div>
           </div>
 
-          <div class="form-group" style="background: var(--color-gray-100); padding: 16px; border-radius: 8px; font-size: 0.85rem; color: var(--color-gray-500);">
-            📍 Map Location Pin: <strong>Auto-Pinned based on City & Address</strong>
+          <!-- Quick City Chips for Ease of Use -->
+          <div style="margin-bottom: 20px;">
+            <span style="font-size: 0.76rem; color: #6B7280; font-weight: 600; text-transform: uppercase;">Quick Fill Top Markets:</span>
+            <div class="quick-tag-wrap" style="margin-top: 6px;">
+              <button type="button" class="quick-tag-btn" onclick="quickFillCity('Bengaluru', 'Karnataka', '560103')">📍 Bengaluru</button>
+              <button type="button" class="quick-tag-btn" onclick="quickFillCity('Mumbai', 'Maharashtra', '400051')">📍 Mumbai</button>
+              <button type="button" class="quick-tag-btn" onclick="quickFillCity('Gurugram', 'Haryana', '122002')">📍 Gurugram / Delhi NCR</button>
+              <button type="button" class="quick-tag-btn" onclick="quickFillCity('Hyderabad', 'Telangana', '500081')">📍 Hyderabad</button>
+              <button type="button" class="quick-tag-btn" onclick="quickFillCity('Dubai', 'Dubai', '00000')">📍 Dubai, UAE</button>
+            </div>
+          </div>
+
+          <div class="form-group" style="background: #F8F7F4; border: 1px solid rgba(184, 149, 85, 0.25); padding: 16px; border-radius: 12px; font-size: 0.86rem; color: #4B5563; display: flex; align-items: center; gap: 10px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B89555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <div>
+              <strong style="color: #111827;">GPS Positioning:</strong> Precise coordinates are auto-pinned from your address &amp; city for broker map filtering.
+            </div>
           </div>
 
           <div style="display: flex; justify-content: space-between; margin-top: 32px;">
             <button type="button" onclick="prevStep(1)" class="btn-outline-gold">← Back</button>
-            <button type="button" onclick="nextStep(3)" class="btn-gold">Next: Pricing & Size →</button>
+            <button type="button" onclick="nextStep(3)" class="btn-gold">Next: Pricing &amp; Size →</button>
           </div>
         </div>
 
         <!-- STEP 03: PRICING & SIZE -->
         <div id="wstep-3" class="step-content">
-          <h2 class="h2-title" style="font-size: 1.6rem; margin-bottom: 8px;">Pricing & Size Specifications</h2>
+          <h2 class="h2-title" style="font-size: 1.6rem; margin-bottom: 8px;">Pricing &amp; Size Specifications</h2>
           <p class="lead-text" style="font-size: 0.95rem; margin-bottom: 24px;">Specify asking price, total area, and configuration details.</p>
 
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
             <div class="form-group">
-              <label>Asking Price ($)</label>
-              <input type="text" id="p-price" class="form-control" placeholder="e.g. $18,500,000" required oninput="triggerAutosave()">
+              <label for="p-price">Asking Price</label>
+              <input type="text" id="p-price" class="form-control" placeholder="e.g. $18,500,000 or ₹14.5 Cr" required oninput="triggerAutosave()">
             </div>
             <div class="form-group">
-              <label>Total Built-Up Area</label>
+              <label for="p-area">Total Built-Up Area</label>
               <input type="text" id="p-area" class="form-control" placeholder="e.g. 7,400" required oninput="triggerAutosave()">
             </div>
           </div>
 
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 20px;">
             <div class="form-group">
-              <label>Area Unit</label>
-              <select id="p-unit" class="form-control" onchange="triggerAutosave()">
+              <label>Measurement Unit</label>
+              <!-- Hidden select for form payload -->
+              <select id="p-unit" style="display: none;" onchange="triggerAutosave()">
                 <option value="sq ft">sq ft</option>
                 <option value="sq m">sq m</option>
                 <option value="Acres">Acres</option>
+                <option value="Guntha">Guntha</option>
               </select>
+              <!-- Segmented Control Button Pill -->
+              <div class="unit-segmented-wrap">
+                <button type="button" class="unit-segment-btn active" onclick="selectUnit('sq ft', this)">sq ft</button>
+                <button type="button" class="unit-segment-btn" onclick="selectUnit('sq m', this)">sq m</button>
+                <button type="button" class="unit-segment-btn" onclick="selectUnit('Acres', this)">Acres</button>
+                <button type="button" class="unit-segment-btn" onclick="selectUnit('Guntha', this)">Guntha</button>
+              </div>
             </div>
+
             <div class="form-group">
-              <label>Configuration (Beds / Floors)</label>
-              <input type="text" id="p-config" class="form-control" placeholder="e.g. 5 Beds • 6 Baths" oninput="triggerAutosave()">
+              <label for="p-config">Configuration / Layout</label>
+              <input type="text" id="p-config" class="form-control" placeholder="e.g. 5 Beds • 6 Baths • 3 Car Parks" oninput="triggerAutosave()">
             </div>
           </div>
 
@@ -251,22 +552,36 @@
 
         <!-- STEP 04: PROJECT DETAILS -->
         <div id="wstep-4" class="step-content">
-          <h2 class="h2-title" style="font-size: 1.6rem; margin-bottom: 8px;">Project Overview & Highlights</h2>
+          <h2 class="h2-title" style="font-size: 1.6rem; margin-bottom: 8px;">Project Overview &amp; Highlights</h2>
           <p class="lead-text" style="font-size: 0.95rem; margin-bottom: 24px;">Provide editorial description, key highlights, and amenity tags.</p>
 
-          <div class="form-group">
-            <label>Project Description</label>
-            <textarea id="p-desc" class="form-control" rows="4" placeholder="Exquisite triplex penthouse featuring panoramic skyline views, floor-to-ceiling glass facades, private plunge pool..." required oninput="triggerAutosave()"></textarea>
+          <div class="form-group" style="margin-bottom: 20px;">
+            <label for="p-desc">Project Description</label>
+            <textarea id="p-desc" class="form-control" rows="4" placeholder="Exquisite luxury development featuring panoramic skyline views, double-height ceilings, Italian marble flooring, and private smart security..." required oninput="triggerAutosave()"></textarea>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 20px;">
+            <label for="p-highlights">Key Architectural Highlights</label>
+            <input type="text" id="p-highlights" class="form-control" placeholder="e.g. Private Sky Deck, Italian Marble, LEED Gold Certified" oninput="triggerAutosave()">
+            <div class="quick-tag-wrap">
+              <button type="button" class="quick-tag-btn" onclick="appendTag('p-highlights', 'Private Sky Deck')">+ Sky Deck</button>
+              <button type="button" class="quick-tag-btn" onclick="appendTag('p-highlights', 'Italian Marble')">+ Italian Marble</button>
+              <button type="button" class="quick-tag-btn" onclick="appendTag('p-highlights', 'LEED Gold Certified')">+ LEED Gold</button>
+              <button type="button" class="quick-tag-btn" onclick="appendTag('p-highlights', 'Floor-to-Ceiling Glass')">+ Floor-to-Ceiling Glass</button>
+              <button type="button" class="quick-tag-btn" onclick="appendTag('p-highlights', 'High Floor Skyline View')">+ Skyline Views</button>
+            </div>
           </div>
 
           <div class="form-group">
-            <label>Key Architectural Highlights</label>
-            <input type="text" id="p-highlights" class="form-control" placeholder="e.g. Private Sky Deck, Italian Marble, Smart Home Security" oninput="triggerAutosave()">
-          </div>
-
-          <div class="form-group">
-            <label>Amenities List</label>
-            <input type="text" id="p-amenities" class="form-control" placeholder="e.g. Concierge, Helipad, Wine Cellar, Swimming Pool" oninput="triggerAutosave()">
+            <label for="p-amenities">Amenities List</label>
+            <input type="text" id="p-amenities" class="form-control" placeholder="e.g. Concierge, Helipad, Wine Cellar, Infinity Pool" oninput="triggerAutosave()">
+            <div class="quick-tag-wrap">
+              <button type="button" class="quick-tag-btn" onclick="appendTag('p-amenities', '24/7 Concierge')">+ 24/7 Concierge</button>
+              <button type="button" class="quick-tag-btn" onclick="appendTag('p-amenities', 'Infinity Pool')">+ Infinity Pool</button>
+              <button type="button" class="quick-tag-btn" onclick="appendTag('p-amenities', 'Private Helipad')">+ Helipad</button>
+              <button type="button" class="quick-tag-btn" onclick="appendTag('p-amenities', 'Valet Parking')">+ Valet Parking</button>
+              <button type="button" class="quick-tag-btn" onclick="appendTag('p-amenities', 'Smart Automation')">+ Smart Automation</button>
+            </div>
           </div>
 
           <div style="display: flex; justify-content: space-between; margin-top: 32px;">
@@ -464,6 +779,39 @@
         return false;
       }
       return true;
+    }
+
+    function selectCategory(catVal, el) {
+      document.querySelectorAll('.category-option-card').forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+      document.getElementById('p-type').value = catVal;
+      triggerAutosave();
+    }
+
+    function quickFillCity(city, state, pin) {
+      document.getElementById('p-city').value = city;
+      document.getElementById('p-state').value = state;
+      document.getElementById('p-pincode').value = pin;
+      triggerAutosave();
+    }
+
+    function selectUnit(unitVal, btn) {
+      document.querySelectorAll('.unit-segment-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('p-unit').value = unitVal;
+      triggerAutosave();
+    }
+
+    function appendTag(inputId, tagText) {
+      const input = document.getElementById(inputId);
+      if (!input) return;
+      const current = input.value.trim();
+      if (!current) {
+        input.value = tagText;
+      } else if (!current.includes(tagText)) {
+        input.value = `${current}, ${tagText}`;
+      }
+      triggerAutosave();
     }
 
     function triggerAutosave() {
