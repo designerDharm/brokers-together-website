@@ -473,6 +473,12 @@
   ],
   "auditLogs": [
     {
+      "id": "log-1789970890160",
+      "timestamp": "2026-09-21T06:08:10.160Z",
+      "action": "AUTH_SUCCESS",
+      "detail": "Successful sign-in: Karan Singhania (Developer)"
+    },
+    {
       "id": "log-1789967223834",
       "timestamp": "2026-09-21T05:07:03.834Z",
       "action": "AUTH_SUCCESS",

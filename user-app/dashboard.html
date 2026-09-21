@@ -347,10 +347,13 @@
       z-index: 90;
     }
 
-    .search-box {
+    .search-box,
+    .topbar-search {
       position: relative;
-      width: 380px;
+      width: 420px;
       max-width: 100%;
+      display: flex;
+      align-items: center;
     }
 
     .search-icon {
@@ -362,25 +365,75 @@
       pointer-events: none;
       display: flex;
       align-items: center;
+      justify-content: center;
+      transition: color 0.2s ease;
+      z-index: 2;
+    }
+
+    .topbar-search:focus-within .search-icon,
+    .search-box:focus-within .search-icon {
+      color: var(--dash-gold-dark, #B89555);
     }
 
     .search-input {
       width: 100%;
-      background: #F9FAFB;
-      border: 1px solid #E5E7EB;
-      border-radius: 8px;
-      padding: 10px 14px 10px 40px;
-      font-size: 0.85rem;
-      color: #111827;
+      height: 42px;
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-radius: 24px;
+      padding: 0 40px 0 42px;
+      font-size: 0.88rem;
+      color: #0F172A;
       font-family: inherit;
       outline: none;
-      transition: all 0.2s ease;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03) inset;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      box-sizing: border-box;
+    }
+
+    .search-input::placeholder {
+      color: #94A3B8;
+      font-size: 0.85rem;
+      font-weight: 400;
+    }
+
+    .search-input:hover {
+      background: #FFFFFF;
+      border-color: #CBD5E1;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
     }
 
     .search-input:focus {
       background: #FFFFFF;
-      border-color: var(--dash-gold);
-      box-shadow: 0 0 0 3px rgba(184, 149, 85, 0.15);
+      border-color: var(--dash-gold, #B89555);
+      box-shadow: 0 0 0 3px rgba(184, 149, 85, 0.18), 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .search-clear-btn {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #E2E8F0;
+      border: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      color: #64748B;
+      cursor: pointer;
+      font-size: 11px;
+      line-height: 1;
+      padding: 0;
+      transition: all 0.15s ease;
+      z-index: 2;
+    }
+
+    .search-clear-btn:hover {
+      background: #CBD5E1;
+      color: #0F172A;
     }
 
     .topbar-right {
@@ -1507,7 +1560,8 @@
         padding: 0 20px;
         gap: 14px;
       }
-      .search-box {
+      .search-box,
+      .topbar-search {
         max-width: 240px;
       }
       .dash-hero-left {
@@ -1565,7 +1619,8 @@
         width: 40px;
         height: 40px;
       }
-      .search-box {
+      .search-box,
+      .topbar-search {
         display: none;
       }
       .chart-legend {
@@ -1695,9 +1750,10 @@
         <!-- Search Bar -->
         <div class="topbar-search">
           <span class="search-icon">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
           </span>
-          <input type="text" id="topbar-search-input" placeholder="Search by Project Name, Broker, Location..." class="search-input" onkeyup="handleDashboardSearch(this.value)">
+          <input type="text" id="topbar-search-input" placeholder="Search projects, inquiries, locations..." class="search-input" oninput="handleDashboardSearch(this.value)">
+          <button type="button" id="topbar-search-clear" class="search-clear-btn" onclick="clearDashboardSearch()" aria-label="Clear search" title="Clear search">&times;</button>
         </div>
 
         <!-- Right Utilities -->
@@ -2683,6 +2739,11 @@
        SEARCH FILTER
     ──────────────────────────────────────────────────────────────────────── */
     function handleDashboardSearch(query) {
+      const clearBtn = document.getElementById('topbar-search-clear');
+      if (clearBtn) {
+        clearBtn.style.display = query && query.length > 0 ? 'inline-flex' : 'none';
+      }
+
       const q = (query || '').toLowerCase().trim();
       if (!q) {
         renderProjectsTable(activeListingsCache);
@@ -2698,6 +2759,15 @@
         (d.listingTitle && d.listingTitle.toLowerCase().includes(q)) ||
         (d.agency       && d.agency.toLowerCase().includes(q))
       ));
+    }
+
+    function clearDashboardSearch() {
+      const input = document.getElementById('topbar-search-input');
+      if (input) {
+        input.value = '';
+        input.focus();
+      }
+      handleDashboardSearch('');
     }
 
     /* ────────────────────────────────────────────────────────────────────────
