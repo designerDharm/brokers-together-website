@@ -16,8 +16,10 @@
     "supportPhone": "+91 1800 266 5678",
     "supportPhoneDisplay": "1800 266 5678",
     "webDomain": "propertyassist.info",
-    "heroTitle": "Connect Direct with Verified Real Estate Brokers",
-    "heroSubtitle": "List your high-value property, reach 800+ verified brokers, and close deals faster with total privacy control.",
+    "heroTitle": "Your Real Estate Project Deserves Premium Visibility.",
+    "heroSubtitle": "Explore your real estate projects directly to a verified network of professional brokers and serious buyers. Brokers Together's Explore feature puts your project listing in front of the right people, fast, effective, and effortless.",
+    "heroFeatureLabel": "✦ EXPLORE FEATURE ✦",
+    "heroGoldSubtext": "EXPLORE NOW ON BROKERS TOGETHER — Join The Growing Brokers Community",
     "featureFlags": {
       "enableCounsellorBooking": true,
       "enableLiveDeals": true,
@@ -39,12 +41,13 @@
     "configurableClaims": {
       "verifiedBrokersCount": "800+",
       "appDownloadsCount": "1,600+",
+      "subscriptionCost": "₹ 0",
       "activeRequirementsCount": "400+",
       "satisfactionRate": "96%",
-      "averageRating": "4.5 / 5.0",
+      "averageRating": "4.5 ★",
       "approvalTimeframe": "Under 24 Hours",
-      "domainVerificationStatus": "Pending Confirmation (propertyassist.info)",
-      "iosAppStatus": "Under Development / Confirmation Required"
+      "domainVerificationStatus": "propertyassist.info",
+      "iosAppStatus": "Available on Android and iOS"
     }
   },
   "canonicalStatuses": {
@@ -305,7 +308,7 @@
       "agency": "Vertex Realty",
       "counsellorId": "cns-201",
       "counsellorName": "Vikramaditya Singhania",
-      "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
+      "avatar": "/images/avatar-default-broker.jpg",
       "messagePreview": "Interested in scheduling a site visit this week.",
       "time": "2h ago",
       "offeredAmount": 900000000,
@@ -321,7 +324,7 @@
       "agency": "Capital Partners",
       "counsellorId": "cns-203",
       "counsellorName": "Arjun Mehta",
-      "avatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80",
+      "avatar": "/images/avatar-default-counsellor.jpg",
       "messagePreview": "Can you share more details on leasing terms?",
       "time": "1d ago",
       "offeredAmount": 3050000000,
@@ -458,20 +461,58 @@
   "testimonials": [
     {
       "id": "tst-1",
-      "name": "Karan Singhania",
-      "role": "Managing Director, Landmark Developers",
-      "text": "Listing our off-market commercial assets through Brokers Together gave us immediate access to 800+ vetted brokers without public exposure. Closed our transaction in 18 days.",
-      "avatar": "/images/avatar-indian-ceo.jpg"
+      "name": "Arjun Malhotra",
+      "role": "Real Estate Broker, Indore",
+      "rating": 5,
+      "text": "I had struggled to move my client's property for months. After listing it on Brokers Together, we received over 30 serious broker inquiries within two weeks. Eight units sold in under a month. The quality of connections on this platform is genuinely phenomenal.",
+      "avatar": "/images/testimonial-karan-singhania.jpg"
     },
     {
       "id": "tst-2",
-      "name": "Ananya Roy",
-      "role": "Luxury Villa Owner & Investor",
-      "text": "The multi-step project wizard made listing our ₹125 Cr beachfront estate effortless. The direct broker messaging UI kept inquiries organised and transparent.",
-      "avatar": "/images/avatar-business-lady.jpg"
+      "name": "Sunanda Krishnamurthy",
+      "role": "Commercial Property Broker, Devas",
+      "rating": 5,
+      "text": "I listed commercial space on a tuesday. By Friday I had three quality tenants interested, and a lease was signed by the following week. This app is unlike anything I've used in the Indian property market before.",
+      "avatar": "/images/testimonial-ananya-roy.jpg"
+    },
+    {
+      "id": "tst-3",
+      "name": "Rohit Patel",
+      "role": "Property Broker, Indore",
+      "rating": 5,
+      "text": "As the property broker who constantly travels to another state, I was worried about managing the process remotely. This platform made it completely seamless, the brokers were professional, and the dashboard gave me full visibility from abroad.",
+      "avatar": "/images/testimonial-vikram-malhotra.jpg"
+    },
+    {
+      "id": "tst-4",
+      "name": "Nishant Oberoi",
+      "role": "Broker, Indore",
+      "rating": 5,
+      "text": "My luxury penthouse had been sitting idle for 4 months. I joined Brokers Together and got five serious offers within 72 hours. The caliber of brokers on this platform is genuinely impressive, no time-wasters whatsoever.",
+      "avatar": "/images/testimonial-devansh-kapoor.jpg"
+    },
+    {
+      "id": "tst-5",
+      "name": "Vikram Sehgal",
+      "role": "Commercial Property Broker",
+      "rating": 5,
+      "text": "The platform is incredibly user-friendly and the support team went above and beyond. Our premium listing was even featured in their weekly broker newsletter, which brought in several high-quality leads we hadn't expected.",
+      "avatar": "/images/testimonial-ritu-sharma.jpg"
     }
   ],
   "auditLogs": [
+    {
+      "id": "log-1789987369868",
+      "timestamp": "2026-09-21T10:42:49.868Z",
+      "action": "AUTH_SUCCESS",
+      "detail": "Successful sign-in: Rajesh Malhotra (Property Owner)"
+    },
+    {
+      "id": "log-1789984857096",
+      "timestamp": "2026-09-21T10:00:57.096Z",
+      "action": "AUTH_SUCCESS",
+      "detail": "Successful sign-in: Rajesh Malhotra (Property Owner)"
+    },
     {
       "id": "log-1789979073943",
       "timestamp": "2026-09-21T08:24:33.943Z",

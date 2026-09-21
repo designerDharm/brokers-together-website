@@ -2554,7 +2554,7 @@
         const isNew = d.status === 'New' || d.status === 'Negotiation';
         const tagClass = isNew ? 'inquiry-tag-new' : 'inquiry-tag-replied';
         const tagLabel = isNew ? 'New' : 'Replied';
-        const avatar = d.avatar || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80';
+        const avatar = d.avatar || '/images/avatar-default-broker.jpg';
         const agency = d.agency || 'Vertex Realty';
         const timeAgo = d.time || '2h ago';
 
@@ -2698,7 +2698,7 @@
       currentInquirySelected = deal;
 
       document.getElementById('inq-modal-title').textContent = `Inquiry: ${deal.buyerName}`;
-      document.getElementById('inq-modal-avatar').src = deal.avatar || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80';
+      document.getElementById('inq-modal-avatar').src = deal.avatar || '/images/avatar-default-broker.jpg';
       document.getElementById('inq-modal-buyer').textContent = deal.buyerName;
       document.getElementById('inq-modal-agency').textContent = deal.agency || 'Broker Partner';
       document.getElementById('inq-modal-project').textContent = deal.listingTitle;
